@@ -1,0 +1,94 @@
+/* navigation bar and logo  */
+.wrapper{
+    width: 1170px; 
+    margin: auto;
+}
+.nav-area{
+	width:auto;
+	list-style: none;
+	margin-top: 20px;
+	margin-left: 100px; 
+	display: flex;   
+}
+.nav-area li{
+	display: inline-block;
+}
+.nav-area li a{
+	color: #3498db;
+	text-decoration: none;
+	padding:5px 10px;
+	font-size: 22px;
+}
+.nav-area li a:hover{
+    color:#fff;
+}
+.logo{
+ height: auto;
+ position: absolute;
+ top: 0; 
+ left: 0;
+ right: 0; 
+ left: 0;
+ text-align: center; 
+ width: 100%;
+ vertical-align: middle;
+ margin-bottom: 10px;
+}
+.logo p{
+	text-align: center; 
+	display: inline-block;
+	vertical-align: middle;
+}
+.user{
+ height: auto;
+ position: absolute;
+ top: 50; 
+ left: 0;
+ right: 0; 
+ left: 0; 
+ text-align: center; 
+ width: 100%;
+ vertical-align: middle;
+}
+.user a{
+    text-decoration-line: none;
+    font-size: 20px;
+    color:#fff;
+    border:none;
+    background: none;
+    margin: 10px auto;
+    text-align: center;
+    border: 2px dotted #3498db;
+    padding: 5px 20px;
+    width: auto;
+    border-radius: 24px;
+    text-align: center; 
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.show-menu-btn,.hide-menu-btn{
+	color: #fff;
+	transition: 0.4s;
+	cursor: pointer;
+	font-size: 22px;
+	display: none;
+}
+.show-menu-btn:hover{
+	color: #3498db;
+	font-size: 45px;
+}
+.hide-menu-btn:hover{
+    color: #3498db;
+}
+.show-menu-btn{
+	float: right;
+}
+.show-menu-btn i{
+	line-height:100px; 
+}
+#chk{
+	position: absolute;
+	visibility: hidden;
+	z-index: -1111;
+}

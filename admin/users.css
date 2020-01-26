@@ -1,0 +1,123 @@
+*{
+	margin:0;
+	padding: 0;
+}
+.header{
+border: solid 2px #fff;
+background-image: linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6)), url("img/flourent.jpeg");
+min-height:100vh;
+height: auto;
+-webkit-background-size:cover;
+background-size: cover;
+background-position: center center;
+position: relative;
+text-align: center;
+margin: auto;
+overflow: hidden;
+padding:20px;
+}
+.header h1{
+	display: inline-block;
+	text-transform: uppercase;
+	border-bottom: 4px solid #3498db;
+	font-size: 20px;
+	margin-top: 10px;
+	color: #fff;
+	padding-top: 100px;
+	text-align: center;
+}
+
+.wrapper{ 
+height: 100px;
+margin: auto;
+}
+
+.wrapper h2{
+color: #fff;
+}
+
+.nav-area{
+	float: middle;
+	list-style: none;
+	margin-top: 30px;    
+}
+.nav-area li{
+	display: inline-block;
+}
+.nav-area li a{
+	color: #3498db;
+	text-decoration: none;
+	padding:5px 10px;
+	font-family: poppins;
+	font-size: 20px;
+}
+.nav-area li a:hover{
+color:#fff;
+}
+.logo img{
+	width: 150px;
+	float: left;
+	height: auto;
+}
+.desc{
+	height: auto;
+	border-bottom: 4px solid #3498db;
+	padding-top: 0px;
+}
+table {
+  table-layout: fixed;
+  width: auto;
+  width: 100%;
+  border-collapse: collapse;
+  border: 3px solid #fff;
+}
+
+thead th:nth-child(1) {
+  width: 5%;
+}
+
+thead th:nth-child(2) {
+  width: 5%;
+}
+
+thead th:nth-child(3) {
+  width: 15%;
+}
+
+thead th:nth-child(4) {
+  width: 10%;
+}
+
+th, td {
+  padding: 10px;
+}
+td{
+	color: #fff;
+}
+thead{
+	 border: 3px solid #fff;
+}
+.table{
+	height: auto;
+	text-align: center;
+	background: none;
+}
+a[name='table']{
+	border:0;
+	background: none;
+	display:block;
+	margin: 4px auto;
+	text-align: center;
+	border: 2px solid #3498db;
+	padding: 4px 2px;
+	width: 70px;
+	border-radius: 24px;
+	transition: 0.25s;
+	color: #3498db;
+	cursor: pointer;
+	text-decoration: none;
+}
+a[name='table']:hover{
+	background-color: #3498db;
+	color: #fff;
+}

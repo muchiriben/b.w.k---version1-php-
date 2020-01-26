@@ -1,0 +1,150 @@
+*{
+	margin:0;
+	padding: 0;
+}
+body{
+	min-width: 100px;
+}
+.wrapper{
+width: 1170px; 
+margin: auto;
+}
+
+.wrapper h2{
+color: #fff;
+}
+
+.header{
+border: solid 1px #fff;
+background-image: linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6)), url("img/moon.jpeg");
+height: auto;
+min-height: 100vh;
+-webkit-background-size:cover;
+background-size: cover;
+background-position: center center;
+position: relative;
+text-align: center;
+margin: auto;
+overflow: hidden;
+padding:20px;
+}
+.footer{
+	border: solid 1px #fff;
+background-image: linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6)), url("img/eng.jpeg");
+height: auto;
+-webkit-background-size:cover;
+background-size: cover;
+background-position: center center;
+position: relative;
+text-align: center;
+margin: auto;
+overflow: hidden;
+padding:20px;
+}
+.nav-area{
+	float: middle;
+	list-style: none;
+	margin-top: 20px;    
+}
+.nav-area li{
+	display: inline-block;
+}
+.nav-area li a{
+	color: #3498db;
+	text-decoration: none;
+	padding:5px 10px;
+	font-family: poppins;
+	font-size: 20px;
+}
+.nav-area li a:hover{
+color:#fff;
+}
+.logo img{
+	width: 150px;
+	float: left;
+	height: auto;
+}
+
+.form{
+	padding-top: 70px;
+}
+.form input{
+	border:none;
+	background: none;
+	display:block;
+	margin: 20px auto;
+	text-align: center;
+	border: 2px solid #fff;
+	padding: 14px 10px;
+	width: 320px;
+	border-radius: 24px;
+	transition: 0.25s;
+	color: #fff;
+	text-decoration-color: #fff;
+	cursor: pointer;
+}
+.form input:hover{
+	border-color: #3498db;
+}
+.form input[type = 'submit']{
+     border:none;
+	background: none;
+	display:block;
+	margin: 20px auto;
+	text-align: center;
+	border: 2px solid #3498db;
+	padding: 14px 40px;
+	width: 120px;
+	border-radius: 24px;
+	transition: 0.25s;
+	cursor: pointer;
+}
+.form input[type = 'submit']:hover{
+	background: #3498db;
+}
+.form h1{
+	display: inline-block;
+	text-transform: uppercase;
+	border-bottom: 4px solid #3498db;
+	font-size: 20px;
+	padding-bottom: 10px;
+	margin-top: 10px;
+	color: #fff;
+}
+
+.form h2{
+	display: inline-block;
+	text-transform: uppercase;
+	font-size: 20px;
+	padding-bottom: 10px;
+	margin-top: 10px;
+	color: #3498db;
+}
+
+.form a{
+	color:#3498db;
+}
+.form select{
+	border:0;
+	background: none;
+	margin: 20px auto;
+	text-align: center;
+	border: 2px solid #fff;
+	padding: 14px 10px;
+	width: 170px;
+	border-radius: 24px;
+	transition: 0.25s;
+	color: #3498db;
+	cursor: pointer;
+}
+.form select:hover{
+	border-color: #3498db;
+}
+::placeholder{
+	color:#3498db; 
+}
+.form select[id='make2'],select[id='model']{
+width: 340px;
+}
+
+

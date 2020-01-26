@@ -1,0 +1,97 @@
+
+*{
+	margin:0;
+	padding: 0;
+}
+body{
+	min-width: 1000px;
+}
+.wrapper{
+width: 1170px; 
+margin: auto;
+}
+
+.wrapper h2{
+color: #fff;
+}
+
+.header{
+border: solid 1px #fff;
+background-image: linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6)), url("img/flourent.jpeg");
+height: 100vh;
+-webkit-background-size:cover;
+background-size: cover;
+background-position: center center;
+position: relative;
+text-align: center;
+margin: auto;
+overflow: hidden;
+padding:20px;
+}
+.nav-area{
+	float:middle;
+	list-style: none;
+	margin-top: 30px; 
+	min-width: 100px;   
+}
+.nav-area li{
+	display: inline-block;
+}
+.nav-area li a{
+	color: #3498db;
+	text-decoration: none;
+	padding:5px 10px;
+	font-family: poppins;
+	font-size: 20px;
+}
+.nav-area li a:hover{
+color:#fff;
+}
+.logo img{
+	width: 150px;
+	float: left;
+	height: auto;
+}
+.welcome-text{
+	position:absolute;
+	width: 600px;
+	height: 300px;
+	margin:10% 25%;
+	text-align:center;	
+}
+.welcome-text h2{
+	text-align: center;
+	color: #3498db;
+	text-transform: uppercase;
+	font-size: 25px;
+}
+.welcome-text a{
+	text-decoration-line: none;
+	font-size: 20px;
+	color:#fff;
+	border:none;
+	background: none;
+	margin: 10px auto;
+	text-align: center;
+	border: 2px solid #fff;
+	padding: 14px 40px;
+	width: 120px;
+	border-radius: 24px;
+	transition: 0.25s;
+	cursor: pointer;
+}
+.welcome-text a:hover{
+	background:#fff;
+	color: #3498db;
+}
+.header h1{
+	display: inline-block;
+	text-transform: uppercase;
+	border-bottom: 4px solid #3498db;
+	font-size: 20px;
+	padding-bottom: 10px;
+	margin-top: 30px;
+	color: #fff;
+}
+
+
