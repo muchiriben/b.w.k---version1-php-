@@ -39,7 +39,7 @@ if ($sql) {
         <input type="radio" name="r" id="r4">
         <input type="radio" name="r" id="r5">
         <div class="slide s1">
-          <p>Something something.....1</p><br>
+          <p>Kenya's Top Motorcycle Riders' Platform</p><br>
           <a href="#bfooter">Get Started</a>
         </div>
         <div class="slide">
