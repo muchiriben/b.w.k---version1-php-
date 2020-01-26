@@ -111,7 +111,7 @@ if ($sql) {
 	    </div> 
 	    <div class="customer">
 	    	<h1>About Us</h1><br><br>
-            <a href="aboutus.php">About Us</a><br><br>
+            <a href="aboutus.php">About BikerWorld</a><br><br>
 	    	<a href="terms.php">Terms and Conditions</a><br><br>
 	    	<a href="policy.php">Privacy Policy</a>
 	    </div>
