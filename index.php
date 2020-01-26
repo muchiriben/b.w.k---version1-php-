@@ -40,7 +40,7 @@ if ($sql) {
         <input type="radio" name="r" id="r5">
         <div class="slide s1">
           <p>Kenya's Top Motorcycle Riders' Platform</p><br>
-          <a href="#bfooter">Get Started</a>
+          <a href="#bfooter">Revs your Soul</a>
         </div>
         <div class="slide">
           <p>Need To Sell or Buy Second-Hand Motorcycles?!</p><br>
