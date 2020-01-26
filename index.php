@@ -47,7 +47,7 @@ if ($sql) {
           <a href="shop.php">SellYourBike</a>
         </div>
         <div class="slide">
-          <p>Want To Earn Money Renting out Motorcycles? Or are you looking for a ride to the Event?</p><br>
+          <p>Earn Money Renting out Motorcycles. Need a ride to an Event?</p><br>
           <a href="rent.php">Rentals</a>
         </div>
         <div class="slide">
