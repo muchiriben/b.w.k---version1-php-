@@ -16,7 +16,7 @@ require_once "inc/conn.php";
 <header class="header">
 	<?php require_once "inc/nav.php"; ?>
 	<div class="cat">
-		<a href="rentad.php">RentYourBike</a>
+		<a href="rentad">RentYourBike</a>
 	</div>
     
     <div class="cont">
@@ -59,7 +59,7 @@ echo '<img src="data:image;base64,'.base64_encode( $row['frontim'] ).'" height="
 /* encrypt url */
 $data = $row["rid"];
 $encrypt = $data*201820192020007;
-$encode = "viewrental.php?v=" .urlencode(base64_encode($encrypt));
+$encode = "viewrental?v=" .urlencode(base64_encode($encrypt));
 ?>
 
 <a href="<?=$encode;?>" id="ref" name = "ref">View Listing</a>

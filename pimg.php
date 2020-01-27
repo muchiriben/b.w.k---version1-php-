@@ -35,7 +35,7 @@ $rs = mysqli_query($conn,$sell);
                 echo "Query failed";
             }
             else{ 
-                header("Location:parts.php");
+                header("Location:parts");
             }
 }
 

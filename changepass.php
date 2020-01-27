@@ -18,7 +18,7 @@ if(isset($_POST['reset'])){
       if ($pass == $repass) {
           $edit ="UPDATE `users` SET pass='$pass', repass='$repass' WHERE uname ='$user'";
             $rs = mysqli_query($conn,$edit);
-            header("location:login.php"); 
+            header("location:login"); 
       }else{
           $error = "Your New Passwords are not the same";
       }

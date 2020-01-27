@@ -2,7 +2,7 @@
 session_start();
 $_SESSION['from'] = "bikead";
 if (($_SESSION['login_user']) == null) {
-  header("Location:login.php");
+  header("Location:login");
 }
 
 require_once "inc/conn.php";
@@ -62,7 +62,7 @@ $sq = "SELECT name FROM maketable WHERE mid = '$make' ";
             	mysqli_query($conn,$sell);
               $last_id = mysqli_insert_id($conn);
               $_SESSION['present_ad'] = $last_id;
-              header('location:imgupload.php');
+              header('location:imgupload');
             }
 
 

@@ -54,7 +54,7 @@ require 'phpmailer/PHPMailerAutoload.php';
    $mail->setFrom('bikerworldkenya@gmail.com','BikerWorldKenya');
    $mail->addAddress($email); 
    if($mail->send()){
-    header("location:reset.php");
+    header("location:reset");
     echo "Mail sent";
    }else{
     echo "Mailer Error:" .$mail->ErrorInfo;
@@ -83,7 +83,7 @@ require 'phpmailer/PHPMailerAutoload.php';
 				<input type="text" name="uname" id="uname" placeholder="Username"><br>
 				<input type="submit" name="get" id="uname" value="GET">
 			</form>
-			<font color="#fff" size="4px"><a href="changepass.php">Change Password</a></font>
+			<font color="#fff" size="4px"><a href="changepass">Change Password</a></font>
 		</div>
 	</header>
   <?php require 'inc/cpt.php'; ?>

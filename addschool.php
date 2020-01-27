@@ -4,7 +4,7 @@ require "inc/conn.php";
 
 //check user has logged in
 if (($_SESSION['login_user']) == null) {
-  header("Location:login.php");
+  header("Location:login");
 }
 
 //initialization of important elements
@@ -52,7 +52,7 @@ $byidq = "SELECT sid FROM users WHERE uname = '$myusername' ";
             $sell="INSERT INTO `shule`(`by_id`,`fname`, `lname`,`sname`, `slocation`,`contact`,`email`,`web`,`slogan`,`pass`,`repass`,`logo`) VALUES ('$by_id','$fname','$lname','$sname','$location','$contact','$email','$web','$slogan','$pass','$repass','$imagetmp1')";
 
             mysqli_query($conn,$sell);
-            header('location:schools.php');
+            header('location:schools');
              
           }else{
             $error = "Passwords are not the same!!!";

@@ -3,7 +3,7 @@ session_start();
 require_once "inc/conn.php";
 
 if (($_SESSION['login_user']) == null) {
-  header("Location:login.php");
+  header("Location:login");
 }
 
 $myusername = $_SESSION['login_user'];
@@ -50,7 +50,7 @@ $imagetmp1=addslashes (file_get_contents($first));
                 $sell="INSERT INTO `dealers`(`by_id`,`fname`, `lname`, `dname`,`location`, `pnumber`,`email`,`web`,`slogan`,`pass`,`repass`,`logo`) VALUES ('$by_id','$fname','$lname','$dname','$location','$pnumber','$email','$web','$slogan','$pass','$repass','$imagetmp1')";
                 
                 mysqli_query($conn,$sell);
-                header('location:dealer.php');
+                header('location:dealer');
             
                             }
         else{

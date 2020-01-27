@@ -18,13 +18,13 @@ $(document).ready(function(){
     $("select.category").change(function(){
         var selectedCategory = $(this).children("option:selected").val();
         if (selectedCategory == "gears") {
-        	location.replace("gears.php");
+        	location.replace("gears");
         }
         else if(selectedCategory == "bikes"){
-            location.replace("shop.php");
+            location.replace("shop");
         }
         else if(selectedCategory == "parts"){
-        	location.replace("parts.php");
+        	location.replace("parts");
         }
         
     });
@@ -86,7 +86,7 @@ echo '<img src="data:image;base64,'.base64_encode( $row['frontim'] ).'" height="
 /* encrypt url */
 $data = $row["gid"];
 $encrypt = $data*201820192020007;
-$encode = "vgear.php?v=" .urlencode(base64_encode($encrypt));
+$encode = "vgear?v=" .urlencode(base64_encode($encrypt));
 ?>
 
 <a href="<?=$encode;?>" id="ref" name = "ref">View Listing</a>

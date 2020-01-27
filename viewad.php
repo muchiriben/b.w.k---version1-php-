@@ -127,7 +127,7 @@ echo '<div class="img">
 /* encrypt url */
 $data = $row["sid"];
 $encrypt = $data*201820192020007;
-$encode = "myprofile.php?v=" .urlencode(base64_encode($encrypt));
+$encode = "myprofile?v=" .urlencode(base64_encode($encrypt));
 ?>
 
 <a href="<?=$encode;?>" id="ref" name = "ref">View Profile</a></td>

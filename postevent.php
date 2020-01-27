@@ -1,7 +1,7 @@
 <?php 
 session_start();
 if (($_SESSION['login_user']) == null) {
-  header("Location:login.php");
+  header("Location:login");
 }
 $_SESSION['from'] = "postev";
 require_once "inc/conn.php";
@@ -28,10 +28,10 @@ $sell="INSERT INTO `events`(`by_id`,`evname`, `held_by`, `date`,`location`,`desc
                 echo "Registration Query failed";
             }
             else{ 
-            	  mysqli_query($conn,$sell);
-                header('location:evimg.php');
+            	mysqli_query($conn,$sell);
                 $last_id = mysqli_insert_id($conn);
                 $_SESSION['present_ad'] = $last_id;
+                header('location:evimg');  
             }
 
 }

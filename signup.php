@@ -2,6 +2,7 @@
 session_start();
 require 'inc/conn.php';
 $_SESSION['from'] = "signup";
+$error = null;
 
 if(isset($_POST['signup'])){
     //get details
@@ -22,13 +23,8 @@ if(isset($_POST['signup'])){
         $num=mysqli_num_rows($result);
     }
         //if record exists
-    if ($num > 0){
-            echo "UserName already taken <a href='signup.php'>Ok</a>" ;//For security purposes die
-            die();
-        }
-    else{
-            //Create registration query
-        if($pass == $repass){ //confirm passwords are similar and register
+    if ($num == 0){
+            if($pass == $repass){ //confirm passwords are similar and register
             $reg="INSERT INTO `users`(`fname`,`sname`, `uname`, `contact`,`email`, `pass`, `repass`) VALUES ('$first', '$last','$user',$contact,'$email','$pass','$repass')";
             if (!$reg){
                 echo "Registration Query failed";
@@ -37,12 +33,16 @@ if(isset($_POST['signup'])){
                 mysqli_query($conn,$reg);
                 $last_id = mysqli_insert_id($conn);
                 $_SESSION['last_id'] = $last_id;
-                header('Location:login.php');
+                header('Location:login');
                 }
                             }
         else{
-        	echo "Password not same <a href='signup.php'>Ok</a>";
+            $error = "Passwords are not same!!";
                 }       
+        }
+    else{
+            $error = "Username has already been taken";
+        
         }
     
 }      
@@ -62,7 +62,8 @@ if(isset($_POST['signup'])){
 <header class="header">
 		<?php require_once 'inc/nav.php'?>
 		<div class="form">
-			<h1>Sign Up</h1>
+			<h1>Sign Up</h1><br>
+            <font size="4" color="#fff"><?php echo $error; ?></font><br>
 			<form action="signup.php" method="post">
 				<input type="text" name="fname" placeholder="Firstname" required>
 				<input type="text" name="sname" placeholder="Secondname" required><br>

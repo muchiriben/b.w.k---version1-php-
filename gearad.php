@@ -2,7 +2,7 @@
 session_start();
 $_SESSION['from'] = "gearad";
 if (($_SESSION['login_user']) == null) {
-  header("Location:login.php");
+  header("Location:login");
 }
 
 require_once "inc/conn.php";
@@ -53,7 +53,7 @@ $sq = "SELECT cname FROM gcategories WHERE cid = '$cate' ";
             	mysqli_query($conn,$sellgear);
                 $last_id = mysqli_insert_id($conn);
                 $_SESSION['present_ad'] = $last_id;
-                header('location:gimg.php');
+                header('location:gimg');
             }
 
 }

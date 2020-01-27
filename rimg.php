@@ -35,7 +35,7 @@ $rs = mysqli_query($conn,$sell);
                 echo "Query failed";
             }
             else{ 
-                header("Location:rent.php");
+                header("Location:rent");
             }
 }
 

@@ -1,0 +1,25 @@
+#mod_rewrite starts here
+
+RewriteEngine on
+
+#does not apply to existing directories, if folder exists on the server then don't change anything and don't run the Rule!
+
+RewriteCond %{REQUEST_FILENAME} !-d
+
+#Check for file in directory with .php extension
+
+RewriteCond %{REQUEST_FILENAME}\.php -f
+
+
+#Here we actually show the page that has the .php extension
+
+# RewriteRule ^(.*)$ $1.php [NC,L]
+
+RewriteRule ^([^\.]+)$ $1.php [NC,L]
+
+#html
+RewriteEngine on
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}\.html -f
+RewriteRule ^([^\.]+)$ $1.html [NC,L]
+

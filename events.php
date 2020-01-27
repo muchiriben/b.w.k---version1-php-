@@ -16,7 +16,7 @@ require_once "inc/conn.php";
 <header class="header">
 	<?php require_once "inc/nav.php"; ?>
 	<div class="cat">
-		<a href="postevent.php">Post Event</a>
+		<a href="postevent">Post Event</a>
 	</div>
     
     <div class="cont">
@@ -57,7 +57,7 @@ echo '<img src="data:image;base64,'.base64_encode( $row['poster1'] ).'" height="
 /* encrypt url */
 $data = $row["evid"];
 $encrypt = $data*201820192020007;
-$encode = "viewevent.php?v=" .urlencode(base64_encode($encrypt));
+$encode = "viewevent?v=" .urlencode(base64_encode($encrypt));
 ?>
 
 <a href="<?=$encode;?>" id="ref" name = "ref">View Listing</a>

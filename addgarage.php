@@ -4,7 +4,7 @@ require "inc/conn.php";
 
 //check user has logged in
 if (($_SESSION['login_user']) == null) {
-  header("Location:login.php");
+  header("Location:login");
 }
 
 //initialization of important elements
@@ -52,7 +52,7 @@ $result = mysqli_query($conn,$byidq);
 
             //run query
             mysqli_query($conn,$addg);
-            header('location:garages.php');     
+            header('location:garages');     
         }else{
             $error = "Passwords are not the same!!!";
         }

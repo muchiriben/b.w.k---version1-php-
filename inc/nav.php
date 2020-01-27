@@ -12,9 +12,9 @@
 			<div class="user">	
 				<?php 
            if (isset($_SESSION['login_user'])) {
-           	  echo  "<a href='myprofile.php'>" .$_SESSION['login_user']. "</a>";    
+           	  echo  "<a href='myprofile'>" .$_SESSION['login_user']. "</a>";    
            }else{ 
-                echo  "<a href='login.php'>Log in/Sign up</a>";    
+                echo  "<a href='login'>Log in/Sign up</a>";    
            }
 
 		        ?>
@@ -25,18 +25,18 @@
 					<i class="fas fa-bars"></i>
 				</label>
 			<ul class="nav-area">
-				<li><a href="index.php" id="links">Home</a></li>
-				<li><a href="shop.php"   id="links">Shop</a></li>
-				<li><a href="rent.php" id="links">Rentals</a></li>
-				<li><a href="schools.php" id="links">LearnToRide</a></li>
-				<li><a href="events.php" id="links">Events</a></li>
-				<li><a href="dealer.php" id="links">Dealerships</a></li>
-				<li><a href="garages.php" id="links">Garages</a></li>
-		        <li><a href="myprofile.php" id="links">MyProfile</a></li>
-		        <li><a href="aboutus.php" id="links">AboutUs</a></li>
+				<li><a href="index" id="links">Home</a></li>
+				<li><a href="shop"   id="links">Shop</a></li>
+				<li><a href="rent" id="links">Rentals</a></li>
+				<li><a href="schools" id="links">LearnToRide</a></li>
+				<li><a href="events" id="links">Events</a></li>
+				<li><a href="dealer" id="links">Dealerships</a></li>
+				<li><a href="garages" id="links">Garages</a></li>
+		        <li><a href="myprofile" id="links">MyProfile</a></li>
+		        <li><a href="aboutus" id="links">AboutUs</a></li>
 		        <?php 
            if (isset($_SESSION['login_user'])) {
-           	echo  "<li><a href='logout.php' id='links'>Log out</a></li>" ;    
+           	echo  "<li><a href='logout' id='links'>Log out</a></li>" ;    
            }
 		        ?>
 		     

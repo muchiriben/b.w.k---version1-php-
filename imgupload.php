@@ -34,7 +34,7 @@ $rs = mysqli_query($conn,$update);
                 echo "Query failed";
             }
             else{ 
-                header("Location:shop.php");
+                header("Location:shop");
             }
 }
 

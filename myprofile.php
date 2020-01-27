@@ -2,17 +2,10 @@
 session_start();
 require_once 'inc/conn.php';
 if (($_SESSION['login_user']) == null) {
-	header("Location:login.php");
+	header("Location:login");
 }
 
 $user = $_SESSION['login_user'];
-$data = $_GET['v'];
-
-/*decrypt url*/
-  $data2 = base64_decode(urldecode($data));
-  $decrypt = $data2/201820192020007;
-  $post_id = $decrypt;
-
 $list = "SELECT * FROM profiles WHERE uname = '$user'";
 $result = mysqli_query($conn,$list);
     if (mysqli_num_rows($result)>0){
@@ -26,6 +19,13 @@ $result = mysqli_query($conn,$list);
 
 /* view profile */
 if (isset($_GET['v'])) {
+$data = $_GET['v'];
+
+/*decrypt url*/
+  $data2 = base64_decode(urldecode($data));
+  $decrypt = $data2/201820192020007;
+  $post_id = $decrypt;
+
   $list = "SELECT * FROM profiles WHERE sid = '$post_id'";
 $result = mysqli_query($conn,$list);
     if (mysqli_num_rows($result)>0){
@@ -119,7 +119,7 @@ $(document).ready(function(){
     <div class="href">
       <?php
          if (!isset($_GET['v'])) { ?>
-            <a href="editprofile.php?id=<?php echo $sid;?>" name="ref">Edit Profile</a>
+            <a href="editprofile" name="ref">Edit Profile</a>
       <?php } ?>
       
       <a href="#" name="ref">Message</a>
@@ -178,7 +178,14 @@ echo '<img src="data:image;base64,'.base64_encode( $row['frontim'] ).'" height="
  <p><?php echo "Year:\t" .$year; ?></p><br><br>
  <p><?php echo "Price:\t" .$price; ?></p><br><br>
  <p><?php echo "Contact Me:\t" .$contact; ?></p><br>
-<a href="viewad.php?id=<?php echo $row["adid"];?>" id="ref" name = "ref">View Ad</a>
+<?php
+/* encrypt url */
+$data = $row["adid"];
+$encrypt = $data*201820192020007;
+$encode = "viewad?v=" .urlencode(base64_encode($encrypt));
+?>
+
+<a href="<?=$encode;?>" id="ref" name = "ref">View Listing</a>
 </div>
 </div>
 
@@ -188,7 +195,7 @@ echo '<img src="data:image;base64,'.base64_encode( $row['frontim'] ).'" height="
         
      <div class='noad'>
          <p>You Currently Have No Motorcycle Listings!!!!</p>
-         <a href="postevent.php">Post Event</a>
+         <a href="postevent">Post Event</a>
      </div>   
 
 <?php } ?>
@@ -235,7 +242,14 @@ echo '<img src="data:image;base64,'.base64_encode( $row['frontim'] ).'" height="
  <p><?php echo "Name:\t" .$gname; ?></p><br><br>
  <p><?php echo "Price:\t" .$price; ?></p><br><br>
  <p><?php echo "Contact Me:\t" .$contact; ?></p><br>
-<a href="vgear.php?id=<?php echo $row["gid"];?>" id="ref" name = "ref">View Ad</a>
+<?php
+/* encrypt url */
+$data = $row["gid"];
+$encrypt = $data*201820192020007;
+$encode = "vgear?v=" .urlencode(base64_encode($encrypt));
+?>
+
+<a href="<?=$encode;?>" id="ref" name = "ref">View Listing</a>
 </div>
 </div>
 
@@ -245,7 +259,7 @@ echo '<img src="data:image;base64,'.base64_encode( $row['frontim'] ).'" height="
         
      <div class='noad'>
          <p>You Currently Have No Gear Listings!!!!</p>
-         <a href="gearad.php">SellGear</a>
+         <a href="gearad">SellGear</a>
      </div>   
 
 <?php } ?>
@@ -290,7 +304,14 @@ echo '<img src="data:image;base64,'.base64_encode( $row['frontim'] ).'" height="
  <p><?php echo "Part Name:\t" .$pname; ?></p><br><br>
  <p><?php echo "Price:\tKes" .$price; ?></p><br><br>
  <p><?php echo "Contact Me:\t" .$contact; ?></p><br>
-<a href="vpart.php?id=<?php echo $row["pid"];?>" id="ref" name = "ref">View Ad</a>
+<?php
+/* encrypt url */
+$data = $row["pid"];
+$encrypt = $data*201820192020007;
+$encode = "vpart?v=" .urlencode(base64_encode($encrypt));
+?>
+
+<a href="<?=$encode;?>" id="ref" name = "ref">View Listing</a>
 </div>
 </div>
 
@@ -300,7 +321,7 @@ echo '<img src="data:image;base64,'.base64_encode( $row['frontim'] ).'" height="
         
      <div class='noad'>
          <p>You Currently Have No Parts Listings!!!!</p>
-         <a href="partsad.php">SellParts</a>
+         <a href="partsad">SellParts</a>
      </div>   
 
 <?php } ?>
@@ -344,7 +365,14 @@ echo '<img src="data:image;base64,'.base64_encode( $row['poster1'] ).'" height="
  <p><?php echo "Location:\t" .$location; ?></p><br><br>
  <p><?php echo "Contact Number:\t" .$contact; ?></p><br><br>
  <p><?php echo "Description:\t" .$description; ?></p><br>
-<a href="viewevent.php?id=<?php echo $row["evid"];?>" id="ref" name = "ref">View Event</a>
+<?php
+/* encrypt url */
+$data = $row["evid"];
+$encrypt = $data*201820192020007;
+$encode = "viewevent?v=" .urlencode(base64_encode($encrypt));
+?>
+
+<a href="<?=$encode;?>" id="ref" name = "ref">View Listing</a>
 </div>
 </div>
 
@@ -354,7 +382,7 @@ echo '<img src="data:image;base64,'.base64_encode( $row['poster1'] ).'" height="
         
      <div class='noad'>
          <p>You Currently Have No Events Posted!!!!</p>
-         <a href="postevent.php">Post Event</a>
+         <a href="postevent">Post Event</a>
      </div>   
 
 <?php } ?>
@@ -399,7 +427,14 @@ echo '<img src="data:image;base64,'.base64_encode( $row['frontim'] ).'" height="
   <p><?php echo "Engine size:\t" .$eng_size. "cc" ;?></p><br><br>
  <p><?php echo "Price/hour:\t" .$price. "/="; ?></p><br><br>
  <p><?php echo "Contact Me:\t" .$contact; ?></p><br>
-<a href="viewrental.php?id=<?php echo $row["rid"];?>" id="ref" name = "ref">View Listing</a>
+<?php
+/* encrypt url */
+$data = $row["rid"];
+$encrypt = $data*201820192020007;
+$encode = "viewrental?v=" .urlencode(base64_encode($encrypt));
+?>
+
+<a href="<?=$encode;?>" id="ref" name = "ref">View Listing</a>
 </div>
 </div>
 
@@ -409,7 +444,7 @@ echo '<img src="data:image;base64,'.base64_encode( $row['frontim'] ).'" height="
         
      <div class='noad'>
          <p>You Currently Have No Motorcycles up for Rent!!!!</p>
-         <a href="rentad.php">RentYourBike</a>
+         <a href="rentad">RentYourBike</a>
      </div>   
 
 <?php } ?>

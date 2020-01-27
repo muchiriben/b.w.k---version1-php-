@@ -34,7 +34,7 @@ $rs = mysqli_query($conn,$sell);
                 echo "Query failed";
             }
             else{ 
-                header("Location:gears.php");
+                header("Location:gears");
             }
 }
 

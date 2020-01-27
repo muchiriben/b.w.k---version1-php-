@@ -16,7 +16,7 @@ require_once "inc/conn.php";
 <header class="header">
 	<?php require_once "inc/nav.php"; ?>
 	<div class="cat">
-		<a href="addgarage.php">Register Garage</a>
+		<a href="addgarage">Register Garage</a>
 	</div>
     
     <div class="cont">
@@ -63,7 +63,7 @@ if ($slogan != null) {
      echo "<a href='" .$web. "'>Website</a>";
    }
  ?>  
-<a href="dprofile.php?id=<?php echo $row["did"];?>" id="ref" name = "ref">Our Listings</a>
+<a href="gprofile?id=<?php echo $row["did"];?>" id="ref" name = "ref">Our Listings</a>
 </div>
 </div>
 
