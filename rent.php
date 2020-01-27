@@ -54,7 +54,15 @@ echo '<img src="data:image;base64,'.base64_encode( $row['frontim'] ).'" height="
   <p><?php echo "Engine size:\t" .$eng_size. "cc" ;?></p><br><br>
  <p><?php echo "Price/hour:\t" .$price. "/="; ?></p><br><br>
  <p><?php echo "Contact Me:\t" .$contact; ?></p><br>
-<a href="viewrental.php?id=<?php echo $row["rid"];?>" id="ref" name = "ref">View Listing</a>
+
+<?php
+/* encrypt url */
+$data = $row["rid"];
+$encrypt = $data*201820192020007;
+$encode = "viewrental.php?v=" .urlencode(base64_encode($encrypt));
+?>
+
+<a href="<?=$encode;?>" id="ref" name = "ref">View Listing</a>
 </div>
 </div>
 

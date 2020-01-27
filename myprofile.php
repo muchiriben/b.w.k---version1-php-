@@ -6,6 +6,13 @@ if (($_SESSION['login_user']) == null) {
 }
 
 $user = $_SESSION['login_user'];
+$data = $_GET['v'];
+
+/*decrypt url*/
+  $data2 = base64_decode(urldecode($data));
+  $decrypt = $data2/201820192020007;
+  $post_id = $decrypt;
+
 $list = "SELECT * FROM profiles WHERE uname = '$user'";
 $result = mysqli_query($conn,$list);
     if (mysqli_num_rows($result)>0){
@@ -18,8 +25,7 @@ $result = mysqli_query($conn,$list);
               }
 
 /* view profile */
-if (isset($_GET['id'])) {
-  $post_id = $_GET['id'];
+if (isset($_GET['v'])) {
   $list = "SELECT * FROM profiles WHERE sid = '$post_id'";
 $result = mysqli_query($conn,$list);
     if (mysqli_num_rows($result)>0){
@@ -112,7 +118,7 @@ $(document).ready(function(){
   <div class="editcont">
     <div class="href">
       <?php
-         if (!isset($_GET['id'])) { ?>
+         if (!isset($_GET['v'])) { ?>
             <a href="editprofile.php?id=<?php echo $sid;?>" name="ref">Edit Profile</a>
       <?php } ?>
       
@@ -410,6 +416,7 @@ echo '<img src="data:image;base64,'.base64_encode( $row['frontim'] ).'" height="
 </div>
     </div>
 </div>
+</header>
 
  <!-- Contact Section -->
 <?php
@@ -448,8 +455,6 @@ echo '<img src="data:image;base64,'.base64_encode( $row['frontim'] ).'" height="
   </script>
 </div>
 <!--- end of modal section --->
-
-</header>
 <?php require_once 'inc/cpt.php'; ?>
 </body>
 </html>

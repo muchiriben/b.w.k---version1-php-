@@ -78,7 +78,15 @@ echo '<img src="data:image;base64,'.base64_encode( $row['frontim'] ).'" height="
  <p><?php echo "Part Name:\t" .$pname; ?></p><br><br>
  <p><?php echo "Price:\tKes" .$price; ?></p><br><br>
  <p><?php echo "Contact Me:\t" .$contact; ?></p><br>
-<a href="vpart.php?id=<?php echo $row["pid"];?>" id="ref" name = "ref">View Listings</a>
+
+<?php
+/* encrypt url */
+$data = $row["pid"];
+$encrypt = $data*201820192020007;
+$encode = "vpart.php?v=" .urlencode(base64_encode($encrypt));
+?>
+
+<a href="<?=$encode;?>" id="ref" name = "ref">View Listing</a>
 </div>
 </div>
 

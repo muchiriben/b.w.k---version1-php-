@@ -80,7 +80,16 @@ echo '<img src="data:image;base64,'.base64_encode( $row['frontim'] ).'" height="
  <p><?php echo "Name:\t" .$gname; ?></p><br><br>
  <p><?php echo "Price:\t" .$price; ?></p><br><br>
  <p><?php echo "Contact Me:\t" .$contact; ?></p><br>
-<a href="vgear.php?id=<?php echo $row["gid"];?>" id="ref" name = "ref">View Listing</a>
+
+
+<?php
+/* encrypt url */
+$data = $row["gid"];
+$encrypt = $data*201820192020007;
+$encode = "vgear.php?v=" .urlencode(base64_encode($encrypt));
+?>
+
+<a href="<?=$encode;?>" id="ref" name = "ref">View Listing</a>
 </div>
 </div>
 

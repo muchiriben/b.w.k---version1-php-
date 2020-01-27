@@ -2,7 +2,13 @@
 session_start();
 require_once 'inc/conn.php';
 $_SESSION['from'] = "viewad";
-$adid = $_GET['id'];
+$data = $_GET['v'];
+
+/*decrypt url*/
+  $data2 = base64_decode(urldecode($data));
+  $decrypt = $data2/201820192020007;
+  $adid = $decrypt;
+
 
 $list = "SELECT * FROM uploads WHERE adid = '$adid'";
  $result = mysqli_query($conn,$list);
@@ -117,7 +123,14 @@ echo '<div class="img">
   <tfoot>
     <tr>
       <th>
-        <td><a name="table" href="myprofile.php?id=<?php echo $sid;?>" id="ref" name = "ref">View Profile</a></td>
+        <td><?php
+/* encrypt url */
+$data = $row["sid"];
+$encrypt = $data*201820192020007;
+$encode = "myprofile.php?v=" .urlencode(base64_encode($encrypt));
+?>
+
+<a href="<?=$encode;?>" id="ref" name = "ref">View Profile</a></td>
       </th>
     </tr>
   </tfoot>

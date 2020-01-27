@@ -213,7 +213,7 @@ thead{
 	text-align: center;
 	background: none;
 }
-a[name='table']{
+a[name='ref']{
 	border:0;
 	background-color: #3498db;
 	color: #fff;

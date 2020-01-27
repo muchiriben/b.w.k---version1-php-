@@ -52,7 +52,15 @@ echo '<img src="data:image;base64,'.base64_encode( $row['poster1'] ).'" height="
  <p><?php echo "Location:\t" .$location; ?></p><br><br>
  <p><?php echo "Contact Number:\t" .$contact; ?></p><br><br>
  <p><?php echo "Description:\t" .$description; ?></p><br>
-<a href="viewevent.php?id=<?php echo $row["evid"];?>" id="ref" name = "ref">View Event</a>
+
+<?php
+/* encrypt url */
+$data = $row["evid"];
+$encrypt = $data*201820192020007;
+$encode = "viewevent.php?v=" .urlencode(base64_encode($encrypt));
+?>
+
+<a href="<?=$encode;?>" id="ref" name = "ref">View Listing</a>
 </div>
 </div>
 
