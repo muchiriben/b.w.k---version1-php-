@@ -13,7 +13,7 @@ if(isset($_POST['send'])){
 $mes="INSERT INTO `messages`(`fname`,`sname`,`email`, `phone`,`message`) VALUES ('$fname','$sname','$email','$phone','$message')";
 $sql = mysqli_query($conn,$mes);
 if ($sql) {
-	header('location:index.php');
+	header('location:index');
 }
 
 }
@@ -44,19 +44,19 @@ if ($sql) {
         </div>
         <div class="slide">
           <p>Need To Sell or Buy Second-Hand Motorcycles?!</p><br>
-          <a href="shop.php">SellYourBike</a>
+          <a href="shop">SellYourBike</a>
         </div>
         <div class="slide">
           <p>Earn Money Renting out Motorcycles. Need a ride to an Event?</p><br>
-          <a href="rent.php">Rentals</a>
+          <a href="rent">Rentals</a>
         </div>
         <div class="slide">
           <p>Are you A bigginner Rider? Get the Best Schools to learn From!!!</p><br>
-          <a href="schools.php">LearnToRide</a>
+          <a href="schools">LearnToRide</a>
         </div>
         <div class="slide">
           <p>Stranded and need a Garage? Here are garages around you?</p><br>
-          <a href="garages.php">FindAGarage</a>
+          <a href="garages">FindAGarage</a>
         </div>
       </div><br>
 
@@ -75,27 +75,27 @@ if ($sql) {
 		<div class="all" id="all">
 			<h1>Our Services</h1><br>
 					<div class="Services">
-					<a href="shop.php">Shop</a>
+					<a href="shop">Shop</a>
 					<p>Looking to sell or buy a motorcycle,motorcycle parts or motorcycle gear?<br></p>
 				</div>
 				<div class="Services">
-					<a href="rent.php">Rentals</a>
+					<a href="rent">Rentals</a>
 					<p>Need a motorcycle for 24hrs? Rent out your motorcylces and earn money.</p>
 				</div>
 				<div class="Services">
-					<a href="school.php">LearnToRide</a>
+					<a href="school">LearnToRide</a>
 					<p>Want to learn how to ride? View all the best riding schools available in Kenya.</p>
 				</div>
 				<div class="Services">
-					<a href="events.php">Events</a>
+					<a href="events">Events</a>
 					<p>View the latest upcoming biking events.<br>Stay updated always.</p>
 				</div>
 				<div class="Services">
-					<a href="dealer.php">Dealerships</a>
+					<a href="dealer">Dealerships</a>
 					<p>Find your favourite Dealership and Buy new bikes from them.</p>
 				</div>
 				<div class="Services">
-					<a href="garages.php">Garages</a>
+					<a href="garages">Garages</a>
 					<p>Bike giving you trouble?<br>Find the nearest garage around you.</p>
 				</div>
              </div>
@@ -103,17 +103,17 @@ if ($sql) {
 <footer class="footer">
 	    <div class="help">
 	    	<h1>Let Us Help You</h1><br><br>
-	    	<a href="help-center.php">Help Center</a><br><br>
-	    	<a href="contact-us.php">Contact Us</a><br><br>
-	    	<a href="how-to-sell.php">How to sell on Bikerworld</a><br><br>
-	    	<a href="safe.php">Safe Buying and Selling</a><br><br>
-	    	<a href="faqs.php">FAQs</a>
+	    	<a href="help-center">Help Center</a><br><br>
+	    	<a href="contact-us">Contact Us</a><br><br>
+	    	<a href="how-to-sell">How to sell on Bikerworld</a><br><br>
+	    	<a href="safe">Safe Buying and Selling</a><br><br>
+	    	<a href="faqs">FAQs</a>
 	    </div> 
 	    <div class="customer">
 	    	<h1>About Us</h1><br><br>
-            <a href="aboutus.php">About BikerWorld</a><br><br>
-	    	<a href="terms.php">Terms and Conditions</a><br><br>
-	    	<a href="policy.php">Privacy Policy</a>
+            <a href="aboutus">About BikerWorld</a><br><br>
+	    	<a href="terms">Terms and Conditions</a><br><br>
+	    	<a href="policy">Privacy Policy</a>
 	    </div>
  		<div class="form">
 	        <h1>Contact Us</h1>
