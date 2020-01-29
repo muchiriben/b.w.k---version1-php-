@@ -86,7 +86,7 @@ $img4 = $row["frontim"];
 <div class="listings">  
 <div class="img">
 <?php
-echo '<img src="data:image;base64,'.base64_encode( $row['frontim'] ).'" height="240px" width="440px">';
+echo '<img src="data:image;base64,'.base64_encode( $img4 ).'" height="240px" width="440px">';
 ?>
 </div>
 <div class="desc">

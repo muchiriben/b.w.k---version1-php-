@@ -15,38 +15,51 @@ if(isset($_POST['signup'])){
 	$repass = mysqli_real_escape_string($conn, md5($_POST['repass']));
   
   //check for similar records
-	$select="SELECT * FROM `users` WHERE uname='$user' ";
-    if (!$select){
-        echo "Select Failed";
-    } else{
-    	$result=mysqli_query($conn,$select);
-        $num=mysqli_num_rows($result);
-    }
+	$select="SELECT * FROM `users` WHERE uname=? ";
+
+   $stmt = mysqli_stmt_init($conn);
+if (!mysqli_stmt_prepare($stmt, $select)) {
+   echo "SQL error";
+} else {
+   mysqli_stmt_bind_param($stmt, "s", $user);
+   mysqli_stmt_execute($stmt);
+   $result = mysqli_stmt_get_result($stmt);
+   $num=mysqli_num_rows($result);
+
         //if record exists
     if ($num == 0){
-            if($pass == $repass){ //confirm passwords are similar and register
-            $reg="INSERT INTO `users`(`fname`,`sname`, `uname`, `contact`,`email`, `pass`, `repass`) VALUES ('$first', '$last','$user',$contact,'$email','$pass','$repass')";
-            if (!$reg){
-                echo "Registration Query failed";
-                            }
-            else{ 
-                mysqli_query($conn,$reg);
-                $last_id = mysqli_insert_id($conn);
-                $_SESSION['last_id'] = $last_id;
-                header('Location:login');
-                }
-                            }
-        else{
+
+          //confirm passwords are similar and register
+            if($pass == $repass){ 
+            $reg="INSERT INTO `users`(`fname`,`sname`, `uname`, `contact`,`email`, `pass`, `repass`) VALUES (?,?,?,?,?,?,?)";
+    
+$stmt = mysqli_stmt_init($conn);
+if (!mysqli_stmt_prepare($stmt, $reg)) {
+  echo "SQL error";
+  exit();
+} else {
+
+mysqli_stmt_bind_param($stmt, "sssssss", $first, $last,$user,$contact,$email,$pass,$repass);
+  
+mysqli_stmt_execute($stmt);
+
+$last_id = mysqli_insert_id($conn);
+$_SESSION['last_id'] = $last_id;
+header('Location:login');
+                
+     }
+} else{
             $error = "Passwords are not same!!";
                 }       
-        }
-    else{
+        
+} else{
             $error = "Username has already been taken";
         
         }
     
-}      
+}
 
+}
 ?>
 
 <!DOCTYPE html>
@@ -63,7 +76,7 @@ if(isset($_POST['signup'])){
 		<?php require_once 'inc/nav.php'?>
 		<div class="form">
 			<h1>Sign Up</h1><br>
-            <font size="4" color="#fff"><?php echo $error; ?></font><br>
+            <font size="5" color="#fff"><?php echo $error; ?></font><br>
 			<form action="signup.php" method="post">
 				<input type="text" name="fname" placeholder="Firstname" required>
 				<input type="text" name="sname" placeholder="Secondname" required><br>

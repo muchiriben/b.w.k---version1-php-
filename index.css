@@ -1,4 +1,3 @@
-
 *{
 	margin:0;
 	padding: 0;
@@ -288,25 +287,24 @@ input[name="r"]{
 	color: #fff;
 }
 .form{
+	border: 1px solid #3498db;
 	float: right;
 	width: 400px;
 	height:450px;
 	background-color: #000;
 	opacity: .7;
 	border-radius: 24px;
-	margin-right: 40px;
-	margin-bottom: 70px;
+	
 }
 .form input, textarea{
 	border:none;
 	background: none;
 	display: block;
 	margin: 10px auto;
-	margin-bottom: 10px;
 	text-align: center;
 	border: 2px solid #fff;
-	padding: 14px 10px;
-	width: 200px;
+	padding: 12px 10px;
+	width: 240px;
 	border-radius: 24px;
 	transition: 0.25s;
 	color: #fff;
@@ -320,19 +318,21 @@ input[name="r"]{
 }
 .form input[type = 'submit']{
     border:none;
-	background: none;
+	background: #3498db;
 	display:block;
 	margin: 20px auto;
 	text-align: center;
-	border: 2px solid #3498db;
+	border: 2px solid #fff;
 	padding: 14px 40px;
-	width: 120px;
+	width: 160px;
 	border-radius: 24px;
 	transition: 0.25s;
 	cursor: pointer;
 }
 .form input[type = 'submit']:hover{
-	background: #3498db;
+	background: #fff;
+	color: #3498db;
+	border: 2px solid #3498db;
 }
 ::placeholder{
 	color:#3498db; 
@@ -585,6 +585,7 @@ input[name="r"]{
 	}
 .form{
 	width: calc(100% / 1);
+	margin-top: 20px;
 }
 }
 

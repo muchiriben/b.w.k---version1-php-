@@ -1,25 +1,46 @@
 <?php
 require_once 'inc/conn.php';
 $error = null;
+$password = null;
 if(isset($_POST['reset'])){
 	$user = mysqli_real_escape_string($conn, $_POST['uname']);
     $provpass = mysqli_real_escape_string($conn, $_POST['provpass']);
 	$pass = mysqli_real_escape_string($conn, md5($_POST['pass']));
 	$repass = mysqli_real_escape_string($conn, md5($_POST['repass']));
 
-	 $select="SELECT * FROM `users` WHERE uname='$user' ";
-	 $result=mysqli_query($conn,$select);
-     if(mysqli_num_rows($result)>0){
-     	while($row = mysqli_fetch_assoc($result)) {
-           $password = $row['pass'];
-         }
-     }
+	 $select="SELECT * FROM `users` WHERE uname=? ";
+	 $stmt = mysqli_stmt_init($conn);
+       //prepare stmt
+       if (!mysqli_stmt_prepare($stmt, $select)) {
+          echo "SQL STATEMENT FAILED";
+       } else {
+           //bind parameters to placeholder
+           mysqli_stmt_bind_param($stmt, "s", $user);
+           //run parameters inside database
+           mysqli_stmt_execute($stmt);
+           $result = mysqli_stmt_get_result($stmt);
+           	while($row = mysqli_fetch_assoc($result)) {
+               $password = $row['pass'];
+            }
+            
+         } 
+
+
     if($provpass == $password){
-         $edit ="UPDATE `users` SET pass='$pass', repass='$repass' WHERE uname ='$user'";
-            $rs = mysqli_query($conn,$edit);
-            header("location:login");
+         $edit ="UPDATE `users` SET pass=? , repass=? WHERE uname =? ";
+           $stmt = mysqli_stmt_init($conn);
+       //prepare stmt
+       if (!mysqli_stmt_prepare($stmt, $edit)) {
+          echo "SQL STATEMENT FAILED";
+       } else {
+           //bind parameters to placeholder
+           mysqli_stmt_bind_param($stmt, "sss", $pass, $repass, $user);
+           //run parameters inside database
+           mysqli_stmt_execute($stmt);   }
+
+           header("location:login");
     }else{
-    	$error = "Provided password is wrong";
+    	$error = "Provided password or Username is invalid";
     }
     }
 
@@ -41,7 +62,7 @@ if(isset($_POST['reset'])){
 		<div class="form">
 			<h1>Password Reset</h1>
 			<form action="reset.php" method="post">
-				<font size="6" color="#fff">Check your registered email for Provided Password</font>
+				<font size="6" color="#fff">Check your registered email for Provided Password</font><br>
 				<font size="6" color="#fff"><?php echo $error; ?></font><br>
 				<input type="text" name="uname" placeholder="Username" required><br>
 				<input type="password" name="provpass" placeholder="Provided Password" required><br>

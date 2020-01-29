@@ -20,7 +20,7 @@ if (isset($_POST['submit'])) {
     }
 }
 
-if(isset($_POST['next'])){
+if(isset($_POST['save'])){
   
 /* Details setting */
 $make =mysqli_real_escape_string($conn, $_POST['make']);
@@ -34,6 +34,31 @@ $trans =mysqli_real_escape_string($conn, $_POST['trans']);
 $condition =mysqli_real_escape_string($conn, $_POST['condition']);
 $size =mysqli_real_escape_string($conn, $_POST['size']);
 $color =mysqli_real_escape_string($conn, $_POST['color']);
+
+$ext = pathinfo($_FILES['frontim']['name']);
+$ext = pathinfo($_FILES['leftim']['name']);
+$ext = pathinfo($_FILES['rightim']['name']);
+$ext = pathinfo($_FILES['backim']['name']);
+if ($ext["extension"] == "jpg" || $ext["extension"] == "jpeg" || $ext["extension"] == "png" || $ext["extension"] == "gif") {
+       $frontim = $_FILES['frontim']['name']; 
+       $first =  $_FILES['frontim']['tmp_name'];
+       $imagetmp1= file_get_contents($first); 
+
+       $leftim = $_FILES['leftim']['name']; 
+       $sec =  $_FILES['leftim']['tmp_name'];
+       $imagetmp2= file_get_contents($sec); 
+
+       $rightim = $_FILES['rightim']['name']; 
+       $thrd =  $_FILES['rightim']['tmp_name'];
+       $imagetmp3= file_get_contents($thrd); 
+
+       $backim = $_FILES['backim']['name']; 
+       $frth =  $_FILES['backim']['tmp_name'];
+       $imagetmp4= file_get_contents($frth); 
+} else {
+      $error = "File is not an Image.";
+      exit();
+}
 
  $sidq = "SELECT sid FROM users WHERE uname =? ";
   //create prepares statement
@@ -72,23 +97,27 @@ $sq = "SELECT name FROM maketable WHERE mid =? ";
 
 /* insert into databse */
 
- $sell="INSERT INTO `uploads`(`sid`, `make`, `model`, `year`, `price`, `contact`, `body_type`, `mileage`, `trans_type`, `bike_condition`, `engine_size`, `color`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
-        
+ $sell="INSERT INTO `uploads`(`sid`, `make`, `model`, `year`, `price`, `contact`, `body_type`, `mileage`, `trans_type`, `bike_condition`, `engine_size`, `color`,`frontim`, `leftim`, `rightim` ,`backim`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+ 
+$null = NULL;        
 $stmt = mysqli_stmt_init($conn);
 if (!mysqli_stmt_prepare($stmt, $sell)) {
   echo "SQL error";
+  exit();
 } else {
-  mysqli_stmt_bind_param($stmt, "issiississss", $sid,$makename,$model,$year,$price,$contact,$body,$mileage,$trans,$condition,$size,$color);
-  mysqli_stmt_execute($stmt);
+  mysqli_stmt_bind_param($stmt, "issiississssbbbb", $sid,$makename,$model,$year,$price,$contact,$body,$mileage,$trans,$condition,$size,$color,$null,$null,$null,$null);
 
- $last_id = mysqli_insert_id($conn);
- $_SESSION['present_ad'] = $last_id;
- header('location:imgupload?v=' .$last_id );
+$stmt->send_long_data(12, $imagetmp1);
+$stmt->send_long_data(13, $imagetmp2);
+$stmt->send_long_data(14, $imagetmp3);
+$stmt->send_long_data(15, $imagetmp4);
+
+mysqli_stmt_execute($stmt);
+
+header('location:shop');
 }
  
         
-
-
 
 }
 
@@ -118,8 +147,9 @@ if (!mysqli_stmt_prepare($stmt, $sell)) {
 <header class="header">
   <?php require_once "inc/nav.php"; ?>
 <div class="form">
-  <h1>Details</h1>
-<form action="bikead.php" method="post" name= "form" id="form">
+<form action="bikead.php" method="post" name= "form" id="form" enctype="multipart/form-data">
+  <div class="details">
+    <h1>Motorcycle Details</h1><br>
                    <select id="make" name="make" onchange="autoSubmit();" required>
                         <option value="">Make</option>
                         <?php
@@ -205,7 +235,24 @@ if (!mysqli_stmt_prepare($stmt, $sell)) {
  
 <input type="number" placeholder="Engine size(cc)" name="size" id="size" required>    
 <input type="text" name="color" id="color" placeholder="Color" required><br>
-<input type="submit" value="Next" name="next">
+<a href="#" id="button">Next</a>
+</div>
+
+<script type="text/javascript">
+  document.getElementById('button').addEventListener("click", function() {
+  document.querySelector('.imgupload').style.display = "inline-block";
+  document.querySelector('.details').style.display = "none";
+});
+</script>
+
+<div class="imgupload">
+  <h1>UPLOAD IMAGES</h1><br>
+     <input type="file" name="frontim" id="frontim"><br>
+     <input type="file" name="leftim" id="leftim"><br>
+     <input type="file" name="rightim" id="rightim"><br>
+     <input type="file" name="backim" id="backim"><br>
+     <input type="submit" name="save" value="Finish">
+</div>
 </form> 
 </div>
 </header>

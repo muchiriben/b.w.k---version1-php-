@@ -20,7 +20,7 @@ if (isset($_POST['submit'])) {
     }
 }
 
-if(isset($_POST['next'])){
+if(isset($_POST['save'])){
 	
 $cate = mysqli_real_escape_string($conn, $_POST['cate']);
 $type = mysqli_real_escape_string($conn, $_POST['type']);
@@ -28,6 +28,31 @@ $brand = mysqli_real_escape_string($conn, $_POST['brand']);
 $gname = mysqli_real_escape_string($conn, $_POST['name']);
 $price = mysqli_real_escape_string($conn, $_POST['price']);
 $contact = mysqli_real_escape_string($conn, $_POST['contact']);
+
+$ext = pathinfo($_FILES['frontim']['name']);
+$ext = pathinfo($_FILES['leftim']['name']);
+$ext = pathinfo($_FILES['rightim']['name']);
+$ext = pathinfo($_FILES['backim']['name']);
+if ($ext["extension"] == "jpg" || $ext["extension"] == "jpeg" || $ext["extension"] == "png" || $ext["extension"] == "gif") {
+       $frontim = $_FILES['frontim']['name']; 
+       $first =  $_FILES['frontim']['tmp_name'];
+       $imagetmp1= file_get_contents($first); 
+
+       $leftim = $_FILES['leftim']['name']; 
+       $sec =  $_FILES['leftim']['tmp_name'];
+       $imagetmp2= file_get_contents($sec); 
+
+       $rightim = $_FILES['rightim']['name']; 
+       $thrd =  $_FILES['rightim']['tmp_name'];
+       $imagetmp3= file_get_contents($thrd); 
+
+       $backim = $_FILES['backim']['name']; 
+       $frth =  $_FILES['backim']['tmp_name'];
+       $imagetmp4= file_get_contents($frth); 
+} else {
+      $error = "File is not an Image.";
+      exit();
+}
 
  $sidq = "SELECT sid FROM users WHERE uname =? ";
   //create prepares statement
@@ -63,18 +88,24 @@ $sq = "SELECT cname FROM gcategories WHERE cid =? ";
             }
          } 
 
- $sellgear="INSERT INTO `guploads`(`sid`, `cate`, `type`, `brand`, `gname`, `price`, `contact`) VALUES (?,?,?,?,?,?,?)";
 
-     $stmt = mysqli_stmt_init($conn);
+ $sellgear="INSERT INTO `guploads`(`sid`, `cate`, `type`, `brand`, `gname`, `price`, `contact`,`frontim`, `leftim`, `rightim` ,`backim`) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+
+$null = NULL; 
+$stmt = mysqli_stmt_init($conn);
 if (!mysqli_stmt_prepare($stmt, $sellgear)) {
   echo "SQL error";
 } else {
-  mysqli_stmt_bind_param($stmt, "issssis", $sid, $cname, $type , $brand ,$gname, $price, $contact);
-  mysqli_stmt_execute($stmt);
+  mysqli_stmt_bind_param($stmt, "issssisbbbb", $sid, $cname, $type , $brand ,$gname, $price, $contact,$null,$null,$null,$null);
 
- $last_id = mysqli_insert_id($conn);
- $_SESSION['present_ad'] = $last_id;
- header('location:gimg?v=' .$last_id );
+$stmt->send_long_data(7, $imagetmp1);
+$stmt->send_long_data(8, $imagetmp2);
+$stmt->send_long_data(9, $imagetmp3);
+$stmt->send_long_data(10, $imagetmp4);
+
+mysqli_stmt_execute($stmt);
+
+header('location:gears');
 }
 
 }
@@ -105,8 +136,9 @@ if (!mysqli_stmt_prepare($stmt, $sellgear)) {
 <header class="header">
 	<?php require_once "inc/nav.php"; ?>
 <div class="form">
-	<h1>Details</h1>
-<form action="gearad.php" method="post" name= "form" id="form">
+<form action="gearad.php" method="post" name= "form" id="form" enctype="multipart/form-data">
+  <div class="details">
+    <h1>Gear Details</h1><br>
                    <select id="cate" name="cate" onchange="autoSubmit();" required>
                         <option value="">Category</option>
                         <?php
@@ -142,7 +174,24 @@ if (!mysqli_stmt_prepare($stmt, $sellgear)) {
 <input type="text" placeholder="Name" name="name" id="name" required><br>		
 <input type="text" placeholder="Price:e.g 200000" name="price" id="price" required>
 <input type="text" placeholder="Contact" name="contact" id="contact" required><br>		
-<input type="submit" value="Next" name="next">
+<a href="#" id="button">Next</a>
+</div>
+
+<script type="text/javascript">
+  document.getElementById('button').addEventListener("click", function() {
+  document.querySelector('.imgupload').style.display = "inline-block";
+  document.querySelector('.details').style.display = "none";
+});
+</script>
+
+<div class="imgupload">
+  <h1>UPLOAD IMAGES</h1><br>
+     <input type="file" name="frontim" id="frontim"><br>
+     <input type="file" name="leftim" id="leftim"><br>
+     <input type="file" name="rightim" id="rightim"><br>
+     <input type="file" name="backim" id="backim"><br>
+     <input type="submit" name="save" value="Finish">
+</div>
 </form> 
 </div>
 </header>

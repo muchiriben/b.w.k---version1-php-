@@ -223,6 +223,13 @@ padding:20px;
 	color:#3498db; 
 }
 
+.details{
+ display: inline-block;
+}
+.imgupload{
+ display: none;
+}
+
 /*cpt section*/
 .copyright{
 	height: 150px;

@@ -1,103 +1,96 @@
-<?php 
+<?php
 session_start();
-require "inc/conn.php";
-
-//check user has logged in
-if (($_SESSION['login_user']) == null) {
-  header("Location:login");
-}
-
-//initialization of important elements
-$myusername = $_SESSION['login_user'];
-$_SESSION['from'] = "addshule";
+require 'inc/conn.php';
+//error message for login
 $error = null;
 
 
-if(isset($_POST['reg'])){
-$fname = mysqli_real_escape_string($conn, $_POST['fname']);
-$lname = mysqli_real_escape_string($conn, $_POST['lname']);
-$sname = mysqli_real_escape_string($conn, $_POST["sname"]);
-$location = mysqli_real_escape_string($conn, $_POST["location"]); 
-$contact = mysqli_real_escape_string($conn, $_POST["contact"]);
-$email = mysqli_real_escape_string($conn, $_POST['email']);
-$web = mysqli_real_escape_string($conn, $_POST['web']);
-$slogan = mysqli_real_escape_string($conn, $_POST['slogan']);
-$pass = mysqli_real_escape_string($conn, md5($_POST['pass']));
-$repass = mysqli_real_escape_string($conn, md5($_POST['repass']));
-$poster1 = $_FILES['logo']['name']; 
-$first =  $_FILES['logo']['tmp_name'];
-//Get the content of the image and then add slashes to it 
-$imagetmp1=addslashes (file_get_contents($first));
-
-//get the sid of user
-$byidq = "SELECT sid FROM users WHERE uname = '$myusername' ";
- $result = mysqli_query($conn,$byidq);
-    if (mysqli_num_rows($result) > 0) {
-            while($row = mysqli_fetch_assoc($result)) {
-               $by_id = $row["sid"];
-            }
-         } 
-
-//check for similar records
-    $select="SELECT * FROM `shule` WHERE sname='$sname' ";
-    $result=mysqli_query($conn,$select);
-    $num=mysqli_num_rows($result);
-    
-        //if record exists
-    if ($num == 0){
-
-          //check passwords are similar
-      if($pass == $repass){
-
-            $sell="INSERT INTO `shule`(`by_id`,`fname`, `lname`,`sname`, `slocation`,`contact`,`email`,`web`,`slogan`,`pass`,`repass`,`logo`) VALUES ('$by_id','$fname','$lname','$sname','$location','$contact','$email','$web','$slogan','$pass','$repass','$imagetmp1')";
-
-            mysqli_query($conn,$sell);
-            header('location:schools');
-             
-          }else{
-            $error = "Passwords are not the same!!!";
-          }
-        }
-    else{
-            $error = "School name already exists!!!";
-         }
-
+   if(isset($_POST['login'])) {
+      // username and password sent from form 
+      $myusername = mysqli_real_escape_string($conn, $_POST['uname']);
+      $mypassword = mysqli_real_escape_string($conn, md5($_POST['pass'])); 
+      
+      $sql = "SELECT sid FROM users WHERE uname = '$myusername' and pass = '$mypassword'";
+      $result = mysqli_query($conn,$sql);
+      $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
+      $sid = $row['sid'];
+//last inserted id from sign up page
+if (isset($_SESSION['last_id'])) {
+  $last_id = $_SESSION['last_id'];
+}else{
+  $last_id = $sid;
 }
 
+      $count = mysqli_num_rows($result);
+      
+      // If result matched $myusername and $mypassword, table row must be 1 row
+      if($count == 1) {
+         $_SESSION['login_user'] = $myusername;
+         //redirect to admin page if login is by admin
+         if ($_SESSION['login_user'] == "AdMiN") {
+           header("location:admin");
+         }
+         //for normal users
+         else{
+          //set profile information if not yet
+         $select="SELECT * FROM `profiles` WHERE sid ='$last_id' ";
+         $result=mysqli_query($conn,$select);
+    if (!$result){
+        echo "Query Failed";
+    } else{
+        $num=mysqli_num_rows($result);
+    }
+
+        if ($num > 0){
+             header("Location:index");
+            //For security purposes die
+            die();
+        }
+        else{
+          //profile not set up
+         if(isset($_SESSION['from'])){
+          if ($_SESSION['from'] == "signup") {  
+            $profile = "INSERT INTO `profiles` (`sid`,`uname`) VALUES ('$last_id','$myusername')";
+               $reg = mysqli_query($conn,$profile);
+              header("Location:index");
+        }
+        }
+           }
+   }
+ }
+   else {
+         $error = "Your Login Name or Password is invalid";
+      }
+
+    }
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Register School</title>
-  <link rel="stylesheet" type="text/css" href="makead.css">
-    <link href="https://fonts.googleapis.com/css?family=Ibarra+Real+Nova&display=swap" rel="stylesheet">
-  <script src="https://kit.fontawesome.com/a076d05399.js"></script>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <link rel="stylesheet" type="text/css" href="login.css">
+  <link href="https://fonts.googleapis.com/css?family=Ibarra+Real+Nova&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
 <header class="header">
-  <?php require_once "inc/nav.php"; ?>
-<div class="form">
-  <h1>Register School</h1><br>
-  <font size="6" color="#fff"><?php echo $error; ?></font><br>
-<form action="addschool.php" method="post" name= "form" id="form" enctype="multipart/form-data">
-<input type="text" placeholder="Head Trainer's First Name" name="fname" id="fname" required>
-<input type="text" placeholder="Head Trainer's Last Name" name="lname" id="lname" required><br>
-<input type="text" placeholder="School Name" name="sname" id="sname" required>
-<input type="text" placeholder="Location e.g Nairobi, South C" name="location" id="location" required><br>
-<input type="text" placeholder="Contact number" name="contact" id="contact" required>
-<input type="email" placeholder="Email" name="email" id="email" required><br>
-<input type="text" placeholder="Website(optional)" name="web" id="web">
-<input type="text" placeholder="Slogan(optional)" name="slogan" id="slogan"><br>
-<input type="password" placeholder="Password" name="pass" id="pass" required pattern="(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}">
-<input type="password" placeholder="Repeat Password" name="repass" id="repass" required pattern="(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}"><br>
-<font size="4" color="#fff">Password must be 8 characters including atleast 1 uppercase letter, 1 lowercase letter and a number</font><br><br>
-<label for="logo"><font color="#fff" size="4">Add School logo(optional):</font></label><br>
-<input type="file" name="logo" id="logo" required><br>
-<input type="submit" value="Register" name="reg">
-</form> 
-</div>
-</header>
-<?php require_once 'inc/cpt.php'; ?>
+    <?php require 'inc/nav.php'; ?>
+    <div class="form">
+      <h1>LOGIN</h1><br>
+      <font size="4" color="#fff"><?php echo $error; ?></font><br>
+      <form action="login.php" method="POST">
+        <input type="text" name="uname" placeholder="Username" required><br>
+        <input type="password" name="pass" placeholder="password" required><br>
+        <input type="submit" name="login" value="LOGIN">
+      </form>
+      <font color="#fff" size="4px">Don't have an account? <a href="signup"> Sign Up</a></font><br><br>
+      <font color="#fff" size="4px"><a href="getpassword">Forgot your password?</a></font>
+    </div>
+  </header>
+  <?php require 'inc/cpt.php'; ?>
 </body>
 </html>
+
+

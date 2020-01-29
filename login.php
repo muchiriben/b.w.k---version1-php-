@@ -10,19 +10,24 @@ $error = null;
       $myusername = mysqli_real_escape_string($conn, $_POST['uname']);
       $mypassword = mysqli_real_escape_string($conn, md5($_POST['pass'])); 
       
-      $sql = "SELECT sid FROM users WHERE uname = '$myusername' and pass = '$mypassword'";
-      $result = mysqli_query($conn,$sql);
-      $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
-      $sid = $row['sid'];
-//last inserted id from sign up page
-if (isset($_SESSION['last_id'])) {
-  $last_id = $_SESSION['last_id'];
-}else{
-  $last_id = $sid;
-}
-
-      $count = mysqli_num_rows($result);
+      $sql = "SELECT sid FROM users WHERE uname =? and pass =? ";
+      $stmt = mysqli_stmt_init($conn);
+       //prepare stmt
+       if (!mysqli_stmt_prepare($stmt, $sql)) {
+          echo "SQL STATEMENT FAILED";
+       } else {
+           //bind parameters to placeholder
+           mysqli_stmt_bind_param($stmt, "ss", $myusername , $mypassword);
+           //run parameters inside database
+           mysqli_stmt_execute($stmt);
+           $result = mysqli_stmt_get_result($stmt);
+           $count = mysqli_num_rows($result);
+            while($row = mysqli_fetch_assoc($result)) {
+               $sid = $row['sid'];
+            }
+         } 
       
+
       // If result matched $myusername and $mypassword, table row must be 1 row
       if($count == 1) {
          $_SESSION['login_user'] = $myusername;
@@ -32,22 +37,32 @@ if (isset($_SESSION['last_id'])) {
          }
          //for normal users
          else{
-          //set profile information if not yet
-         $select="SELECT * FROM `profiles` WHERE sid ='$last_id' ";
-         $result=mysqli_query($conn,$select);
-    if (!$result){
-        echo "Query Failed";
-    } else{
-        $num=mysqli_num_rows($result);
-    }
 
-        if ($num > 0){
-             header("Location:index");
-            //For security purposes die
-            die();
-        }
-        else{
-          //profile not set up
+          //last inserted id from sign up page
+if (!isset($_SESSION['last_id'])) {
+  $last_id = $sid;
+} else {
+  $last_id = $_SESSION['last_id'];
+}
+
+          //set profile information if not yet
+         $select="SELECT * FROM `profiles` WHERE sid =? ";
+         $stmt = mysqli_stmt_init($conn);
+       //prepare stmt
+       if (!mysqli_stmt_prepare($stmt, $select)) {
+          echo "SQL STATEMENT FAILED";
+       } else {
+           //bind parameters to placeholder
+           mysqli_stmt_bind_param($stmt, "i", $last_id);
+           //run parameters inside database
+           mysqli_stmt_execute($stmt);
+           $result = mysqli_stmt_get_result($stmt);
+           $num=mysqli_num_rows($result);
+          
+//if there is no record in profiles for new user
+        if ($num == 0){
+
+           //profile not set up
          if(isset($_SESSION['from'])){
           if ($_SESSION['from'] == "signup") {  
             $profile = "INSERT INTO `profiles` (`sid`,`uname`) VALUES ('$last_id','$myusername')";
@@ -55,14 +70,28 @@ if (isset($_SESSION['last_id'])) {
               header("Location:index");
         }
         }
+   
+        }
+        else{
+         
+            header("Location:index");
+            //For security purposes die
+            die();
+
            }
    }
- }
-   else {
-         $error = "Your Login Name or Password is invalid";
-      }
 
-    }
+
+  } 
+
+}  else {
+         $error = "Your Login Name or Password is invalid";
+        }
+
+
+
+
+}    
 ?>
 
 <!DOCTYPE html>
@@ -79,14 +108,14 @@ if (isset($_SESSION['last_id'])) {
 		<?php require 'inc/nav.php'; ?>
 		<div class="form">
 			<h1>LOGIN</h1><br>
-      <font size="4" color="#fff"><?php echo $error; ?></font><br>
+      <font size="5" color="#fff"><?php echo $error; ?></font><br>
 			<form action="login.php" method="POST">
 				<input type="text" name="uname" placeholder="Username" required><br>
 				<input type="password" name="pass" placeholder="password" required><br>
 				<input type="submit" name="login" value="LOGIN">
 			</form>
-			<font color="#fff" size="4px">Don't have an account? <a href="signup"> Sign Up</a></font><br><br>
-			<font color="#fff" size="4px"><a href="getpassword">Forgot your password?</a></font>
+			<font color="#fff" size="5px">Don't have an account? <a href="signup"> Sign Up</a></font><br><br>
+			<font color="#fff" size="5px"><a href="getpassword">Forgot your password?</a></font>
 		</div>
 	</header>
   <?php require 'inc/cpt.php'; ?>

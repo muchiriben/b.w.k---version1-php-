@@ -114,7 +114,7 @@ if ($sql) {
             <a href="aboutus">About BikerWorld</a><br><br>
 	    	<a href="terms">Terms and Conditions</a><br><br>
 	    	<a href="policy">Privacy Policy</a>
-	    </div><br>
+	    </div>
  		<div class="form">
 	        <h1>Contact Us</h1>
 			<form action="index.php" method="POST">

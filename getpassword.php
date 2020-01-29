@@ -4,11 +4,18 @@ require_once 'inc/conn.php';
 $error = null;
 if (isset($_POST['get'])) {
   $user = mysqli_real_escape_string($conn, $_POST['uname']);
-  $select="SELECT * FROM `users` WHERE uname='$user' ";
-  $result=mysqli_query($conn,$select);
-    if (!$result){
-        echo "Select Failed";
-    } else{
+  $select="SELECT * FROM `users` WHERE uname=? ";
+  $stmt = mysqli_stmt_init($conn);
+       //prepare stmt
+       if (!mysqli_stmt_prepare($stmt, $select)) {
+          echo "SQL STATEMENT FAILED";
+       } else {
+           //bind parameters to placeholder
+           mysqli_stmt_bind_param($stmt, "s", $user);
+           //run parameters inside database
+           mysqli_stmt_execute($stmt);
+           $result = mysqli_stmt_get_result($stmt);
+
         if(mysqli_num_rows($result)>0){
           while($row = mysqli_fetch_assoc($result)) {
            $email = $row['email'];
@@ -16,7 +23,8 @@ if (isset($_POST['get'])) {
         }else{
           $error = "Username not Found";
         }
-    }
+      }
+    
 
 //generate random password
 function random_strings($length_of_string) 
@@ -34,8 +42,18 @@ function random_strings($length_of_string)
 // Random string of length 8 
 $randpass = md5(random_strings(8));
 
-$edit ="UPDATE `users` SET pass='$randpass', repass='$randpass' WHERE uname ='$user'";
-            $rs = mysqli_query($conn,$edit);
+$edit ="UPDATE `users` SET pass=? , repass=? WHERE uname =? ";
+$stmt = mysqli_stmt_init($conn);
+       //prepare stmt
+       if (!mysqli_stmt_prepare($stmt, $edit)) {
+          echo "SQL STATEMENT FAILED";
+       } else {
+           //bind parameters to placeholder
+           mysqli_stmt_bind_param($stmt, "sss", $randpass, $randpass, $user);
+           //run parameters inside database
+           mysqli_stmt_execute($stmt);   }
+
+            
 //send email
 require 'phpmailer/PHPMailerAutoload.php';      
    $mail = new PHPMailer();

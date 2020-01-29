@@ -7,8 +7,17 @@ if (($_SESSION['login_user']) == null) {
 }
 
 $user = $_SESSION['login_user'];
-$list = "SELECT * FROM profiles WHERE uname = '$user'";
-$result = mysqli_query($conn,$list);
+$list = "SELECT * FROM profiles WHERE uname =? ";
+$stmt = mysqli_stmt_init($conn);
+       //prepare stmt
+       if (!mysqli_stmt_prepare($stmt, $list)) {
+          echo "SQL STATEMENT FAILED";
+       } else {
+           //bind parameters to placeholder
+           mysqli_stmt_bind_param($stmt, "s", $user);
+           //run parameters inside database
+           mysqli_stmt_execute($stmt);
+           $result = mysqli_stmt_get_result($stmt);
     if (mysqli_num_rows($result)>0){
             while($row = mysqli_fetch_assoc($result)) {
                  $sid = $row['sid'];
@@ -16,31 +25,72 @@ $result = mysqli_query($conn,$list);
                  $bio = $row['bio'];
                  $profilepic = $row['profilepic'];
             } 
-              }
+              } 
+          }
 
 if(isset($_POST['save'])){
-	$picname = $_FILES['profilepic']['name'];
-	$pic = $_FILES['profilepic']['tmp_name'];
-	$profilepic = addslashes (file_get_contents($pic));
 	$uname = mysqli_real_escape_string($conn, $_POST['name']);
 	$bio = mysqli_real_escape_string($conn, $_POST['bio']);
- 
-if ($profilepic == null) {
-	$edit ="UPDATE `profiles` SET uname='$uname', bio = '$bio' WHERE uname ='$user'";
+    $picname = $_FILES['profilepic']['name']; 
+
+if ($picname == null) {
+	$edit ="UPDATE `profiles` SET uname=? , bio =?  WHERE uname =? ";
+	$stmt = mysqli_stmt_init($conn);
+       //prepare stmt
+       if (!mysqli_stmt_prepare($stmt, $edit)) {
+          echo "SQL STATEMENT FAILED";
+       } else {
+           //bind parameters to placeholder
+           mysqli_stmt_bind_param($stmt, "sss", $uname, $bio, $user);
+           //run parameters inside database
+           mysqli_stmt_execute($stmt);    
+          }
 }else{
-	$edit ="UPDATE `profiles` SET uname='$uname', bio = '$bio', profilepic = '$profilepic' WHERE uname ='$user'";
+
+$ext = pathinfo($picname);
+if ($ext["extension"] == "jpg" || $ext["extension"] == "jpeg" || $ext["extension"] == "png" || $ext["extension"] == "gif") {
+
+	$pic = $_FILES['profilepic']['tmp_name'];
+	$profilepic = file_get_contents($pic);
+
+} else {
+      $error = "File is not an Image.";
+      exit();
 }
 
-$rs = mysqli_query($conn,$edit);
- if (!$rs){
-                echo "Query failed";
-            }
-            else{ 
-            $edit ="UPDATE `users` SET uname='$uname' WHERE uname ='$user'";
-            $rs = mysqli_query($conn,$edit);
-                $_SESSION['login_user'] = $uname;
-                header("Location:myprofile.php");
-            }
+	$edit ="UPDATE `profiles` SET uname=? , bio =? , profilepic =? WHERE uname =? ";
+    
+$null = NULL;
+$stmt = mysqli_stmt_init($conn);
+if (!mysqli_stmt_prepare($stmt, $edit)) {
+  echo "SQL error";
+  exit();
+} else {
+
+  mysqli_stmt_bind_param($stmt, "ssbs", $uname,$bio,$null,$user);
+
+$stmt->send_long_data(2, $profilepic);
+  
+mysqli_stmt_execute($stmt);
+}
+}
+
+//update username in users table
+$edit ="UPDATE `users` SET uname=? WHERE uname =? ";
+$stmt = mysqli_stmt_init($conn);
+       //prepare stmt
+       if (!mysqli_stmt_prepare($stmt, $edit)) {
+          echo "SQL STATEMENT FAILED";
+       } else {
+           //bind parameters to placeholder
+           mysqli_stmt_bind_param($stmt, "ss", $uname, $user);
+           //run parameters inside database
+           mysqli_stmt_execute($stmt);    
+          }
+
+$_SESSION['login_user'] = $uname;
+header("Location:myprofile.php");
+            
 }
 
 ?>

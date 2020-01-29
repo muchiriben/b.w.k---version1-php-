@@ -52,7 +52,7 @@ $poster2 = $row["poster2"];
 <div class="listings">  
 <div class="img">
 <?php
-echo '<img src="data:image;base64,'.base64_encode( $row['poster1'] ).'" height="240px" width="440px">';
+echo '<img src="data:image;base64,'.base64_encode( $poster1 ).'" height="240px" width="440px">';
 ?>
 </div>
 
