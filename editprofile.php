@@ -2,6 +2,9 @@
 session_start();
 require_once 'inc/conn.php';
 $_SESSION['from'] = "editprofile";
+if (($_SESSION['login_user']) == null) {
+  header("Location:login");
+}
 
 $user = $_SESSION['login_user'];
 $list = "SELECT * FROM profiles WHERE uname = '$user'";
@@ -63,6 +66,7 @@ $rs = mysqli_query($conn,$edit);
 	            <input type="text" name="name" id="name" placeholder="Username" maxlength="22" value="<?php echo $uname; ?>"><br>
 	            <font color="#fff"><label for="bio">Edit Profile Bio:</label></font><br>
 				<input id="bio" name="bio" placeholder="BIO" maxlength="30" value="<?php echo $bio ?>">
+				<a href="changepass" name="ref" id="ref">Change Password</a>
 				<input type="submit" name="save" id="save" value="Save">
 			</form>
 		</div>

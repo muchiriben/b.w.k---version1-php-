@@ -23,8 +23,19 @@ require_once "inc/conn.php";
     <h1>Learn To Ride</h1>
     <?php           
        $list = "SELECT * FROM shule ORDER BY rand()";
-       $result = mysqli_query($conn,$list);
-    if (mysqli_num_rows($result)>0){
+       
+       //create prepared statement
+       $stmt = mysqli_stmt_init($conn);
+
+       //prepare stmt
+       if (!mysqli_stmt_prepare($stmt, $list)) {
+
+          echo "SQL STATEMENT FAILED";
+
+       } else {
+
+           mysqli_stmt_execute($stmt);
+           $result = mysqli_stmt_get_result($stmt);
             while($row = mysqli_fetch_assoc($result)) {
 $shule_id = $row["shule_id"];
 $by_id = $row["by_id"];
@@ -35,8 +46,8 @@ $location = $row['slocation'];
 $pnumber = $row['contact'];
 $email = $row['email'];
 $web = $row['web'];
-$slogan = $row['slogan'];
-$logo = $row["logo"];   
+$slogan = $row['slogan']; 
+$logo = $row['logo'];  
    ?>
   
 <div class="listings">  
@@ -45,7 +56,7 @@ $logo = $row["logo"];
 if ($logo == null) {
   echo '<img src="img/brossi.jpg" height="250px" width="440px">';
 }else{
-   echo '<img src="data:image;base64,'.base64_encode( $row['logo'] ).'" height="240px" width="440px">';
+   echo '<img src="data:image;base64,'.base64_encode( $logo ).'" height="240px" width="440px">';
 }
 if ($slogan != null) {
   echo "<div class='slogan'><p>"  .$slogan. "</p></div>";

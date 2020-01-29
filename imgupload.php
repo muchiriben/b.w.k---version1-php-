@@ -3,39 +3,39 @@ session_start();
 include_once 'inc/conn.php';
 $myusername = $_SESSION['login_user'];
 $ad_id = $_SESSION['present_ad'];
+echo $ad_id;
+
+function array_encode($array,$mysqli){ // Convert Array for DB storage json compressed in BLOB
+    $result = gzcompress(json_encode($array));
+    if ($mysqli){ mysqli_real_escape_string($mysqli,$result); }
+    return $result;
+}
 
 if (isset($_POST['save'])) {
-
-if (getimagesize($_FILES['frontim']['tmp_name']) == false) {
-
-echo "<br />Please Select An Image.";
-
-} else {
 
 $frontim = $_FILES['frontim']['name']; 
 $leftim = $_FILES['leftim']['name'];
 $rightim = $_FILES['rightim']['name'];
 $backim = $_FILES['backim']['name'];
 
-$front = $_FILES['frontim']['tmp_name'];
-$left = $_FILES['leftim']['tmp_name'];
-$right = $_FILES['rightim']['tmp_name'];
-$back = $_FILES['backim']['tmp_name'];
 
-//Get the content of the image and then add slashes to it 
-$imagetmp1=addslashes (file_get_contents($front));
-$imagetmp2=addslashes (file_get_contents($left));
-$imagetmp3=addslashes (file_get_contents($right));
-$imagetmp4=addslashes (file_get_contents($back));
-          
-$update ="UPDATE `uploads` SET frontim='$imagetmp1',leftim = '$imagetmp2',rightim = '$imagetmp3',backim = '$imagetmp4' WHERE adid ='$ad_id'";
-$rs = mysqli_query($conn,$update);
- if (!$rs){
-                echo "Query failed";
-            }
-            else{ 
-                header("Location:shop");
-            }
+$arr = [];  // empty array for BLOB
+$frontim = array_encode($arr,$mysqli); // json, compress; now binary         
+$update ="UPDATE `uploads` SET frontim=? ,leftim=? ,rightim=? ,backim=? WHERE adid=? ";
+
+//create prepares statement
+$stmt = mysqli_stmt_init($conn);
+//prepare stmt
+if (!mysqli_stmt_prepare($stmt, $update)) {
+          echo "SQL STATEMENT FAILED";
+} else {
+        //bind parameters to placeholder
+        $null = NULL;
+        mysqli_stmt_bind_param($stmt, "bi", $null, $ad_id);
+        mysqli_stmt_send_long_data($stmt,0,$imagetmp1);
+        //run parameters inside database
+        mysqli_stmt_execute($stmt);
+        header("Location:shop");   
 }
 
 }

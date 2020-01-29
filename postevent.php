@@ -15,24 +15,36 @@ $location = mysqli_real_escape_string($conn, $_POST["location"]);
 $description = mysqli_real_escape_string($conn, $_POST["description"]); 
 $contact = mysqli_real_escape_string($conn, $_POST["contact"]);
    
-$byidq = "SELECT sid FROM users WHERE uname = '$myusername' ";
- $result = mysqli_query($conn,$byidq);
-    if (mysqli_num_rows($result) > 0) {
+$sidq = "SELECT sid FROM users WHERE uname =? ";
+  //create prepares statement
+       $stmt = mysqli_stmt_init($conn);
+       //prepare stmt
+       if (!mysqli_stmt_prepare($stmt, $sidq)) {
+          echo "SQL STATEMENT FAILED";
+       } else {
+           //bind parameters to placeholder
+           mysqli_stmt_bind_param($stmt, "s", $myusername);
+           //run parameters inside database
+           mysqli_stmt_execute($stmt);
+           $result = mysqli_stmt_get_result($stmt);
             while($row = mysqli_fetch_assoc($result)) {
                $by_id = $row["sid"];
             }
          } 
 
-$sell="INSERT INTO `events`(`by_id`,`evname`, `held_by`, `date`,`location`,`description`,`contact`) VALUES ('$by_id','$evname','$held_by','$date','$location','$description','$contact')";
- if (!$sell){
-                echo "Registration Query failed";
-            }
-            else{ 
-            	mysqli_query($conn,$sell);
-                $last_id = mysqli_insert_id($conn);
-                $_SESSION['present_ad'] = $last_id;
-                header('location:evimg');  
-            }
+$sell="INSERT INTO `events`(`by_id`,`evname`, `held_by`, `date`,`location`,`description`,`contact`) VALUES (?,?,?,?,?,?,?)";
+
+$stmt = mysqli_stmt_init($conn);
+if (!mysqli_stmt_prepare($stmt, $sell)) {
+  echo "SQL error";
+} else {
+  mysqli_stmt_bind_param($stmt, "issssss",$by_id,$evname,$held_by,$date,$location,$description,$contact);
+  mysqli_stmt_execute($stmt);
+
+ $last_id = mysqli_insert_id($conn);
+ $_SESSION['present_ad'] = $last_id;
+ header('location:evimg?v=' .$last_id );
+}
 
 }
 

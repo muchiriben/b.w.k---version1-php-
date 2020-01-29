@@ -30,32 +30,54 @@ $year = mysqli_real_escape_string($conn, $_POST['year']);
 $price = mysqli_real_escape_string($conn, $_POST['price']);
 $contact = mysqli_real_escape_string($conn, $_POST['contact']);
 
- $sidq = "SELECT sid FROM users WHERE uname = '$myusername' ";
- $result = mysqli_query($conn,$sidq);
-    if (mysqli_num_rows($result) > 0) {
+ $sidq = "SELECT sid FROM users WHERE uname =? ";
+  //create prepares statement
+       $stmt = mysqli_stmt_init($conn);
+       //prepare stmt
+       if (!mysqli_stmt_prepare($stmt, $sidq)) {
+          echo "SQL STATEMENT FAILED";
+       } else {
+           //bind parameters to placeholder
+           mysqli_stmt_bind_param($stmt, "s", $myusername);
+           //run parameters inside database
+           mysqli_stmt_execute($stmt);
+           $result = mysqli_stmt_get_result($stmt);
             while($row = mysqli_fetch_assoc($result)) {
                $sid = $row["sid"];
             }
          } 
 
-$sq = "SELECT name FROM maketable WHERE mid = '$make' ";
- $result = mysqli_query($conn,$sq);
-    if (mysqli_num_rows($result) > 0) {
+$sq = "SELECT name FROM maketable WHERE mid =? ";
+ //create prepares statement
+       $stmt = mysqli_stmt_init($conn);
+       //prepare stmt
+       if (!mysqli_stmt_prepare($stmt, $sq)) {
+          echo "SQL STATEMENT FAILED";
+       } else {
+           //bind parameters to placeholder
+           mysqli_stmt_bind_param($stmt, "i", $make);
+           //run parameters inside database
+           mysqli_stmt_execute($stmt);
+           $result = mysqli_stmt_get_result($stmt);
             while($row = mysqli_fetch_assoc($result)) {
                $makename = $row["name"];
             }
          } 
 
- $sell="INSERT INTO `puploads`(`sid`, `make`, `model`, `type`,`pname`,`price`, `contact`) VALUES ('$sid','$makename','$model','$type','$pname','$price','$contact')";
- if (!$sell){
-                echo "Registration Query failed";
-            }
-            else{ 
-            	mysqli_query($conn,$sell);
-              $last_id = mysqli_insert_id($conn);
-              $_SESSION['present_ad'] = $last_id;
-              header('location:pimg');
-            }
+
+ $sellpart="INSERT INTO `puploads`(`sid`, `make`, `model`,`year`,`type`,`pname`,`price`, `contact`) VALUES (?,?,?,?,?,?,?,?)";
+
+  $stmt = mysqli_stmt_init($conn);
+if (!mysqli_stmt_prepare($stmt, $sellpart)) {
+  echo "SQL error";
+} else {
+  mysqli_stmt_bind_param($stmt, "ississis", $sid,$makename,$model,$price,$type,$pname,$price,$contact);
+  mysqli_stmt_execute($stmt); 
+  $last_id = mysqli_insert_id($conn);
+ $_SESSION['present_ad'] = $last_id;
+ header('location:pimg?v=' .$last_id );
+}
+            
 
 }
 
@@ -101,6 +123,7 @@ $sq = "SELECT name FROM maketable WHERE mid = '$make' ";
                     </select>
                <select id="model" name="model" required>
                 <option value="">Model</option>
+                <option value="Universal">Universal</option>
                 <?php
                 if ($pmenu != '' && is_numeric($pmenu)) {
                   
@@ -117,13 +140,29 @@ $sq = "SELECT name FROM maketable WHERE mid = '$make' ";
                 ?>
                  </select>
 		<br>
+
+<select id="year" name="year" required>
+  <?php
+    $y=(int)date('Y') + 1;
+    ?>
+    <option value="">Year</option>
+    <option value="<?php echo $y;?>"><?php echo $y;?></option>
+      <?php
+      $y--;
+    for(; $y>'1950'; $y--)
+    {
+  ?>
+  <option value="<?php echo $y;?>"><?php echo $y;?></option>
+  <?php }?>
+</select>
+
 <select id="type" name="type" required>
   <option id="type" value="Aftermaket Part">Aftermaket Part</option>
   <option id="type" value="OEM Part(0riginal)">OEM Part(Original Equipment Manufacturer)</option>
-</select> 
-<input type="text" name="pname" id="pname" placeholder="Part Name" required><br>
-<input type="price" placeholder="Price:e.g 200000" name="price" id="price" required>
-<input type="tel" placeholder="Contact" name="contact" id="contact" required><br>
+</select><br> 
+<input type="text" name="pname" id="pname" placeholder="Part Name" required>
+<input type="text" placeholder="Price:e.g 200000" name="price" id="price" required><br>
+<input type="text" placeholder="Contact" name="contact" id="contact" required><br>
 <input type="submit" value="Next" name="next">
 </form> 
 </div>

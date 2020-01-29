@@ -12,6 +12,24 @@ $myusername = $_SESSION['login_user'];
 $_SESSION['from'] = "addgarage";
 $error =  null;
 
+//get the sid of user
+$sidq = "SELECT sid FROM users WHERE uname =? ";
+  //create prepares statement
+       $stmt = mysqli_stmt_init($conn);
+       //prepare stmt
+       if (!mysqli_stmt_prepare($stmt, $sidq)) {
+          echo "SQL STATEMENT FAILED";
+       } else {
+           //bind parameters to placeholder
+           mysqli_stmt_bind_param($stmt, "s", $myusername);
+           //run parameters inside database
+           mysqli_stmt_execute($stmt);
+           $result = mysqli_stmt_get_result($stmt);
+            while($row = mysqli_fetch_assoc($result)) {
+               $by_id = $row["sid"];
+            }
+         } 
+
 if(isset($_POST['register'])){
 $fname = mysqli_real_escape_string($conn, $_POST['fname']);
 $lname = mysqli_real_escape_string($conn, $_POST['lname']);
@@ -23,44 +41,66 @@ $web = mysqli_real_escape_string($conn, $_POST['web']);
 $slogan = mysqli_real_escape_string($conn, $_POST['slogan']);
 $pass = mysqli_real_escape_string($conn, md5($_POST['pass']));
 $repass = mysqli_real_escape_string($conn, md5($_POST['repass']));   
-$poster1 = $_FILES['logo']['name']; 
-$first = $_FILES['logo']['tmp_name'];
-//Get the content of the image and then add slashes to it 
-$imagetmp1=addslashes (file_get_contents($first));
 
-//get the sid of user
-$byidq = "SELECT sid FROM users WHERE uname = '$myusername' ";
-$result = mysqli_query($conn,$byidq);
-    if (mysqli_num_rows($result) > 0) {
-            while($row = mysqli_fetch_assoc($result)) {
-               $by_id = $row["sid"];
-            }
-         } 
+$ext = pathinfo($_FILES['logo']['name']);
+if ($ext["extension"] == "jpg" || $ext["extension"] == "jpeg" || $ext["extension"] == "png" || $ext["extension"] == "gif") {
+
+       $poster1 = $_FILES['logo']['name'];
+       $first =  $_FILES['logo']['tmp_name'];
+//Get the content of the image and then add slashes to it 
+$imagetmp1= file_get_contents($first); 
+
+} else {
+      $error = "File is not an Image.";
+      exit();
+}
 
 //check for similar records
-    $select="SELECT * FROM `garages` WHERE gar_name='$gar_name' ";
-    $result=mysqli_query($conn,$select);
-    $num=mysqli_num_rows($result);
-    
+    $select="SELECT * FROM `garages` WHERE gar_name=? ";
+    $stmt = mysqli_stmt_init($conn);
+if (!mysqli_stmt_prepare($stmt, $select)) {
+  echo "SQL error";
+} else {
+  mysqli_stmt_bind_param($stmt, "s", $gar_name);
+  mysqli_stmt_execute($stmt);
+  $result = mysqli_stmt_get_result($stmt);
+  $num=mysqli_num_rows($result);
+
     //if record exists
     if ($num == 0){
 
         //check passwords are similar
         if($pass == $repass){ 
 
-            $addg="INSERT INTO `garages`(`by_id`,`fname`, `lname`,`gar_name`, `gar_location`,`contact`,`email`,`web`,`slogan`,`pass`,`repass`,`logo`) VALUES ('$by_id','$fname','$lname','$gar_name','$gar_location','$contact','$email','$web','$slogan','$pass','$repass','$imagetmp1')";
+            $addg="INSERT INTO `garages`(`by_id`,`fname`, `lname`,`gar_name`, `gar_location`,`contact`,`email`,`web`,`slogan`,`pass`,`repass`,`logo`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
 
             //run query
-            mysqli_query($conn,$addg);
-            header('location:garages');     
-        }else{
-            $error = "Passwords are not the same!!!";
+$null = NULL;           
+$stmt = mysqli_stmt_init($conn);
+if (!mysqli_stmt_prepare($stmt, $addg)) {
+  echo "SQL error";
+  exit();
+} else {
+
+  mysqli_stmt_bind_param($stmt, "issssssssssb", $by_id,$fname,$lname,$gar_name,$gar_location,$contact,$email,$web,$slogan,$pass,$repass,$null);
+ 
+  $stmt->send_long_data(11, $imagetmp1);
+  
+  mysqli_stmt_execute($stmt);
+
+  header('location:garages'); 
+
         }
-                  }
-    else{
+
+  } else {
+            $error = "Passwords are not the same!!!";
+         }
+                  
+  }  else{
            $error = "Garage name has already been taken!!!"; 
         }
 
+}
 
 }
 

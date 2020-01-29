@@ -11,14 +11,23 @@ $_SESSION['from'] = "dealereg";
 /*erorr message initilization*/
 $error = null;
 
-//get sid of user
-$byidq = "SELECT sid FROM users WHERE uname = '$myusername' ";
- $result = mysqli_query($conn,$byidq);
-    if (mysqli_num_rows($result) > 0) {
+//get the sid of user
+$sidq = "SELECT sid FROM users WHERE uname =? ";
+  //create prepares statement
+       $stmt = mysqli_stmt_init($conn);
+       //prepare stmt
+       if (!mysqli_stmt_prepare($stmt, $sidq)) {
+          echo "SQL STATEMENT FAILED";
+       } else {
+           //bind parameters to placeholder
+           mysqli_stmt_bind_param($stmt, "s", $myusername);
+           //run parameters inside database
+           mysqli_stmt_execute($stmt);
+           $result = mysqli_stmt_get_result($stmt);
             while($row = mysqli_fetch_assoc($result)) {
                $by_id = $row["sid"];
             }
-         }
+         } 
 
 
 if(isset($_POST['reg'])){
@@ -32,36 +41,63 @@ $web = mysqli_real_escape_string($conn, $_POST['web']);
 $slogan = mysqli_real_escape_string($conn, $_POST['slogan']);
 $pass = mysqli_real_escape_string($conn, md5($_POST['pass']));
 $repass = mysqli_real_escape_string($conn, md5($_POST['repass']));
-$poster1 = $_FILES['logo']['name']; 
-$first = $_FILES['logo']['tmp_name'];
+
+$ext = pathinfo($_FILES['logo']['name']);
+if ($ext["extension"] == "jpg" || $ext["extension"] == "jpeg" || $ext["extension"] == "png" || $ext["extension"] == "gif") {
+
+       $poster1 = $_FILES['logo']['name'];
+       $first =  $_FILES['logo']['tmp_name'];
 //Get the content of the image and then add slashes to it 
-$imagetmp1=addslashes (file_get_contents($first));
+$imagetmp1= file_get_contents($first); 
+
+} else {
+      $error = "File is not an Image.";
+      exit();
+}
 
 //check for similar records
-    $select="SELECT * FROM `dealers` WHERE dname='$dname' ";
-    $result=mysqli_query($conn,$select);
-    $num=mysqli_num_rows($result);
+    $select="SELECT * FROM `dealers` WHERE dname=? ";
+    $stmt = mysqli_stmt_init($conn);
+if (!mysqli_stmt_prepare($stmt, $select)) {
+  echo "SQL error";
+} else {
+  mysqli_stmt_bind_param($stmt, "s", $dname);
+  mysqli_stmt_execute($stmt);
+  $result = mysqli_stmt_get_result($stmt);
+  $num=mysqli_num_rows($result);
     
         //if record exists
     if ($num == 0){
 
             //Check if passwords are similar
         if($pass == $repass){ 
-                $sell="INSERT INTO `dealers`(`by_id`,`fname`, `lname`, `dname`,`location`, `pnumber`,`email`,`web`,`slogan`,`pass`,`repass`,`logo`) VALUES ('$by_id','$fname','$lname','$dname','$location','$pnumber','$email','$web','$slogan','$pass','$repass','$imagetmp1')";
+                $sell="INSERT INTO `dealers`(`by_id`,`fname`, `lname`, `dname`,`location`, `pnumber`,`email`,`web`,`slogan`,`pass`,`repass`,`logo`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
                 
-                mysqli_query($conn,$sell);
-                header('location:dealer');
+$null = NULL;
+$stmt = mysqli_stmt_init($conn);
+if (!mysqli_stmt_prepare($stmt, $sell)) {
+  echo "SQL error";
+  exit();
+} else {
+
+  mysqli_stmt_bind_param($stmt, "issssssssssb", $by_id,$fname,$lname,$dname,$location,$pnumber,$email,$web,$slogan,$pass,$repass,$null);
+
+$stmt->send_long_data(11, $imagetmp1);
+  
+mysqli_stmt_execute($stmt);
+
+header('location:dealer');
             
                             }
-        else{
+        
+} else{
             $error = "Passwords are not same!!";
-                }  
-        }
-    else{
+      }  
+} else{
            $error = "Dealership name already exists!!";      
-        }
+      }
 
-
+}
 
 }
 

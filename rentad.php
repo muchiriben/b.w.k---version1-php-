@@ -30,33 +30,52 @@ $price = mysqli_real_escape_string($conn, $_POST['price']);
 $contact = mysqli_real_escape_string($conn, $_POST['contact']);
 
 
- $sidq = "SELECT sid FROM users WHERE uname = '$myusername' ";
- $result = mysqli_query($conn,$sidq);
-    if (mysqli_num_rows($result) > 0) {
+ $sidq = "SELECT sid FROM users WHERE uname =? ";
+  //create prepares statement
+       $stmt = mysqli_stmt_init($conn);
+       //prepare stmt
+       if (!mysqli_stmt_prepare($stmt, $sidq)) {
+          echo "SQL STATEMENT FAILED";
+       } else {
+           //bind parameters to placeholder
+           mysqli_stmt_bind_param($stmt, "s", $myusername);
+           //run parameters inside database
+           mysqli_stmt_execute($stmt);
+           $result = mysqli_stmt_get_result($stmt);
             while($row = mysqli_fetch_assoc($result)) {
                $sid = $row["sid"];
             }
          } 
 
-$sq = "SELECT name FROM maketable WHERE mid = '$make' ";
- $result = mysqli_query($conn,$sq);
-    if (mysqli_num_rows($result) > 0) {
+$sq = "SELECT name FROM maketable WHERE mid =? ";
+ //create prepares statement
+       $stmt = mysqli_stmt_init($conn);
+       //prepare stmt
+       if (!mysqli_stmt_prepare($stmt, $sq)) {
+          echo "SQL STATEMENT FAILED";
+       } else {
+           //bind parameters to placeholder
+           mysqli_stmt_bind_param($stmt, "i", $make);
+           //run parameters inside database
+           mysqli_stmt_execute($stmt);
+           $result = mysqli_stmt_get_result($stmt);
             while($row = mysqli_fetch_assoc($result)) {
                $makename = $row["name"];
             }
          } 
 
- $sell="INSERT INTO `rentals`(`sid`, `make`, `model`, `year`,`eng_size`,`price`, `contact`) VALUES ('$sid','$makename','$model','$year','$eng_size','$price','$contact')";
- if (!$sell){
-                echo "Registration Query failed";
-            }
-            else{ 
-            	mysqli_query($conn,$sell);
-                $last_id = mysqli_insert_id($conn);
-                $_SESSION['present_ad'] = $last_id;
-                header('location:rimg.php');
-            }
+ $sell="INSERT INTO `rentals`(`sid`, `make`, `model`, `year`,`eng_size`,`price`, `contact`) VALUES (?,?,?,?,?,?,?)";
+ $stmt = mysqli_stmt_init($conn);
+if (!mysqli_stmt_prepare($stmt, $sell)) {
+  echo "SQL error";
+} else {
+  mysqli_stmt_bind_param($stmt, "issiiis", $sid,$makename,$model,$year,$eng_size,$price,$contact);
+  mysqli_stmt_execute($stmt);
 
+ $last_id = mysqli_insert_id($conn);
+ $_SESSION['present_ad'] = $last_id;
+ header('location:rimg?v=' .$last_id );
+}
 
 }
 

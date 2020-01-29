@@ -23,8 +23,19 @@ require_once "inc/conn.php";
     <h1>Coming Soon</h1>
     <?php           
        $list = "SELECT * FROM events ORDER BY rand()";
-       $result = mysqli_query($conn,$list);
-    if (mysqli_num_rows($result)>0){
+       
+       //create prepared statement
+       $stmt = mysqli_stmt_init($conn);
+
+       //prepare stmt
+       if (!mysqli_stmt_prepare($stmt, $list)) {
+
+          echo "SQL STATEMENT FAILED";
+
+       } else {
+
+           mysqli_stmt_execute($stmt);
+           $result = mysqli_stmt_get_result($stmt);
             while($row = mysqli_fetch_assoc($result)) {
 $evid = $row["evid"];
 $by_id = $row["by_id"];

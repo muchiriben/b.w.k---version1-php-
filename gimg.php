@@ -2,7 +2,7 @@
 session_start();
 include_once 'inc/conn.php';
 $myusername = $_SESSION['login_user'];
-$g_id = $_SESSION['present_ad'];
+$g_id = $_GET['v'];
 
 if (isset($_POST['save'])) {
 

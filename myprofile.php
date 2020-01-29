@@ -6,9 +6,18 @@ if (($_SESSION['login_user']) == null) {
 }
 
 $user = $_SESSION['login_user'];
-$list = "SELECT * FROM profiles WHERE uname = '$user'";
-$result = mysqli_query($conn,$list);
-    if (mysqli_num_rows($result)>0){
+$list = "SELECT * FROM profiles WHERE uname =?";
+//create prepares statement
+       $stmt = mysqli_stmt_init($conn);
+       //prepare stmt
+       if (!mysqli_stmt_prepare($stmt, $list)) {
+          echo "SQL STATEMENT FAILED";
+       } else {
+           //bind parameters to placeholder
+           mysqli_stmt_bind_param($stmt, "s", $user);
+           //run parameters inside database
+           mysqli_stmt_execute($stmt);
+           $result = mysqli_stmt_get_result($stmt);
             while($row = mysqli_fetch_assoc($result)) {
                  $sid = $row['sid'];
                  $uname = $row['uname'];
@@ -26,9 +35,18 @@ $data = $_GET['v'];
   $decrypt = $data2/201820192020007;
   $post_id = $decrypt;
 
-  $list = "SELECT * FROM profiles WHERE sid = '$post_id'";
-$result = mysqli_query($conn,$list);
-    if (mysqli_num_rows($result)>0){
+  $list = "SELECT * FROM profiles WHERE sid =?";
+//create prepares statement
+       $stmt = mysqli_stmt_init($conn);
+       //prepare stmt
+       if (!mysqli_stmt_prepare($stmt, $list)) {
+          echo "SQL STATEMENT FAILED";
+       } else {
+           //bind parameters to placeholder
+           mysqli_stmt_bind_param($stmt, "i", $post_id);
+           //run parameters inside database
+           mysqli_stmt_execute($stmt);
+           $result = mysqli_stmt_get_result($stmt);
             while($row = mysqli_fetch_assoc($result)) {
                  $sid = $row['sid'];
                  $uname = $row['uname'];
@@ -144,9 +162,19 @@ $(document).ready(function(){
   <div class="cont">
     <h1>Motorcycles</h1>
     <?php           
-       $list = "SELECT * FROM uploads WHERE sid = $sid";
-       $result = mysqli_query($conn,$list);
-    if (mysqli_num_rows($result)>0){
+       $list = "SELECT * FROM uploads WHERE sid =?";
+       //create prepares statement
+       $stmt = mysqli_stmt_init($conn);
+       //prepare stmt
+       if (!mysqli_stmt_prepare($stmt, $list)) {
+          echo "SQL STATEMENT FAILED";
+       } else {
+           //bind parameters to placeholder
+           mysqli_stmt_bind_param($stmt, "i", $sid);
+           //run parameters inside database
+           mysqli_stmt_execute($stmt);
+           $result = mysqli_stmt_get_result($stmt);
+           if (mysqli_num_rows($result)>0){
             while($row = mysqli_fetch_assoc($result)) {
 $adid = $row["adid"];
 $make = $row["make"];
@@ -198,7 +226,9 @@ $encode = "viewad?v=" .urlencode(base64_encode($encrypt));
          <a href="postevent">Post Event</a>
      </div>   
 
-<?php } ?>
+<?php 
+}
+} 
 ?>
 </div>
   </div>
@@ -209,9 +239,19 @@ $encode = "viewad?v=" .urlencode(base64_encode($encrypt));
    <div class="cont">
     <h1>Gears</h1>
     <?php           
-       $list = "SELECT * FROM guploads WHERE sid = $sid";
-       $result = mysqli_query($conn,$list);
-    if (mysqli_num_rows($result)>0){
+       $list = "SELECT * FROM guploads WHERE sid =?";
+       //create prepares statement
+       $stmt = mysqli_stmt_init($conn);
+       //prepare stmt
+       if (!mysqli_stmt_prepare($stmt, $list)) {
+          echo "SQL STATEMENT FAILED";
+       } else {
+           //bind parameters to placeholder
+           mysqli_stmt_bind_param($stmt, "i", $sid);
+           //run parameters inside database
+           mysqli_stmt_execute($stmt);
+           $result = mysqli_stmt_get_result($stmt);
+           if (mysqli_num_rows($result)>0){
             while($row = mysqli_fetch_assoc($result)) {
 $gid = $row["gid"];
 $sid = $row["sid"];
@@ -262,7 +302,9 @@ $encode = "vgear?v=" .urlencode(base64_encode($encrypt));
          <a href="gearad">SellGear</a>
      </div>   
 
-<?php } ?>
+<?php 
+}
+}
 ?>
 </div>
   </div>
@@ -273,9 +315,19 @@ $encode = "vgear?v=" .urlencode(base64_encode($encrypt));
   <div class="cont">
     <h1>Parts</h1>
     <?php           
-       $list = "SELECT * FROM puploads WHERE sid = $sid";
-       $result = mysqli_query($conn,$list);
-    if (mysqli_num_rows($result)>0){
+       $list = "SELECT * FROM puploads WHERE sid =?";
+       //create prepares statement
+       $stmt = mysqli_stmt_init($conn);
+       //prepare stmt
+       if (!mysqli_stmt_prepare($stmt, $list)) {
+          echo "SQL STATEMENT FAILED";
+       } else {
+           //bind parameters to placeholder
+           mysqli_stmt_bind_param($stmt, "i", $sid);
+           //run parameters inside database
+           mysqli_stmt_execute($stmt);
+           $result = mysqli_stmt_get_result($stmt);
+           if (mysqli_num_rows($result)>0){
             while($row = mysqli_fetch_assoc($result)) {
 $sid = $row['sid'];
 $make = $row['make'];
@@ -324,7 +376,9 @@ $encode = "vpart?v=" .urlencode(base64_encode($encrypt));
          <a href="partsad">SellParts</a>
      </div>   
 
-<?php } ?>
+<?php 
+}
+}
 ?>
 </div>
   </div>  
@@ -335,9 +389,19 @@ $encode = "vpart?v=" .urlencode(base64_encode($encrypt));
    <div class="cont">
     <h1>Coming Soon</h1>
     <?php           
-       $list = "SELECT * FROM events WHERE by_id = $sid";
-       $result = mysqli_query($conn,$list);
-    if (mysqli_num_rows($result)>0){
+       $list = "SELECT * FROM events WHERE by_id =?";
+       //create prepares statement
+       $stmt = mysqli_stmt_init($conn);
+       //prepare stmt
+       if (!mysqli_stmt_prepare($stmt, $list)) {
+          echo "SQL STATEMENT FAILED";
+       } else {
+           //bind parameters to placeholder
+           mysqli_stmt_bind_param($stmt, "i", $sid);
+           //run parameters inside database
+           mysqli_stmt_execute($stmt);
+           $result = mysqli_stmt_get_result($stmt);
+           if (mysqli_num_rows($result)>0){
             while($row = mysqli_fetch_assoc($result)) {
 $evid = $row["evid"];
 $by_id = $row["by_id"];
@@ -385,7 +449,10 @@ $encode = "viewevent?v=" .urlencode(base64_encode($encrypt));
          <a href="postevent">Post Event</a>
      </div>   
 
-<?php } ?>
+<?php
+} 
+}
+?>
 </div>
     </div>
 </div>
@@ -395,9 +462,19 @@ $encode = "viewevent?v=" .urlencode(base64_encode($encrypt));
   <div class="cont">
     <h1>Rent a Bike</h1>
     <?php           
-       $list = "SELECT * FROM rentals WHERE sid = $sid";
-       $result = mysqli_query($conn,$list);
-    if (mysqli_num_rows($result)>0){
+      $list = "SELECT * FROM rentals WHERE sid =?";
+       //create prepares statement
+       $stmt = mysqli_stmt_init($conn);
+       //prepare stmt
+       if (!mysqli_stmt_prepare($stmt, $list)) {
+          echo "SQL STATEMENT FAILED";
+       } else {
+           //bind parameters to placeholder
+           mysqli_stmt_bind_param($stmt, "i", $sid);
+           //run parameters inside database
+           mysqli_stmt_execute($stmt);
+           $result = mysqli_stmt_get_result($stmt);
+           if (mysqli_num_rows($result)>0){
             while($row = mysqli_fetch_assoc($result)) {
 $rid = $row["rid"];
 $sid = $row["sid"];
@@ -447,7 +524,10 @@ $encode = "viewrental?v=" .urlencode(base64_encode($encrypt));
          <a href="rentad">RentYourBike</a>
      </div>   
 
-<?php } ?>
+<?php 
+}
+} 
+?>
 </div>
     </div>
 </div>

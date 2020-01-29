@@ -46,11 +46,24 @@ $(document).ready(function(){
     
     <div class="cont">
     <h1>Motorcycle Listings</h1>
-    <?php           
+    <?php
+       //create sql template           
        $list = "SELECT * FROM uploads ORDER BY rand()";
-       $result = mysqli_query($conn,$list);
-    if (mysqli_num_rows($result)>0){
-            while($row = mysqli_fetch_assoc($result)) {
+       
+       //create prepared statement
+       $stmt = mysqli_stmt_init($conn);
+
+       //prepare stmt
+       if (!mysqli_stmt_prepare($stmt, $list)) {
+
+          echo "SQL STATEMENT FAILED";
+
+       } else {
+
+           mysqli_stmt_execute($stmt);
+           $result = mysqli_stmt_get_result($stmt);
+
+           while($row = mysqli_fetch_assoc($result)) {
 $adid = $row["adid"];
 $sid = $row["sid"];
 $make = $row["make"];
@@ -98,6 +111,7 @@ $encode = "viewad?v=" .urlencode(base64_encode($encrypt));
 }
 }
 ?>
+                  
 </div>
   </div>
 </header>
