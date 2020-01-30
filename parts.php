@@ -84,11 +84,11 @@ echo '<img src="data:image;base64,'.base64_encode( $img4 ).'" height="240px" wid
 </div>
 
 <div class="desc">
- <p><?php echo "Make:\t" .$make; ?></p><br><br>
- <p><?php echo "Model:\t" .$model; ?></p><br><br>
- <p><?php echo "Type:\t" .$type; ?></p><br><br>
- <p><?php echo "Part Name:\t" .$pname; ?></p><br><br>
- <p><?php echo "Price:\tKes" .$price; ?></p><br><br>
+ <p><?php echo "Make:\t" .$make; ?></p><br>
+ <p><?php echo "Model:\t" .$model; ?></p><br>
+ <p><?php echo "Type:\t" .$type; ?></p><br>
+ <p><?php echo "Part Name:\t" .$pname; ?></p><br>
+ <p><?php echo "Price:\tKes" .$price; ?></p><br>
  <p><?php echo "Contact Me:\t" .$contact; ?></p><br>
 
 <?php
@@ -99,6 +99,11 @@ $encode = "vpart?v=" .urlencode(base64_encode($encrypt));
 ?>
 
 <a href="<?=$encode;?>" id="ref" name = "ref">View Listing</a>
+</div>
+<div class="img">
+<?php
+echo '<img src="data:image;base64,'.base64_encode( $img3 ).'" height="240px" width="440px">';
+?>
 </div>
 </div>
 

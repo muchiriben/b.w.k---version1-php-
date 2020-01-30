@@ -57,13 +57,12 @@ echo '<img src="data:image;base64,'.base64_encode( $poster1 ).'" height="240px" 
 </div>
 
 <div class="desc">
- <p><?php echo "Event Name:\t" .$evname; ?></p><br><br>
- <p><?php echo "Held By:\t" .$held_by; ?></p><br><br>
- <p><?php echo "Date:\t" .$date; ?></p><br><br>
- <p><?php echo "Location:\t" .$location; ?></p><br><br>
- <p><?php echo "Contact Number:\t" .$contact; ?></p><br><br>
- <p><?php echo "Description:\t" .$description; ?></p><br>
-
+ <p><?php echo "Event Name:\t" .$evname; ?></p><br>
+ <p><?php echo "Held By:\t" .$held_by; ?></p><br>
+ <p><?php echo "Date:\t" .$date; ?></p><br>
+ <p><?php echo "Location:\t" .$location; ?></p><br>
+ <p><?php echo "Contact Us:\t" .$contact; ?></p><br><br>
+ 
 <?php
 /* encrypt url */
 $data = $row["evid"];
@@ -71,7 +70,12 @@ $encrypt = $data*201820192020007;
 $encode = "viewevent?v=" .urlencode(base64_encode($encrypt));
 ?>
 
-<a href="<?=$encode;?>" id="ref" name = "ref">View Listing</a>
+<a href="<?=$encode;?>" id="ref" name = "ref">View Event</a>
+</div>
+<div class="img">
+<?php
+echo '<img src="data:image;base64,'.base64_encode( $poster2 ).'" height="240px" width="440px">';
+?>
 </div>
 </div>
 

@@ -84,11 +84,11 @@ echo '<img src="data:image;base64,'.base64_encode( $img4 ).'" height="240px" wid
 </div>
 
 <div class="desc">
- <p><?php echo "Category:\t" .$cate; ?></p><br><br>
- <p><?php echo "Type:\t" .$type; ?></p><br><br>
- <p><?php echo "Brand:\t" .$brand; ?></p><br><br>
- <p><?php echo "Name:\t" .$gname; ?></p><br><br>
- <p><?php echo "Price:\t" .$price; ?></p><br><br>
+ <p><?php echo "Category:\t" .$cate; ?></p><br>
+ <p><?php echo "Type:\t" .$type; ?></p><br>
+ <p><?php echo "Brand:\t" .$brand; ?></p><br>
+ <p><?php echo "Name:\t" .$gname; ?></p><br>
+ <p><?php echo "Price:\t" .$price; ?></p><br>
  <p><?php echo "Contact Me:\t" .$contact; ?></p><br>
 
 
@@ -100,6 +100,11 @@ $encode = "vgear?v=" .urlencode(base64_encode($encrypt));
 ?>
 
 <a href="<?=$encode;?>" id="ref" name = "ref">View Listing</a>
+</div>
+<div class="img">
+<?php
+echo '<img src="data:image;base64,'.base64_encode( $img3 ).'" height="240px" width="440px">';
+?>
 </div>
 </div>
 

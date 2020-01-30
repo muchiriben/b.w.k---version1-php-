@@ -197,14 +197,14 @@ $img4 = $row["frontim"];
 <div class="listings">  
 <div class="img">
 <?php
-echo '<img src="data:image;base64,'.base64_encode( $row['frontim'] ).'" height="240px" width="440px">';
+echo '<img src="data:image;base64,'.base64_encode( $img4 ).'" height="240px" width="440px">';
 ?>
 </div>
 <div class="desc">
- <p><?php echo "Make:\t" .$make; ?></p><br><br>
- <p><?php echo "Model:\t" .$model; ?></p><br><br>
- <p><?php echo "Year:\t" .$year; ?></p><br><br>
- <p><?php echo "Price:\t" .$price; ?></p><br><br>
+ <p><?php echo "Make:\t" .$make; ?></p><br>
+ <p><?php echo "Model:\t" .$model; ?></p><br>
+ <p><?php echo "Year:\t" .$year; ?></p><br>
+ <p><?php echo "Price:\t" .$price; ?></p><br>
  <p><?php echo "Contact Me:\t" .$contact; ?></p><br>
 <?php
 /* encrypt url */
@@ -214,6 +214,11 @@ $encode = "viewad?v=" .urlencode(base64_encode($encrypt));
 ?>
 
 <a href="<?=$encode;?>" id="ref" name = "ref">View Listing</a>
+</div>
+<div class="img">
+<?php
+echo '<img src="data:image;base64,'.base64_encode( $img3 ).'" height="240px" width="440px">';
+?>
 </div>
 </div>
 
@@ -276,11 +281,11 @@ echo '<img src="data:image;base64,'.base64_encode( $row['frontim'] ).'" height="
 </div>
 
 <div class="desc">
- <p><?php echo "Category:\t" .$cate; ?></p><br><br>
- <p><?php echo "Type:\t" .$type; ?></p><br><br>
- <p><?php echo "Brand:\t" .$brand; ?></p><br><br>
- <p><?php echo "Name:\t" .$gname; ?></p><br><br>
- <p><?php echo "Price:\t" .$price; ?></p><br><br>
+ <p><?php echo "Category:\t" .$cate; ?></p><br>
+ <p><?php echo "Type:\t" .$type; ?></p><br>
+ <p><?php echo "Brand:\t" .$brand; ?></p><br>
+ <p><?php echo "Name:\t" .$gname; ?></p><br>
+ <p><?php echo "Price:\t" .$price; ?></p><br>
  <p><?php echo "Contact Me:\t" .$contact; ?></p><br>
 <?php
 /* encrypt url */
@@ -290,6 +295,11 @@ $encode = "vgear?v=" .urlencode(base64_encode($encrypt));
 ?>
 
 <a href="<?=$encode;?>" id="ref" name = "ref">View Listing</a>
+</div>
+<div class="img">
+<?php
+echo '<img src="data:image;base64,'.base64_encode( $img3 ).'" height="240px" width="440px">';
+?>
 </div>
 </div>
 
@@ -350,11 +360,11 @@ echo '<img src="data:image;base64,'.base64_encode( $row['frontim'] ).'" height="
 </div>
 
 <div class="desc">
- <p><?php echo "Make:\t" .$make; ?></p><br><br>
- <p><?php echo "Model:\t" .$model; ?></p><br><br>
- <p><?php echo "Type:\t" .$type; ?></p><br><br>
- <p><?php echo "Part Name:\t" .$pname; ?></p><br><br>
- <p><?php echo "Price:\tKes" .$price; ?></p><br><br>
+ <p><?php echo "Make:\t" .$make; ?></p><br>
+ <p><?php echo "Model:\t" .$model; ?></p><br>
+ <p><?php echo "Type:\t" .$type; ?></p><br>
+ <p><?php echo "Part Name:\t" .$pname; ?></p><br>
+ <p><?php echo "Price:\tKes" .$price; ?></p><br>
  <p><?php echo "Contact Me:\t" .$contact; ?></p><br>
 <?php
 /* encrypt url */
@@ -364,6 +374,11 @@ $encode = "vpart?v=" .urlencode(base64_encode($encrypt));
 ?>
 
 <a href="<?=$encode;?>" id="ref" name = "ref">View Listing</a>
+</div>
+<div class="img">
+<?php
+echo '<img src="data:image;base64,'.base64_encode( $img3 ).'" height="240px" width="440px">';
+?>
 </div>
 </div>
 
@@ -423,11 +438,11 @@ echo '<img src="data:image;base64,'.base64_encode( $row['poster1'] ).'" height="
 </div>
 
 <div class="desc">
- <p><?php echo "Event Name:\t" .$evname; ?></p><br><br>
- <p><?php echo "Held By:\t" .$held_by; ?></p><br><br>
- <p><?php echo "Date:\t" .$date; ?></p><br><br>
- <p><?php echo "Location:\t" .$location; ?></p><br><br>
- <p><?php echo "Contact Number:\t" .$contact; ?></p><br><br>
+ <p><?php echo "Event Name:\t" .$evname; ?></p><br>
+ <p><?php echo "Held By:\t" .$held_by; ?></p><br>
+ <p><?php echo "Date:\t" .$date; ?></p><br>
+ <p><?php echo "Location:\t" .$location; ?></p><br>
+ <p><?php echo "Contact Number:\t" .$contact; ?></p><br>
  <p><?php echo "Description:\t" .$description; ?></p><br>
 <?php
 /* encrypt url */
@@ -436,7 +451,12 @@ $encrypt = $data*201820192020007;
 $encode = "viewevent?v=" .urlencode(base64_encode($encrypt));
 ?>
 
-<a href="<?=$encode;?>" id="ref" name = "ref">View Listing</a>
+<a href="<?=$encode;?>" id="ref" name = "ref">View Event</a>
+</div>
+<div class="img">
+<?php
+echo '<img src="data:image;base64,'.base64_encode( $row['poster2'] ).'" height="240px" width="440px">';
+?>
 </div>
 </div>
 
@@ -498,11 +518,11 @@ echo '<img src="data:image;base64,'.base64_encode( $row['frontim'] ).'" height="
 </div>
 
 <div class="desc">
- <p><?php echo "Make:\t" .$make; ?></p><br><br>
- <p><?php echo "Model:\t" .$model; ?></p><br><br>
- <p><?php echo "Year:\t" .$year; ?></p><br><br>
-  <p><?php echo "Engine size:\t" .$eng_size. "cc" ;?></p><br><br>
- <p><?php echo "Price/hour:\t" .$price. "/="; ?></p><br><br>
+ <p><?php echo "Make:\t" .$make; ?></p><br>
+ <p><?php echo "Model:\t" .$model; ?></p><br>
+ <p><?php echo "Year:\t" .$year; ?></p><br>
+  <p><?php echo "Engine size:\t" .$eng_size. "cc" ;?></p><br>
+ <p><?php echo "Price/hour:\t" .$price. "/="; ?></p><br>
  <p><?php echo "Contact Me:\t" .$contact; ?></p><br>
 <?php
 /* encrypt url */
@@ -512,6 +532,11 @@ $encode = "viewrental?v=" .urlencode(base64_encode($encrypt));
 ?>
 
 <a href="<?=$encode;?>" id="ref" name = "ref">View Listing</a>
+</div>
+<div class="img">
+<?php
+echo '<img src="data:image;base64,'.base64_encode( $row['backim'] ).'" height="240px" width="440px">';
+?>
 </div>
 </div>
 

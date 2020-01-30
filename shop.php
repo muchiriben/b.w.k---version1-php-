@@ -90,11 +90,11 @@ echo '<img src="data:image;base64,'.base64_encode( $img4 ).'" height="240px" wid
 ?>
 </div>
 <div class="desc">
- <p><?php echo "Make:\t" .$make; ?></p><br><br>
- <p><?php echo "Model:\t" .$model; ?></p><br><br>
- <p><?php echo "Year:\t" .$year; ?></p><br><br>
- <p><?php echo "Price:\t" .$price; ?></p><br><br>
- <p><?php echo "Contact Me:\t" .$contact; ?></p><br>
+ <p><?php echo "Make:\t" .$make; ?></p><br>
+ <p><?php echo "Model:\t" .$model; ?></p><br>
+ <p><?php echo "Year:\t" .$year; ?></p><br>
+ <p><?php echo "Price:\t" .$price; ?></p><br>
+ <p><?php echo "Contact Me:\t" .$contact; ?></p><br><br>
 
 <?php
 /* encrypt url */
@@ -104,6 +104,11 @@ $encode = "viewad?v=" .urlencode(base64_encode($encrypt));
 ?>
 
 <a href="<?=$encode;?>" id="ref" name = "ref">View Listing</a>
+</div><br>
+   <div class="img">
+<?php
+echo '<img src="data:image;base64,'.base64_encode( $img3 ).'" height="240px" width="440px">';
+?>
 </div>
 </div>
 

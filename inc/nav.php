@@ -7,7 +7,7 @@
 <body>
     <div class="wrapper">
 			<div class="logo">
-				<p><b><font color="#fff" size="8px" >BikerWorldKenya</font></b></p>
+				<p><b>BikerWorldKenya</b></p>
 			</div><br><br>
 			<div class="user">	
 				<?php 

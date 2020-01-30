@@ -61,7 +61,7 @@ if ($slogan != null) {
   echo "<div class='slogan'><p>"  .$slogan. "</p></div>";
 }
 ?>
-</div>
+</div><br>
 
 <div class="desc">
  <p><?php echo "Garage Name:\t" .$gar_name; ?></p><br><br>

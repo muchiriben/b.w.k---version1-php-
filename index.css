@@ -50,6 +50,8 @@ body{
 	text-align: center; 
 	display: inline-block;
 	vertical-align: middle;
+	font-size: 50px;
+	color: #fff;
 }
 .user{
  height: auto;
@@ -180,7 +182,7 @@ input[name="r"]{
    animation: drop 1.5s ease;
    color: #fff;
    text-transform: uppercase;
-   font-size: 40px;
+   font-size: 35px;
    margin-top:200px; 
 }
 
@@ -287,7 +289,7 @@ input[name="r"]{
 	color: #fff;
 }
 .form{
-	border: 1px solid #3498db;
+	border: 1px solid #fff;
 	float: right;
 	width: 400px;
 	height:450px;
@@ -304,7 +306,7 @@ input[name="r"]{
 	text-align: center;
 	border: 2px solid #fff;
 	padding: 12px 10px;
-	width: 240px;
+	width: 220px;
 	border-radius: 24px;
 	transition: 0.25s;
 	color: #fff;
@@ -324,7 +326,7 @@ input[name="r"]{
 	text-align: center;
 	border: 2px solid #fff;
 	padding: 14px 40px;
-	width: 160px;
+	width: 140px;
 	border-radius: 24px;
 	transition: 0.25s;
 	cursor: pointer;
@@ -569,7 +571,7 @@ input[name="r"]{
 	text-align: center; 
 	display: inline-block;
 	vertical-align: middle;
-	font-size: 25px;
+	font-size: 22px;
 }
 .help{
 	width: calc(100% / 1);
@@ -648,7 +650,61 @@ input[name="r"]{
 	margin-top: 5px;
 	margin-bottom: 5px;
 	}
-	
+	.slide p{
+		font-size: 28px;
+	}
+	.bar{
+		width: 50px;
+		margin:8px;
+	}
+	.logo p{
+		font-size: 40px;
+	}
+
+.copyall{
+	margin-left: 5px;
+}
+.terms{
+	margin-left: 5px;
+}
+.media{
+   margin-left: 5px;
+}
+.contact{
+   margin-left: 5px;
+}
+.download{
+   margin-left: 5px;
+}
+.contact h3{
+	font-size: 12px;
+	margin: 10px;
+}
+.btn{
+	width: 40px;
+	height: 40px;
+	margin: 8px; 
+}
+.terms h3{
+	font-size: 12px;
+	margin-left:60px;
+	margin-right: 60px;
+	margin-top: 10px;
+}
+.terms a{
+	font-size: 12px;
+	margin-left:60px;
+	margin-right: 60px;
+	margin-top: 10px;
+}
+.download a{
+	padding: 4px 10px;
+	font-size: 12px;
+	margin-top: 10px;
+	margin-left: 10px;
+	width: 130px; 
+}
+
 }
 
 

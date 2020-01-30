@@ -54,7 +54,7 @@ $logo = $row['logo'];
 <div class="img">
 <?php
 if ($logo == null) {
-  echo '<img src="img/brossi.jpg" height="250px" width="440px">';
+  echo '<img src="img/brossi.jpg" height="240px" width="440px">';
 }else{
    echo '<img src="data:image;base64,'.base64_encode( $logo ).'" height="240px" width="440px">';
 }
@@ -62,7 +62,7 @@ if ($slogan != null) {
   echo "<div class='slogan'><p>"  .$slogan. "</p></div>";
 }
 ?>
-</div>
+</div><br>
 
 <div class="desc">
  <p><?php echo "School Name:\t" .$sname; ?></p><br><br>

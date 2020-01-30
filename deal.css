@@ -52,6 +52,8 @@ body{
 	text-align: center; 
 	display: inline-block;
 	vertical-align: middle;
+	font-size: 50px;
+	color: #fff;
 }
 .user{
  height: auto;
@@ -195,17 +197,10 @@ float: left;
 	height: 244px;
 	border: 2px solid #3498db;
 	float: left;
-	position: relative;
-  text-align: center;
-  color: white;
 }
-/*.slogan{
-   position: absolute;
-   bottom: 8px;
-   right: 16px;
-}*/
 .slogan p{
 	font-size: 20px;
+	color: #fff;
 }
 .desc{
 	float: left;
@@ -456,5 +451,11 @@ float: left;
 	}
 	.desc{
 		margin-left: 0px;
+	}
+}
+
+@media screen and (max-width: 650px){
+	.logo p{
+		font-size: 40px;
 	}
 }
