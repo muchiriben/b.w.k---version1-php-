@@ -42,23 +42,27 @@ if ($sql) {
         <div class="slide s1">
           <h1>BikerWorldKenya</h1><br>
           <h2>Join the Family</h2><br>
-          <a href="#bfooter">Braap</a>
+          <a href="signup">Braap!!!</a>
         </div>
         <div class="slide">
-          <p>Need To Sell or Buy Second-Hand Motorcycles?!</p><br>
-          <a href="shop">SellYourBike</a>
+          <h1>SHOP BikerWorldKenya</h1><br>
+          <h2>Buy motorcycles, their parts and gears</h2><br>
+          <a href="shop">Shop</a>
         </div>
         <div class="slide">
-          <p>Earn Money Renting out Motorcycles. Need a ride to an Event?</p><br>
+          <h1>Motorcycle rentals</h1><br>
+          <h2>Rent a motorcycle when the time arises</h2><br>
           <a href="rent">Rentals</a>
         </div>
         <div class="slide">
-          <p>Are you A bigginner Rider? Get the Best Schools to learn From!!!</p><br>
+          <h1>What you looking for?</h1><br>
+          <h2>Find Dealerships, riding schools and garages</h2><br>
           <a href="schools">LearnToRide</a>
         </div>
         <div class="slide">
-          <p>Stranded and need a Garage? Here are garages around you?</p><br>
-          <a href="garages">FindAGarage</a>
+          <h1>View upcoming events</h1><br>
+          <h2>Buy tickets for you favorite events</h2><br>
+          <a href="events">Events</a>
         </div>
       </div><br>
 

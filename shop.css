@@ -374,7 +374,7 @@ margin-right: 40px;
 	font-size: 18px;
 }
 @media screen and (max-width: 950px){
-   .show-menu-btn,.hide-menu-btn{
+   .show-menu-btn, .hide-menu-btn{
 	display: block;
 }
    .nav-area{

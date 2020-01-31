@@ -124,17 +124,16 @@ body{
 }
 
 /*slider section*/
-.slides a{
+.slide a{
 	text-decoration-line: none;
 	font-size: 20px;
-	color:#fff;
+	color:#3498db;
 	border:none;
 	background: none;
 	margin: 5px auto;
 	text-align: center;
 	border: 2px solid #fff;
-	padding: 5px 20px;
-	width: 120px;
+	padding: 5px 40px;
 	border-radius: 24px;
 	transition: 0.25s;
 	cursor: pointer;
@@ -168,12 +167,10 @@ input[name="r"]{
     visibility: hidden;
 }
 
-.slides{
-  
+.slides{ 
 	margin-top: 40px;
 	height: 400px;
 	width: 500%;
-	position: absolute; 
     left: 0;
     right: 0;  
     text-align: center; 
@@ -634,6 +631,7 @@ input[name="r"]{
    .show-menu-btn,.hide-menu-btn{
 	display: block; 
 }
+
    .nav-area{
    	position:absolute;
    	background-color: #000;
@@ -667,6 +665,7 @@ input[name="r"]{
 #chk:checked ~ .nav-area{
    right: 0;
 }
+
    
 }
 
