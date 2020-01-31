@@ -38,9 +38,11 @@ if ($sql) {
         <input type="radio" name="r" id="r3">
         <input type="radio" name="r" id="r4">
         <input type="radio" name="r" id="r5">
+
         <div class="slide s1">
-          <p>Kenya's Top Motorcycle Riders' Platform</p><br>
-          <a href="#bfooter">Revs your Soul</a>
+          <h1>BikerWorldKenya</h1><br>
+          <h2>Join the Family</h2><br>
+          <a href="#bfooter">Braap</a>
         </div>
         <div class="slide">
           <p>Need To Sell or Buy Second-Hand Motorcycles?!</p><br>

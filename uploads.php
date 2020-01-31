@@ -15,14 +15,18 @@ $_SESSION['from'] = "uploads";
 <body>
 	<header class="header">
 		<div class="wrapper">
-			<div class="logo">
-				<img src="img/logo3.png">
-			</div>
-			<ul class="nav-area">
+            <div class="logo">
+        <i><b><font color="#fff" size="8px">BikerWorldKenya</font></b></i>
+      </div>
+      <ul class="nav-area">
         <li><a href="admin.php" id="links">Home</a></li>
         <li><a href="users.php" id="logolink">Users</a></li>
-        <li><a href="uploads.php" id="links">Uploads</a></li>
-            <li><a href="dealerships.php" id="links">Dealerships</a></li>
+        <li><a href="dealerships.php" id="links">Dealerships</a></li>
+        <li><a href="schools.php" id="links">Schools</a></li>
+        <li><a href="garages.php" id="links">Garages</a></li>
+        <li><a href="uploads.php" id="links">BikeUploads</a></li>
+        <li><a href="gps.php" id="links">Gears&Parts</a></li>
+            <li><a href="eventads.php" id="links">Events</a></li>
             <li><a href="update.php" id="links">Update Database</a></li>
             <li><a href="messages.php" id="links">Messages</a></li>
             <?php 
@@ -36,7 +40,7 @@ $_SESSION['from'] = "uploads";
             ?>
          
       </ul>
-		</div><br>
+    </div>
       <div class="desc">
          <h1>UPLOADS</h1><br><br>
 <div class="table">
@@ -93,8 +97,8 @@ $img4 = $row["frontim"];
     <td><?php echo $body; ?></td>
     <td><?php echo $mileage; ?></td>
     <td><?php echo $size; ?></td>
-    <td><a href="viewadmin.php?id=<?php echo $adid;?>" name = "table">View</a></td>
-    <td><a href="actions.php?id=<?php echo $adid;?>" name = "table">Delete</a></td>
+    <td><input type="submit" name="delete" Value="Delete"></td>
+    <td><input type="submit" name="view" Value="View"></td>
   </tr>
   </tbody>
     <?php
