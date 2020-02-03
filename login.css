@@ -420,3 +420,12 @@ padding:20px;
     margin-bottom: 20px;
     }
 }
+
+@media screen and (max-width: 600px){
+	.logo p{
+		font-size: 40px;
+	}
+	.form input, .form select, .form a{
+    	width: 280px;
+    }
+}

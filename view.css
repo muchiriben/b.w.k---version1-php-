@@ -47,6 +47,8 @@ body{
  margin-bottom: 10px;
 }
 .logo p{
+	font-size: 50px;
+	color: #fff;
 	text-align: center; 
 	display: inline-block;
 	vertical-align: middle;
@@ -130,13 +132,11 @@ padding:20px;
 	color: #fff;
 	size: 20px;
 }
-.image{
-	float: left;
-	width: 20%
-	margin-left: 0px;
-	height: auto;
+.images{
+	width: 100%;
+	margin-bottom: 20px;
 }
-.image h1{
+.images h1{
 	color: #fff;
 	size: 20px
 }
@@ -164,8 +164,13 @@ padding:20px;
 	display: inline-block;
 	margin-right:8px;
 	margin-bottom: 8px;
-	height: 284px;
+	height: 304px;
+	width: 45%;
 	border: 2px solid #3498db;
+}
+img{
+	width: 100%;
+	height: 300px;
 }
 th{
      color: #fff;
@@ -178,8 +183,8 @@ td{
 
 table {
   table-layout: fixed;
-  width: 35%;
-  height: 585px;
+  width: 100%;
+  height: 500px;
   border-collapse: collapse;
   border: 3px solid #fff;
   float: right;
@@ -380,16 +385,19 @@ a[name='ref']{
     .nav-area li a{
 	padding:3px 8px;
 	font-size: 20px;
+} 
+
 }
+
 @media screen and (max-width: 950px){
     .nav-area li a{
 	padding:3px 8px;
 	font-size: 18px;
+    } 
+    .show-menu-btn,.hide-menu-btn{
+	display: block; 
 }
-@media screen and (max-width: 950px){
-   .show-menu-btn,.hide-menu-btn{
-	display: block;
-}
+
    .nav-area{
    	position:absolute;
    	background-color: #000;
@@ -423,17 +431,13 @@ a[name='ref']{
 #chk:checked ~ .nav-area{
    right: 0;
 }
-   
+
 }
+
 @media screen and (max-width: 1250px){
-img{
-	height: 200px;
-	width: 300px;
-}
 table{
 	float: left;
 	font-size: 14px;
-	max-width: 500px;
 }
 th{
      color: #fff;
@@ -475,4 +479,60 @@ a[name='table']{
     height: auto;
     margin-bottom: 20px;
     }
+}
+
+@media screen and (max-width: 600px){
+	.logo p{
+		font-size: 40px;
+	}
+	.img{
+		width: calc(100% / 1);
+		height: 254px;
+	}
+	img{
+		height: 250px;
+	}
+	.copyall{
+	margin-left: 5px;
+}
+.terms{
+	margin-left: 5px;
+}
+.media{
+   margin-left: 5px;
+}
+.contact{
+   margin-left: 5px;
+}
+.download{
+   margin-left: 5px;
+}
+.contact h3{
+	font-size: 12px;
+	margin: 10px;
+}
+.btn{
+	width: 40px;
+	height: 40px;
+	margin: 8px; 
+}
+.terms h3{
+	font-size: 12px;
+	margin-left:60px;
+	margin-right: 60px;
+	margin-top: 10px;
+}
+.terms a{
+	font-size: 12px;
+	margin-left:60px;
+	margin-right: 60px;
+	margin-top: 10px;
+}
+.download a{
+	padding: 4px 10px;
+	font-size: 12px;
+	margin-top: 10px;
+	margin-left: 10px;
+	width: 130px; 
+}
 }

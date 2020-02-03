@@ -23,7 +23,7 @@
 				<input type="checkbox" id="chk">
 				<label for="chk" class="show-menu-btn">
 					<i class="fas fa-bars"></i>
-				</label>
+				</label><br><br>
 			<ul class="nav-area">
 				<li><a href="index" id="links">Home</a></li>
 				<li><a href="shop"   id="links">Shop</a></li>

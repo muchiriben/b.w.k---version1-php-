@@ -10,11 +10,17 @@ if(isset($_POST['send'])){
 	$email = mysqli_real_escape_string($conn, $_POST['mail']);
 	$phone = mysqli_real_escape_string($conn, $_POST['phone']);
 	$message = mysqli_real_escape_string($conn, $_POST['message']);
-$mes="INSERT INTO `messages`(`fname`,`sname`,`email`, `phone`,`message`) VALUES ('$fname','$sname','$email','$phone','$message')";
-$sql = mysqli_query($conn,$mes);
-if ($sql) {
-	header('location:index');
+$mes="INSERT INTO `messages`(`fname`,`sname`,`email`, `phone`,`message`) VALUES (?,?,?,?,?)";
+$stmt = mysqli_stmt_init($conn);
+if(!mysqli_stmt_prepare($stmt, $mes)){
+	echo "error";
+} else {
+
+	mysqli_stmt_bind_param($stmt, "sssss" , $fname,$sname,$email,$phone,$message);
+    mysqli_stmt_execute($stmt);
+    header('location:index');
 }
+
 
 }
 
@@ -56,7 +62,7 @@ if ($sql) {
         </div>
         <div class="slide">
           <h1>What you looking for?</h1><br>
-          <h2>Find Dealerships, riding schools and garages</h2><br>
+          <h2>Dealerships, riding schools and garages</h2><br>
           <a href="schools">LearnToRide</a>
         </div>
         <div class="slide">
@@ -89,7 +95,7 @@ if ($sql) {
 					<p>Need a motorcycle for 24hrs? Rent out your motorcylces and earn money.</p>
 				</div>
 				<div class="Services">
-					<a href="school">LearnToRide</a>
+					<a href="schools">LearnToRide</a>
 					<p>Want to learn how to ride? View all the best riding schools available in Kenya.</p>
 				</div>
 				<div class="Services">

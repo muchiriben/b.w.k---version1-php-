@@ -114,8 +114,8 @@ if (!isset($_SESSION['last_id'])) {
 				<input type="password" name="pass" placeholder="password" required><br>
 				<input type="submit" name="login" value="LOGIN">
 			</form>
-			<font color="#fff" size="5px">Don't have an account? <a href="signup"> Sign Up</a></font><br><br>
-			<font color="#fff" size="5px"><a href="getpassword">Forgot your password?</a></font>
+			<font color="#fff" size="4px">Don't have an account? <a href="signup"> Sign Up</a></font><br><br>
+			<font color="#fff" size="4px"><a href="getpassword">Forgot your password?</a></font>
 		</div>
 	</header>
   <?php require 'inc/cpt.php'; ?>

@@ -2,9 +2,11 @@
 session_start();
 require_once 'inc/conn.php';
 if (($_SESSION['login_user']) == null) {
-	header("Location:login");
+	header("Location:dealer_login");
 }
-
+if (($_SESSION['user_type']) == null) {
+  header("Location:dealer_login");
+}
 $user = $_SESSION['login_user'];
 $list = "SELECT * FROM profiles WHERE uname =?";
 //create prepares statement
@@ -148,7 +150,7 @@ $(document).ready(function(){
 
 <div class="cat">
     <select class="category">
-      <option class="option" value="bikes" selected="">Category</option>
+      <option class="option" value="" selected="">Category</option>
       <option class="option" value="bikes">Bikes</option>
       <option class="option" value="gears">Gears</option>
       <option class="option" value="parts">Parts</option>
@@ -195,7 +197,7 @@ $img4 = $row["frontim"];
    ?>
   
 <div class="listings">  
-<div class="img" id="top">
+<div class="img">
 <?php
 echo '<img src="data:image;base64,'.base64_encode( $img4 ).'" height="240px" width="440px">';
 ?>
@@ -215,7 +217,7 @@ $encode = "viewad?v=" .urlencode(base64_encode($encrypt));
 
 <a href="<?=$encode;?>" id="ref" name = "ref">View Listing</a>
 </div>
-<div class="img" id="bottom">
+<div class="img">
 <?php
 echo '<img src="data:image;base64,'.base64_encode( $img3 ).'" height="240px" width="440px">';
 ?>
@@ -296,7 +298,7 @@ $encode = "vgear?v=" .urlencode(base64_encode($encrypt));
 
 <a href="<?=$encode;?>" id="ref" name = "ref">View Listing</a>
 </div>
-<div class="img" id="bottom">
+<div class="img">
 <?php
 echo '<img src="data:image;base64,'.base64_encode( $img3 ).'" height="240px" width="440px">';
 ?>
@@ -375,7 +377,7 @@ $encode = "vpart?v=" .urlencode(base64_encode($encrypt));
 
 <a href="<?=$encode;?>" id="ref" name = "ref">View Listing</a>
 </div>
-<div class="img" id="bottom">
+<div class="img">
 <?php
 echo '<img src="data:image;base64,'.base64_encode( $img3 ).'" height="240px" width="440px">';
 ?>
@@ -453,7 +455,7 @@ $encode = "viewevent?v=" .urlencode(base64_encode($encrypt));
 
 <a href="<?=$encode;?>" id="ref" name = "ref">View Event</a>
 </div>
-<div class="img" id="bottom">
+<div class="img">
 <?php
 echo '<img src="data:image;base64,'.base64_encode( $row['poster2'] ).'" height="240px" width="440px">';
 ?>
@@ -533,7 +535,7 @@ $encode = "viewrental?v=" .urlencode(base64_encode($encrypt));
 
 <a href="<?=$encode;?>" id="ref" name = "ref">View Listing</a>
 </div>
-<div class="img" id="bottom">
+<div class="img">
 <?php
 echo '<img src="data:image;base64,'.base64_encode( $row['backim'] ).'" height="240px" width="440px">';
 ?>

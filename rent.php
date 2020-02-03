@@ -52,9 +52,9 @@ $img4 = $row["frontim"];
    ?>
   
 <div class="listings">  
-<div class="img">
+<div class="img" id="top">
 <?php
-echo '<img src="data:image;base64,'.base64_encode( $img4 ).'" height="240px" width="440px">';
+echo '<img src="data:image;base64,'.base64_encode( $img4 ).'">';
 ?>
 </div>
 
@@ -74,10 +74,10 @@ $encode = "viewrental?v=" .urlencode(base64_encode($encrypt));
 ?>
 
 <a href="<?=$encode;?>" id="ref" name = "ref">View Listing</a>
-</div>
-<div class="img">
+</div><br>
+<div class="img" id="bottom">
 <?php
-echo '<img src="data:image;base64,'.base64_encode( $img3 ).'" height="240px" width="440px">';
+echo '<img src="data:image;base64,'.base64_encode( $img3 ).'">';
 ?>
 </div>
 </div>

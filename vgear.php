@@ -41,6 +41,9 @@ $user = "SELECT * FROM users WHERE sid = '$sid'";
 <head>
    <title>ViewAD</title>
    <link rel="stylesheet" type="text/css" href="view.css">
+   <link href="https://fonts.googleapis.com/css?family=Ibarra+Real+Nova&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
   <header class="header">

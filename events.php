@@ -50,9 +50,9 @@ $poster2 = $row["poster2"];
    ?>
   
 <div class="listings">  
-<div class="img">
+<div class="img" id="top">
 <?php
-echo '<img src="data:image;base64,'.base64_encode( $poster1 ).'" height="240px" width="440px">';
+echo '<img src="data:image;base64,'.base64_encode( $poster1 ).'">';
 ?>
 </div>
 
@@ -71,10 +71,10 @@ $encode = "viewevent?v=" .urlencode(base64_encode($encrypt));
 ?>
 
 <a href="<?=$encode;?>" id="ref" name = "ref">View Event</a>
-</div>
-<div class="img">
+</div><br>
+<div class="img" id="bottom">
 <?php
-echo '<img src="data:image;base64,'.base64_encode( $poster2 ).'" height="240px" width="440px">';
+echo '<img src="data:image;base64,'.base64_encode( $poster2 ).'">';
 ?>
 </div>
 </div>
