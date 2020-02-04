@@ -10,11 +10,11 @@ $error = null;
       $myusername = mysqli_real_escape_string($conn, $_POST['uname']);
       $mypassword = mysqli_real_escape_string($conn, md5($_POST['pass'])); 
       
-      $sql = "SELECT sid FROM users WHERE uname =? and pass =? ";
+      $sql = "SELECT * FROM dealers WHERE dname =? and pass =? ";
       $stmt = mysqli_stmt_init($conn);
        //prepare stmt
        if (!mysqli_stmt_prepare($stmt, $sql)) {
-          echo "SQL STATEMENT FAILED";
+          echo "SQL STATEMENT FAILED1";
        } else {
            //bind parameters to placeholder
            mysqli_stmt_bind_param($stmt, "ss", $myusername , $mypassword);
@@ -23,7 +23,8 @@ $error = null;
            $result = mysqli_stmt_get_result($stmt);
            $count = mysqli_num_rows($result);
             while($row = mysqli_fetch_assoc($result)) {
-               $sid = $row['sid'];
+               $did = $row['did'];
+               $profilepic = $row['logo'];
             }
          } 
       
@@ -31,7 +32,7 @@ $error = null;
       // If result matched $myusername and $mypassword, table row must be 1 row
       if($count == 1) {
          $_SESSION['login_user'] = $myusername;
-         $_SESSION['user_type'] = 'user';
+         $_SESSION['user_type'] = 'dealer';
          //redirect to admin page if login is by admin
          if ($_SESSION['login_user'] == "AdMiN") {
            header("location:admin");
@@ -39,14 +40,14 @@ $error = null;
          //for normal users
          else{
 
-
-         $last_id = $sid;
+    
+         $last_id = $did;
           //set profile information if not yet
-         $select="SELECT * FROM `profiles` WHERE sid =? ";
+         $select="SELECT * FROM `dprofile` WHERE did =? ";
          $stmt = mysqli_stmt_init($conn);
        //prepare stmt
        if (!mysqli_stmt_prepare($stmt, $select)) {
-          echo "SQL STATEMENT FAILED";
+          echo "SQL STATEMENT FAILED2";
        } else {
            //bind parameters to placeholder
            mysqli_stmt_bind_param($stmt, "i", $last_id);
@@ -59,19 +60,21 @@ $error = null;
         if ($num == 0){
 
            //profile not set up
-            $profile = "INSERT INTO `profiles` (`sid`,`uname`) VALUES (?,?)";
+            $profile = "INSERT INTO `dprofile` (`did`,`dname`,`profilepic`) VALUES (?,?,?)";
             $stmt = mysqli_stmt_init($conn);
             if (!mysqli_stmt_prepare($stmt, $profile)) {
               echo "Errorr";
             } else {
-              mysqli_stmt_bind_param($stmt, "is" , $last_id,$myusername);
+              $null = NULL;
+              mysqli_stmt_bind_param($stmt, "isb" , $last_id,$myusername,$null);
+              $stmt->send_long_data(2, $profilepic);
               mysqli_stmt_execute($stmt);
               header("Location:index");
             }
-
+ 
         }
         else{
-         
+
             header("Location:index");
             //For security purposes die
             die();
@@ -85,9 +88,6 @@ $error = null;
 }  else {
          $error = "Your Login Name or Password is invalid";
         }
-
-
-
 
 }    
 ?>
@@ -128,9 +128,9 @@ $error = null;
     </select>
   </div>
 		<div class="form">
-			<h1>LOGIN</h1><br>
+			<h1>DEALER LOGIN</h1><br>
       <font size="5" color="#fff"><?php echo $error; ?></font><br>
-			<form action="login.php" method="POST">
+			<form action="dealer_login.php" method="POST">
 				<input type="text" name="uname" placeholder="Username" required><br>
 				<input type="password" name="pass" placeholder="password" required><br>
 				<input type="submit" name="login" value="LOGIN">

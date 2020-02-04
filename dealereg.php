@@ -1,6 +1,6 @@
 <?php 
 session_start();
-require_once "inc/conn.php";
+require "inc/conn.php";
 
 if (($_SESSION['login_user']) == null) {
   header("Location:login");
@@ -86,7 +86,7 @@ $stmt->send_long_data(11, $imagetmp1);
   
 mysqli_stmt_execute($stmt);
 
-header('location:dealer');
+header('location:dealer_login');
             
                             }
         

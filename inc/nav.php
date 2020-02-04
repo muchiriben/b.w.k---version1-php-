@@ -32,7 +32,16 @@
 				<li><a href="events" id="links">Events</a></li>
 				<li><a href="dealer" id="links">Dealerships</a></li>
 				<li><a href="garages" id="links">Garages</a></li>
-		        <li><a href="myprofile" id="links">MyProfile</a></li>
+                
+				<?php if(isset($_SESSION['user_type'])) {
+				if ($_SESSION['user_type'] == 'user') { ?>
+				<li><a href="myprofile" id="links">MyProfile</a></li>
+                <?php } else if ($_SESSION['user_type'] == 'dealer') { ?>
+                <li><a href="dealer_profile" id="links">Profile</a></li>           
+                <?php } } else { ?>
+                <li><a href="myprofile" id="links">MyProfile</a></li>
+                <?php } ?>
+		        
 		        <li><a href="aboutus" id="links">AboutUs</a></li>
 		        <?php 
            if (isset($_SESSION['login_user'])) {

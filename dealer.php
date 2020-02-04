@@ -70,9 +70,14 @@ if ($slogan != null) {
    if ($web != null) {
      echo "<a href='" .$web. "'>Website</a>";
    }
- ?> 
- 
-<a href="dprofile?id=<?php echo $row["did"];?>" id="ref" name = "ref">Our Listings</a>
+
+/* encrypt url */
+$data = $did;
+$encrypt = $data*201820192020007;
+$encode = "dealer_profile?v=" .urlencode(base64_encode($encrypt));
+?>
+
+<a href="<?=$encode;?>" id="ref" name = "ref">Our Listings</a>
 </div>
 </div>
 
