@@ -98,7 +98,7 @@ echo '<img src="data:image;base64,'.base64_encode( $img4 ).'" >';
 
 <?php
 /* encrypt url */
-$data = $row["adid"];
+$data = $adid;
 $encrypt = $data*201820192020007;
 $encode = "viewad?v=" .urlencode(base64_encode($encrypt));
 ?>

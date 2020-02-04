@@ -104,7 +104,7 @@ echo '<div class="img">
       <th>
         <td><?php
 /* encrypt url */
-$data = $row["sid"];
+$data = $sid;
 $encrypt = $data*201820192020007;
 $encode = "myprofile?v=" .urlencode(base64_encode($encrypt));
 ?>

@@ -264,22 +264,34 @@ outline: none;
 	width: 100%;	
 }
 .noad{
-	width: 100%;
-    height: 100px;
-	margin-top: 20px;
-	text-align: center;
+	display: block;
+	width:100%;
+	height:200px;
+	margin-top: 40px;
+	padding-bottom: 20px;
 }
 .noad p{
      font-size: 30px;
      color: #fff;
 }
 .noad a{
-     margin-left: 44%;
+	 text-decoration-line: none;
+font-size: 20px;
+color:#fff;
+border:none;
+background-color: #3498db;
+text-align: center;
+border: 2px solid #fff;
+padding: 5px 20px;
+border-radius: 24px;
+margin-top: 30px;
+margin-right: 40px;
 }
 
 
 /* content area*/
 .cont{
+	width: 100%;
 	margin-top: 10px;
 }
 .cont h1{
@@ -319,7 +331,7 @@ outline: none;
     color: #fff;
     font-size: 20px;
 }
-.desc a{
+.cont a{
 text-decoration-line: none;
 font-size: 20px;
 color:#fff;
@@ -491,22 +503,22 @@ margin-right: 40px;
 	margin-bottom: 20px; 
 }
 .media{
+	width: calc(100% / 1);
     border-right: none; 
 	border-bottom:1px solid #585858;
-    width:400px;  
-    height: auto;
+     height: auto;
     margin-bottom: 20px;
     }
 .contact{
+	width: calc(100% / 1);
 	border-right: none;
 	border-bottom:1px solid #585858;
-    width:400px; 
     height: auto;
      margin-bottom: 20px;
     }
 .download{
-	width:400px; 
-    height: auto;
+	width: calc(100% / 1);
+	height: auto;
     margin-bottom: 20px;
     }
 }
@@ -593,4 +605,47 @@ margin-right: 40px;
 	.logo p{
 		font-size: 40px;
 	}
+	.copyall{
+	margin-left: 5px;
+}
+.terms{
+	margin-left: 5px;
+}
+.media{
+   margin-left: 5px;
+}
+.contact{
+   margin-left: 5px;
+}
+.download{
+   margin-left: 5px;
+}
+.contact h3{
+	font-size: 12px;
+	margin: 10px;
+}
+.btn{
+	width: 40px;
+	height: 40px;
+	margin: 8px; 
+}
+.terms h3{
+	font-size: 12px;
+	margin-left:60px;
+	margin-right: 60px;
+	margin-top: 10px;
+}
+.terms a{
+	font-size: 12px;
+	margin-left:60px;
+	margin-right: 60px;
+	margin-top: 10px;
+}
+.download a{
+	padding: 4px 10px;
+	font-size: 12px;
+	margin-top: 10px;
+	margin-left: 10px;
+	width: 130px; 
+}
 }

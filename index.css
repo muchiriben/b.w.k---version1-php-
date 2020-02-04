@@ -392,6 +392,7 @@ input[name="r"]{
 /*cpt section*/
 .copyright{
 	height: 150px;
+	width: 100%;
 	border: solid 1px #fff;
 	background-color: #000;
 	opacity: .9;
@@ -569,19 +570,19 @@ input[name="r"]{
 .media{
     border-right: none; 
 	border-bottom:1px solid #585858;
-    width:400px;  
+   width: calc(100% / 1); 
     height: auto;
     margin-bottom: 20px;
     }
 .contact{
 	border-right: none;
 	border-bottom:1px solid #585858;
-    width:400px; 
+   width: calc(100% / 1);
     height: auto;
      margin-bottom: 20px;
     }
 .download{
-	width:400px; 
+	width: calc(100% / 1); 
     height: auto;
     margin-bottom: 20px;
     }

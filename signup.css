@@ -423,21 +423,21 @@ padding:20px;
 	margin-bottom: 20px; 
 }
 .media{
+	width: calc(100% / 1);
     border-right: none; 
 	border-bottom:1px solid #585858;
-    width:400px;  
     height: auto;
     margin-bottom: 20px;
     }
 .contact{
+	width: calc(100% / 1);
 	border-right: none;
 	border-bottom:1px solid #585858;
-    width:400px; 
     height: auto;
      margin-bottom: 20px;
     }
 .download{
-	width:400px; 
+	width: calc(100% / 1);
     height: auto;
     margin-bottom: 20px;
     }
@@ -458,5 +458,48 @@ padding:20px;
     }
     .form input[name = 'uname']{
     width: 280px;
+}
+    .copyall{
+	margin-left: 5px;
+}
+.terms{
+	margin-left: 5px;
+}
+.media{
+   margin-left: 5px;
+}
+.contact{
+   margin-left: 5px;
+}
+.download{
+   margin-left: 5px;
+}
+.contact h3{
+	font-size: 12px;
+	margin: 10px;
+}
+.btn{
+	width: 40px;
+	height: 40px;
+	margin: 8px; 
+}
+.terms h3{
+	font-size: 12px;
+	margin-left:60px;
+	margin-right: 60px;
+	margin-top: 10px;
+}
+.terms a{
+	font-size: 12px;
+	margin-left:60px;
+	margin-right: 60px;
+	margin-top: 10px;
+}
+.download a{
+	padding: 4px 10px;
+	font-size: 12px;
+	margin-top: 10px;
+	margin-left: 10px;
+	width: 130px; 
 }
 }

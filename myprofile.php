@@ -5,7 +5,11 @@ if (($_SESSION['login_user']) == null) {
 	header("Location:login");
 }
 
-$user = $_SESSION['login_user'];
+
+/* view profile */
+if (!isset($_GET['v'])) {
+  
+     $user = $_SESSION['login_user'];
 $list = "SELECT * FROM profiles WHERE uname =?";
 //create prepares statement
        $stmt = mysqli_stmt_init($conn);
@@ -25,16 +29,16 @@ $list = "SELECT * FROM profiles WHERE uname =?";
                  $profilepic = $row['profilepic'];
             } 
               }
+                   
+} else {
 
-/* view profile */
-if (isset($_GET['v'])) {
-$data = $_GET['v'];
+     $data = $_GET['v'];
 
 /*decrypt url*/
   $data2 = base64_decode(urldecode($data));
   $decrypt = $data2/201820192020007;
   $post_id = $decrypt;
-
+    
   $list = "SELECT * FROM profiles WHERE sid =?";
 //create prepares statement
        $stmt = mysqli_stmt_init($conn);
@@ -227,8 +231,8 @@ echo '<img src="data:image;base64,'.base64_encode( $img3 ).'" height="240px" wid
 }else{ ?>
         
      <div class='noad'>
-         <p>You Currently Have No Motorcycle Listings!!!!</p>
-         <a href="postevent">Post Event</a>
+         <p>You Currently Have No Motorcycle Listings!!!!</p><br><br>
+         <a href="bikead" id="ref" name="ref">Post Listing</a>
      </div>   
 
 <?php 
@@ -237,7 +241,7 @@ echo '<img src="data:image;base64,'.base64_encode( $img3 ).'" height="240px" wid
 ?>
 </div>
   </div>
-</div>
+
 
 <!----gears section---->
 <div id="gears" class="gears">
@@ -308,8 +312,8 @@ echo '<img src="data:image;base64,'.base64_encode( $img3 ).'" height="240px" wid
 }else{ ?>
         
      <div class='noad'>
-         <p>You Currently Have No Gear Listings!!!!</p>
-         <a href="gearad">SellGear</a>
+         <p>You Currently Have No Gear Listings!!!!</p><br><br>
+         <a href="gearad" id="ref" name="ref">SellGear</a>
      </div>   
 
 <?php 
@@ -387,8 +391,8 @@ echo '<img src="data:image;base64,'.base64_encode( $img3 ).'" height="240px" wid
 }else{ ?>
         
      <div class='noad'>
-         <p>You Currently Have No Parts Listings!!!!</p>
-         <a href="partsad">SellParts</a>
+         <p>You Currently Have No Parts Listings!!!!</p><br><br>
+         <a href="partsad" id="ref" name="ref">SellParts</a>
      </div>   
 
 <?php 
@@ -465,8 +469,8 @@ echo '<img src="data:image;base64,'.base64_encode( $row['poster2'] ).'" height="
 }else{ ?>
         
      <div class='noad'>
-         <p>You Currently Have No Events Posted!!!!</p>
-         <a href="postevent">Post Event</a>
+         <p>You Currently Have No Events Posted!!!!</p><br><br>
+         <a href="postevent" id="ref" name="ref">Post Event</a>
      </div>   
 
 <?php
@@ -475,7 +479,6 @@ echo '<img src="data:image;base64,'.base64_encode( $row['poster2'] ).'" height="
 ?>
 </div>
     </div>
-</div>
 
 <!----rentals section---->
 <div class="rentals">
@@ -545,8 +548,8 @@ echo '<img src="data:image;base64,'.base64_encode( $row['backim'] ).'" height="2
 }else{ ?>
         
      <div class='noad'>
-         <p>You Currently Have No Motorcycles up for Rent!!!!</p>
-         <a href="rentad">RentYourBike</a>
+         <p>You Currently Have No Motorcycles up for Rent!!!!</p><br><br>
+         <a href="rentad" id="ref" name="ref">RentYourBike</a>
      </div>   
 
 <?php 
