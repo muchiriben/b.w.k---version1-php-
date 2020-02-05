@@ -5,8 +5,9 @@ if (($_SESSION['login_user']) == null) {
   header("Location:login");
 }
 
-require_once "inc/conn.php";
+require "inc/conn.php";
 $myusername = $_SESSION['login_user'];
+$usertype = $_SESSION['user_type'];
 $pmenu = $cmenu = null;
 if (isset($_GET["make"]) && is_numeric($_GET["make"])) {
     $pmenu = $_GET["make"];
@@ -60,7 +61,8 @@ if ($ext["extension"] == "jpg" || $ext["extension"] == "jpeg" || $ext["extension
       exit();
 }
 
- $sidq = "SELECT sid FROM users WHERE uname =? ";
+if($usertype == 'user') {
+    $sidq = "SELECT sid FROM users WHERE uname =? ";
   //create prepares statement
        $stmt = mysqli_stmt_init($conn);
        //prepare stmt
@@ -73,9 +75,28 @@ if ($ext["extension"] == "jpg" || $ext["extension"] == "jpeg" || $ext["extension
            mysqli_stmt_execute($stmt);
            $result = mysqli_stmt_get_result($stmt);
             while($row = mysqli_fetch_assoc($result)) {
-               $sid = $row["sid"];
+               $by_id = $row["sid"];
             }
          } 
+} elseif ($usertype == 'dealer') {
+     $sidq = "SELECT did FROM dealers WHERE dname =? ";
+  //create prepares statement
+       $stmt = mysqli_stmt_init($conn);
+       //prepare stmt
+       if (!mysqli_stmt_prepare($stmt, $sidq)) {
+          echo "SQL STATEMENT FAILED";
+       } else {
+           //bind parameters to placeholder
+           mysqli_stmt_bind_param($stmt, "s", $myusername);
+           //run parameters inside database
+           mysqli_stmt_execute($stmt);
+           $result = mysqli_stmt_get_result($stmt);
+            while($row = mysqli_fetch_assoc($result)) {
+               $by_id = $row["did"];
+            }
+         } 
+}
+ 
 
 $sq = "SELECT name FROM maketable WHERE mid =? ";
  //create prepares statement
@@ -97,7 +118,7 @@ $sq = "SELECT name FROM maketable WHERE mid =? ";
 
 /* insert into databse */
 
- $sell="INSERT INTO `uploads`(`sid`, `make`, `model`, `year`, `price`, `contact`, `body_type`, `mileage`, `trans_type`, `bike_condition`, `engine_size`, `color`,`frontim`, `leftim`, `rightim` ,`backim`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+ $sell="INSERT INTO `uploads`(`by_id`,`user_type`, `make`, `model`, `year`, `price`, `contact`, `body_type`, `mileage`, `trans_type`, `bike_condition`, `engine_size`, `color`,`frontim`, `leftim`, `rightim` ,`backim`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
  
 $null = NULL;        
 $stmt = mysqli_stmt_init($conn);
@@ -105,12 +126,12 @@ if (!mysqli_stmt_prepare($stmt, $sell)) {
   echo "SQL error";
   exit();
 } else {
-  mysqli_stmt_bind_param($stmt, "issiississssbbbb", $sid,$makename,$model,$year,$price,$contact,$body,$mileage,$trans,$condition,$size,$color,$null,$null,$null,$null);
+  mysqli_stmt_bind_param($stmt, "isssiississssbbbb", $by_id,$usertype,$makename,$model,$year,$price,$contact,$body,$mileage,$trans,$condition,$size,$color,$null,$null,$null,$null);
 
-$stmt->send_long_data(12, $imagetmp1);
-$stmt->send_long_data(13, $imagetmp2);
-$stmt->send_long_data(14, $imagetmp3);
-$stmt->send_long_data(15, $imagetmp4);
+$stmt->send_long_data(13, $imagetmp1);
+$stmt->send_long_data(14, $imagetmp2);
+$stmt->send_long_data(15, $imagetmp3);
+$stmt->send_long_data(16, $imagetmp4);
 
 mysqli_stmt_execute($stmt);
 

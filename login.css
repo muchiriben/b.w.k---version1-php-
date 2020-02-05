@@ -125,8 +125,7 @@ padding:20px;
 
 .cat{
 	float: right;
-	margin-top: 20px;
-	margin-bottom: 10px;
+	margin-top: 15px;
 	width: 100%;
     height: auto;
 }
@@ -138,19 +137,20 @@ padding:20px;
 }
 .category{
 	float: right;
-	margin-right: 50px;
+	margin-right: 70px;
     border:none;
-	background: #fff;
+	background: #3498db;
 	display:inline-block;
-	border: 2px solid #3498db;
+	border: 2px solid #fff;
 	padding: 10px 10px;
-	width: 200px;
+	width: 170px;
 	border-radius: 24px;
 	transition: 0.25s;
-	color: #3498db;
-    font-size: 16px;
+	color: #fff;
+    font-size: 14px;
 	outline: none;
 }
+
 
 .form{
 	margin-top: 30px;

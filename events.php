@@ -1,7 +1,7 @@
 <?php 
 session_start();
 $_SESSION['from'] = "events";
-require_once "inc/conn.php";
+require "inc/conn.php";
 ?>
 <!DOCTYPE html>
 <html>
@@ -84,7 +84,6 @@ echo '<img src="data:image;base64,'.base64_encode( $poster2 ).'">';
 }
 ?>
 </div>
-    </div>
 </header>
 <?php require_once 'inc/cpt.php';?>
 </body>

@@ -5,7 +5,8 @@ if (($_SESSION['login_user']) == null) {
 }
 $_SESSION['from'] = "postev";
 require_once "inc/conn.php";
-$myusername = $_SESSION['login_user']; 
+$myusername = $_SESSION['login_user'];
+$usertype = $_SESSION['user_type']; 
 if(isset($_POST['save'])){
 
 $evname = mysqli_real_escape_string($conn, $_POST["evname"]);
@@ -30,7 +31,8 @@ if ($ext["extension"] == "jpg" || $ext["extension"] == "jpeg" || $ext["extension
       exit();
 }
    
-$sidq = "SELECT sid FROM users WHERE uname =? ";
+if($usertype == 'user') {
+    $sidq = "SELECT sid FROM users WHERE uname =? ";
   //create prepares statement
        $stmt = mysqli_stmt_init($conn);
        //prepare stmt
@@ -46,19 +48,37 @@ $sidq = "SELECT sid FROM users WHERE uname =? ";
                $by_id = $row["sid"];
             }
          } 
+} elseif ($usertype == 'dealer') {
+     $sidq = "SELECT did FROM dealers WHERE dname =? ";
+  //create prepares statement
+       $stmt = mysqli_stmt_init($conn);
+       //prepare stmt
+       if (!mysqli_stmt_prepare($stmt, $sidq)) {
+          echo "SQL STATEMENT FAILED";
+       } else {
+           //bind parameters to placeholder
+           mysqli_stmt_bind_param($stmt, "s", $myusername);
+           //run parameters inside database
+           mysqli_stmt_execute($stmt);
+           $result = mysqli_stmt_get_result($stmt);
+            while($row = mysqli_fetch_assoc($result)) {
+               $by_id = $row["did"];
+            }
+         } 
+}
 
 
-$sell="INSERT INTO `events`(`by_id`,`evname`, `held_by`, `date`,`location`,`description`,`contact`,`poster1`, `poster2`) VALUES (?,?,?,?,?,?,?,?,?)";
+$sell="INSERT INTO `events`(`by_id`,`user_type`,`evname`, `held_by`, `date`,`location`,`description`,`contact`,`poster1`, `poster2`) VALUES (?,?,?,?,?,?,?,?,?,?)";
 
 $null = NULL;
 $stmt = mysqli_stmt_init($conn);
 if (!mysqli_stmt_prepare($stmt, $sell)) {
   echo "SQL error";
 } else {
-  mysqli_stmt_bind_param($stmt, "issssssbb",$by_id,$evname,$held_by,$date,$location,$description,$contact,$null,$null);
+  mysqli_stmt_bind_param($stmt, "isssssssbb",$by_id,$usertype,$evname,$held_by,$date,$location,$description,$contact,$null,$null);
 
-$stmt->send_long_data(7, $imagetmp1);
-$stmt->send_long_data(8, $imagetmp2);
+$stmt->send_long_data(8, $imagetmp1);
+$stmt->send_long_data(9, $imagetmp2);
 
 mysqli_stmt_execute($stmt);
 

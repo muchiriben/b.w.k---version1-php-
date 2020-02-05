@@ -65,7 +65,7 @@ $(document).ready(function(){
 
            while($row = mysqli_fetch_assoc($result)) {
 $adid = $row["adid"];
-$sid = $row["sid"];
+$sid = $row["by_id"];
 $make = $row["make"];
 $model =$row["model"];
 $year = $row["year"];
@@ -118,7 +118,6 @@ echo '<img src="data:image;base64,'.base64_encode( $img3 ).'">';
 ?>
                   
 </div>
-  </div>
 </header>
 <?php include_once 'inc/cpt.php';  ?>
 </body>

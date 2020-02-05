@@ -7,6 +7,7 @@ if (($_SESSION['login_user']) == null) {
 
 require "inc/conn.php";
 $myusername = $_SESSION['login_user'];
+$usertype = $_SESSION['user_type'];
 $pmenu = $cmenu = null;
 if (isset($_GET["make"]) && is_numeric($_GET["make"])) {
     $pmenu = $_GET["make"];
@@ -56,7 +57,8 @@ if ($ext["extension"] == "jpg" || $ext["extension"] == "jpeg" || $ext["extension
 }
 
 
- $sidq = "SELECT sid FROM users WHERE uname =? ";
+ if($usertype == 'user') {
+    $sidq = "SELECT sid FROM users WHERE uname =? ";
   //create prepares statement
        $stmt = mysqli_stmt_init($conn);
        //prepare stmt
@@ -69,9 +71,27 @@ if ($ext["extension"] == "jpg" || $ext["extension"] == "jpeg" || $ext["extension
            mysqli_stmt_execute($stmt);
            $result = mysqli_stmt_get_result($stmt);
             while($row = mysqli_fetch_assoc($result)) {
-               $sid = $row["sid"];
+               $by_id = $row["sid"];
             }
          } 
+} elseif ($usertype == 'dealer') {
+     $sidq = "SELECT did FROM dealers WHERE dname =? ";
+  //create prepares statement
+       $stmt = mysqli_stmt_init($conn);
+       //prepare stmt
+       if (!mysqli_stmt_prepare($stmt, $sidq)) {
+          echo "SQL STATEMENT FAILED";
+       } else {
+           //bind parameters to placeholder
+           mysqli_stmt_bind_param($stmt, "s", $myusername);
+           //run parameters inside database
+           mysqli_stmt_execute($stmt);
+           $result = mysqli_stmt_get_result($stmt);
+            while($row = mysqli_fetch_assoc($result)) {
+               $by_id = $row["did"];
+            }
+         } 
+}
 
 $sq = "SELECT name FROM maketable WHERE mid =? ";
  //create prepares statement
@@ -91,19 +111,19 @@ $sq = "SELECT name FROM maketable WHERE mid =? ";
          } 
 
 
- $sellpart="INSERT INTO `puploads`(`sid`, `make`, `model`,`year`,`type`,`pname`,`price`, `contact`,`frontim`, `leftim`, `rightim` ,`backim`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+ $sellpart="INSERT INTO `puploads`(`by_id`,`user_type`, `make`, `model`,`year`,`type`,`pname`,`price`, `contact`,`frontim`, `leftim`, `rightim` ,`backim`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
 $null = NULL;
 $stmt = mysqli_stmt_init($conn);
 if (!mysqli_stmt_prepare($stmt, $sellpart)) {
   echo "SQL error";
 } else {
-mysqli_stmt_bind_param($stmt, "ississisbbbb", $sid,$makename,$model,$price,$type,$pname,$price,$contact,$null,$null,$null,$null);
+mysqli_stmt_bind_param($stmt, "isssissisbbbb", $by_id,$usertype,$makename,$model,$price,$type,$pname,$price,$contact,$null,$null,$null,$null);
 
-$stmt->send_long_data(8, $imagetmp1);
-$stmt->send_long_data(9, $imagetmp2);
-$stmt->send_long_data(10, $imagetmp3);
-$stmt->send_long_data(11, $imagetmp4);
+$stmt->send_long_data(9, $imagetmp1);
+$stmt->send_long_data(10, $imagetmp2);
+$stmt->send_long_data(11, $imagetmp3);
+$stmt->send_long_data(12, $imagetmp4);
 
 mysqli_stmt_execute($stmt); 
   

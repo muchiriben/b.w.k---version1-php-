@@ -3,7 +3,7 @@ session_start();
 require 'inc/conn.php';
 //error message for login
 $error = null;
-
+$_SESSION['from'] = 'dealer_login';
 
    if(isset($_POST['login'])) {
       // username and password sent from form 
@@ -25,6 +25,7 @@ $error = null;
             while($row = mysqli_fetch_assoc($result)) {
                $did = $row['did'];
                $profilepic = $row['logo'];
+               $bio = $row['slogan'];
             }
          } 
       
@@ -60,13 +61,13 @@ $error = null;
         if ($num == 0){
 
            //profile not set up
-            $profile = "INSERT INTO `dprofile` (`did`,`dname`,`profilepic`) VALUES (?,?,?)";
+            $profile = "INSERT INTO `dprofile`(`did`,`dname`,`profilepic`,`bio`) VALUES (?,?,?,?)";
             $stmt = mysqli_stmt_init($conn);
             if (!mysqli_stmt_prepare($stmt, $profile)) {
               echo "Errorr";
             } else {
               $null = NULL;
-              mysqli_stmt_bind_param($stmt, "isb" , $last_id,$myusername,$null);
+              mysqli_stmt_bind_param($stmt, "isbs" , $last_id,$myusername,$null,$bio);
               $stmt->send_long_data(2, $profilepic);
               mysqli_stmt_execute($stmt);
               header("Location:index");
@@ -121,10 +122,9 @@ $error = null;
 		<?php require 'inc/nav.php'; ?>
     <div class="cat">
     <select class="category">
-      <option class="option" value="user">Login As</option>
-      <option class="option" value="user">Individual User</option>
+      <option class="option" value="user">Login As:</option>
+      <option class="option" value="user">User</option>
       <option class="option" value="dealer">Dealership</option>
-      <option class="option" value="garage">Garage</option>
     </select>
   </div>
 		<div class="form">
@@ -135,8 +135,8 @@ $error = null;
 				<input type="password" name="pass" placeholder="password" required><br>
 				<input type="submit" name="login" value="LOGIN">
 			</form>
-			<font color="#fff" size="4px">Don't have an account? <a href="signup"> Sign Up</a></font><br><br>
-			<font color="#fff" size="4px"><a href="getpassword">Forgot your password?</a></font>
+			<font color="#fff" size="4px">Don't have an account? <a href="dealereg">Register Dealership</a></font><br>
+			<font color="#fff" size="4px"><a href="dealer_getpass">Forgot your password?</a></font>
 		</div>
 	</header>
   <?php require 'inc/cpt.php'; ?>

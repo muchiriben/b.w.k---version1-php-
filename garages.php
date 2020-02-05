@@ -69,12 +69,13 @@ if ($slogan != null) {
  <p><?php echo "Head Mechanic:\t" .$fname. " " .$lname; ?></p><br><br>
  <p><?php echo "Phone Number:\t" .$contact; ?></p><br><br>
  <p><?php echo "Email:\t" .$email; ?></p><br><br>
+
  <?php
    if ($web != null) {
-     echo "<a href='" .$web. "'>Website</a>";
+     echo "<a target='_blank' href='" .$web. "'>Website</a>";
    }
- ?>  
-<a href="gprofile?id=<?php echo $row["did"];?>" id="ref" name = "ref">Our Listings</a>
+ ?>
+
 </div>
 </div>
 

@@ -4,7 +4,7 @@ require 'inc/conn.php';
 $error = null;
 if (isset($_POST['get'])) {
   $user = mysqli_real_escape_string($conn, $_POST['uname']);
-  $select="SELECT * FROM `users` WHERE uname=? ";
+  $select="SELECT * FROM `dealers` WHERE dname=? ";
   $stmt = mysqli_stmt_init($conn);
        //prepare stmt
        if (!mysqli_stmt_prepare($stmt, $select)) {
@@ -21,7 +21,7 @@ if (isset($_POST['get'])) {
            $email = $row['email'];
          }
         }else{
-          $error = "Username not Found";
+          $error = "Dealer name not Found";
         }
       }
     
@@ -42,7 +42,7 @@ function random_strings($length_of_string)
 // Random string of length 8 
 $randpass = md5(random_strings(8));
 
-$edit ="UPDATE `users` SET pass=? , repass=? WHERE uname =? ";
+$edit ="UPDATE `dealers` SET pass=? , repass=? WHERE dname =? ";
 $stmt = mysqli_stmt_init($conn);
        //prepare stmt
        if (!mysqli_stmt_prepare($stmt, $edit)) {
@@ -68,11 +68,11 @@ require 'phpmailer/PHPMailerAutoload.php';
 
    $mail->Subject = "Reset Password";
    $mail->isHTML(true);
-   $mail->Body = "<b>Reset Password.<br>This is Private information!!<br><h1>Use password:</h1>" .$randpass. "</b>";
+   $mail->Body = "<b>Reset Password.<br>This is Private information!!<br><h1>Use password(Copy):</h1>" .$randpass. "</b>";
    $mail->setFrom('bikerworldkenya@gmail.com','BikerWorldKenya');
    $mail->addAddress($email); 
    if($mail->send()){
-    header("location:reset");
+    header("location:dealer_reset");
     echo "Mail sent";
    }else{
     echo "Mailer Error:" .$mail->ErrorInfo;
@@ -97,11 +97,11 @@ require 'phpmailer/PHPMailerAutoload.php';
 		<div class="form">
 			<h1>GET NEW PASSWORD</h1><br>
       <h2><?php echo $error ?></h2>
-			<form action="getpassword.php" method="post">
-				<input type="text" name="uname" id="uname" placeholder="Username"><br>
+			<form action="dealer_getpass.php" method="post">
+				<input type="text" name="uname" id="uname" placeholder="Dealer name"><br>
 				<input type="submit" name="get" id="uname" value="GET">
 			</form>
-			<font color="#fff" size="4px"><a href="changepass">Change Password</a></font>
+			<font color="#fff" size="4px"><a href="dealer_changepass">Change Password</a></font>
 		</div>
 	</header>
   <?php require 'inc/cpt.php'; ?>

@@ -8,7 +8,7 @@ if(isset($_POST['reset'])){
 	$pass = mysqli_real_escape_string($conn, md5($_POST['pass']));
 	$repass = mysqli_real_escape_string($conn, md5($_POST['repass']));
 
-	 $select="SELECT * FROM `users` WHERE uname=? ";
+	 $select="SELECT * FROM `dealers` WHERE dname=? ";
 	 $stmt = mysqli_stmt_init($conn);
        //prepare stmt
        if (!mysqli_stmt_prepare($stmt, $select)) {
@@ -27,7 +27,7 @@ if(isset($_POST['reset'])){
 
 
     if($provpass == $password){
-         $edit ="UPDATE `users` SET pass=? , repass=? WHERE uname =? ";
+         $edit ="UPDATE `dealers` SET pass=? , repass=? WHERE dname =? ";
            $stmt = mysqli_stmt_init($conn);
        //prepare stmt
        if (!mysqli_stmt_prepare($stmt, $edit)) {
@@ -38,7 +38,7 @@ if(isset($_POST['reset'])){
            //run parameters inside database
            mysqli_stmt_execute($stmt);   }
 
-           header("location:login");
+           header("location:dealer_login");
     }else{
     	$error = "Provided password or Username is invalid";
     }
@@ -61,7 +61,7 @@ if(isset($_POST['reset'])){
 		<?php require_once 'inc/nav.php'; ?>
 		<div class="form">
 			<h1>Password Reset</h1>
-			<form action="reset.php" method="post">
+			<form action="dealer_reset.php" method="post">
 				<font size="6" color="#fff">Check your registered email for Provided Password</font><br>
 				<font size="6" color="#fff"><?php echo $error; ?></font><br>
 				<input type="text" name="uname" placeholder="Username" required><br>

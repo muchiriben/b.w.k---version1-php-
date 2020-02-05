@@ -1,7 +1,7 @@
 <?php 
 session_start();
 $_SESSION['from'] = "gears";
-require_once "inc/conn.php";
+require "inc/conn.php";
 
 ?>
 <!DOCTYPE html>
@@ -62,7 +62,7 @@ $(document).ready(function(){
            
             while($row = mysqli_fetch_assoc($result)) {
 $gid = $row["gid"];
-$sid = $row["sid"];
+$sid = $row["by_id"];
 $cate = $row["cate"];
 $type =$row["type"];
 $brand = $row["brand"];
@@ -113,7 +113,7 @@ echo '<img src="data:image;base64,'.base64_encode( $img3 ).'">';
 }
 ?>
 </div>
-	</div>
+
 </header>
 <?php require_once 'inc/cpt.php'; ?>
 </body>

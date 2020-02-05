@@ -68,7 +68,7 @@ if ($slogan != null) {
  <p><?php echo "Email:\t" .$email; ?></p><br><br>
  <?php
    if ($web != null) {
-     echo "<a href='" .$web. "'>Website</a>";
+     echo "<a target='_blank' href='" .$web. "'>Website</a>";
    }
 
 /* encrypt url */

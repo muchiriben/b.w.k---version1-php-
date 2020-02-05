@@ -4,14 +4,15 @@ require_once 'inc/conn.php';
 if (($_SESSION['login_user']) == null) {
   header("Location:dealer_login");
 }
+$usertype = 'dealer';
 
 /* view profile */
 if (!isset($_GET['v'])) {
 if (($_SESSION['user_type']) != 'dealer') {
   header("Location:dealer_login");
 }
-
-     $user = $_SESSION['login_user'];
+ 
+$user = $_SESSION['login_user'];
 $list = "SELECT * FROM dprofile WHERE dname =?";
 //create prepares statement
        $stmt = mysqli_stmt_init($conn);
@@ -25,8 +26,8 @@ $list = "SELECT * FROM dprofile WHERE dname =?";
            mysqli_stmt_execute($stmt);
            $result = mysqli_stmt_get_result($stmt);
             while($row = mysqli_fetch_assoc($result)) {
-                 $did = $row['did'];
-                 $dname = $row['dname'];
+                 $sid = $row['did'];
+                 $uname = $row['dname'];
                  $bio = $row['bio'];
                  $profilepic = $row['profilepic'];
             } 
@@ -40,7 +41,7 @@ $list = "SELECT * FROM dprofile WHERE dname =?";
   $data2 = base64_decode(urldecode($data));
   $decrypt = $data2/201820192020007;
   $post_id = $decrypt;
- 
+    
   $list = "SELECT * FROM dprofile WHERE did =?";
 //create prepares statement
        $stmt = mysqli_stmt_init($conn);
@@ -54,8 +55,8 @@ $list = "SELECT * FROM dprofile WHERE dname =?";
            mysqli_stmt_execute($stmt);
            $result = mysqli_stmt_get_result($stmt);
             while($row = mysqli_fetch_assoc($result)) {
-                 $did = $row['did'];
-                 $dname = $row['dname'];
+                 $sid = $row['did'];
+                 $uname = $row['dname'];
                  $bio = $row['bio'];
                  $profilepic = $row['profilepic'];
             } 
@@ -134,7 +135,7 @@ $(document).ready(function(){
       echo '<img src="data:image;base64,'.base64_encode( $profilepic ).'" height="150px" width="200px"><br>';
     }
 ?>
-   <font color="#fff"><h2><?php echo $dname; ?></h2>
+   <font color="#fff"><h2><?php echo $uname; ?></h2>
      <h2><?php echo $bio; ?></h2></font>
   </div>
   </div>
@@ -166,9 +167,9 @@ $(document).ready(function(){
 <!----bikes section---->
 <div id="bikes" class="bikes">
   <div class="cont">
-    <h1>Motorcycles</h1>
-    <?php           
-       $list = "SELECT * FROM uploads WHERE sid =?";
+    <h1>Motorcycle Listings</h1>
+    <?php
+       $list = "SELECT * FROM uploads WHERE by_id =? AND user_type =?";
        //create prepares statement
        $stmt = mysqli_stmt_init($conn);
        //prepare stmt
@@ -176,13 +177,14 @@ $(document).ready(function(){
           echo "SQL STATEMENT FAILED";
        } else {
            //bind parameters to placeholder
-           mysqli_stmt_bind_param($stmt, "i", $sid);
+           mysqli_stmt_bind_param($stmt, "is", $sid,$usertype);
            //run parameters inside database
            mysqli_stmt_execute($stmt);
            $result = mysqli_stmt_get_result($stmt);
            if (mysqli_num_rows($result)>0){
             while($row = mysqli_fetch_assoc($result)) {
 $adid = $row["adid"];
+$sid = $row["by_id"];
 $make = $row["make"];
 $model =$row["model"];
 $year = $row["year"];
@@ -203,7 +205,7 @@ $img4 = $row["frontim"];
 <div class="listings">  
 <div class="img" id="top">
 <?php
-echo '<img src="data:image;base64,'.base64_encode( $img4 ).'" height="240px" width="440px">';
+echo '<img src="data:image;base64,'.base64_encode( $img4 ).'" >';
 ?>
 </div>
 <div class="desc">
@@ -211,20 +213,21 @@ echo '<img src="data:image;base64,'.base64_encode( $img4 ).'" height="240px" wid
  <p><?php echo "Model:\t" .$model; ?></p><br>
  <p><?php echo "Year:\t" .$year; ?></p><br>
  <p><?php echo "Price:\t" .$price; ?></p><br>
- <p><?php echo "Contact Me:\t" .$contact; ?></p><br>
+ <p><?php echo "Contact Me:\t" .$contact; ?></p><br><br>
+
 <?php
 /* encrypt url */
-$data = $row["adid"];
+$data = $adid;
 $encrypt = $data*201820192020007;
 $encode = "viewad?v=" .urlencode(base64_encode($encrypt));
 ?>
 
 <a href="<?=$encode;?>" id="ref" name = "ref">View Listing</a>
-</div>
-<div class="img" id="bottom">
+</div><br>
+   <div class="img" id="bottom">
 <?php
-echo '<img src="data:image;base64,'.base64_encode( $img3 ).'" height="240px" width="440px">';
-?>
+echo '<img src="data:image;base64,'.base64_encode( $img3 ).'">';
+?>                  
 </div>
 </div>
 
@@ -233,8 +236,12 @@ echo '<img src="data:image;base64,'.base64_encode( $img3 ).'" height="240px" wid
 }else{ ?>
         
      <div class='noad'>
-         <p>You Currently Have No Motorcycle Listings!!!!</p><br><br>
-         <a href="bikead" id="ref" name="ref">Post Listing</a>
+      <?php if (!isset($_GET['v'])) { ?>
+         <p>You Currently Have No Motorcycle on Sale!!!!</p><br><br>
+         <a href="partad" id="ref" name="ref">SellPart</a>
+      <?php } else { ?>
+         <p>They Currently Have No Motorcycle on Sale!!!!</p><br><br>
+      <?php } ?>
      </div>   
 
 <?php 
@@ -248,9 +255,9 @@ echo '<img src="data:image;base64,'.base64_encode( $img3 ).'" height="240px" wid
 <!----gears section---->
 <div id="gears" class="gears">
    <div class="cont">
-    <h1>Gears</h1>
+    <h1>Motorcycle Gear</h1>
     <?php           
-       $list = "SELECT * FROM guploads WHERE sid =?";
+       $list = "SELECT * FROM guploads WHERE by_id =? AND user_type =?";
        //create prepares statement
        $stmt = mysqli_stmt_init($conn);
        //prepare stmt
@@ -258,14 +265,14 @@ echo '<img src="data:image;base64,'.base64_encode( $img3 ).'" height="240px" wid
           echo "SQL STATEMENT FAILED";
        } else {
            //bind parameters to placeholder
-           mysqli_stmt_bind_param($stmt, "i", $sid);
+           mysqli_stmt_bind_param($stmt, "is", $sid,$usertype);
            //run parameters inside database
            mysqli_stmt_execute($stmt);
            $result = mysqli_stmt_get_result($stmt);
            if (mysqli_num_rows($result)>0){
             while($row = mysqli_fetch_assoc($result)) {
 $gid = $row["gid"];
-$sid = $row["sid"];
+$sid = $row["by_id"];
 $cate = $row["cate"];
 $type =$row["type"];
 $brand = $row["brand"];
@@ -280,9 +287,9 @@ $img4 = $row["frontim"];
    ?>
   
 <div class="listings">  
-<div class="img">
+<div class="img" id="top">
 <?php
-echo '<img src="data:image;base64,'.base64_encode( $row['frontim'] ).'" height="240px" width="440px">';
+echo '<img src="data:image;base64,'.base64_encode( $img4 ).'">';
 ?>
 </div>
 
@@ -293,6 +300,8 @@ echo '<img src="data:image;base64,'.base64_encode( $row['frontim'] ).'" height="
  <p><?php echo "Name:\t" .$gname; ?></p><br>
  <p><?php echo "Price:\t" .$price; ?></p><br>
  <p><?php echo "Contact Me:\t" .$contact; ?></p><br>
+
+
 <?php
 /* encrypt url */
 $data = $row["gid"];
@@ -301,10 +310,10 @@ $encode = "vgear?v=" .urlencode(base64_encode($encrypt));
 ?>
 
 <a href="<?=$encode;?>" id="ref" name = "ref">View Listing</a>
-</div>
+</div><br>
 <div class="img" id="bottom">
 <?php
-echo '<img src="data:image;base64,'.base64_encode( $img3 ).'" height="240px" width="440px">';
+echo '<img src="data:image;base64,'.base64_encode( $img3 ).'">';
 ?>
 </div>
 </div>
@@ -314,24 +323,27 @@ echo '<img src="data:image;base64,'.base64_encode( $img3 ).'" height="240px" wid
 }else{ ?>
         
      <div class='noad'>
-         <p>You Currently Have No Gear Listings!!!!</p><br><br>
-         <a href="gearad" id="ref" name="ref">SellGear</a>
+      <?php if (!isset($_GET['v'])) { ?>
+         <p>You Currently Have No Gears on Sale!!!!</p><br><br>
+         <a href="partad" id="ref" name="ref">SellGear</a>
+      <?php } else { ?>
+         <p>They Currently Have No Gears on Sale!!!!</p><br><br>
+      <?php } ?>
      </div>   
 
 <?php 
 }
-}
+} 
 ?>
 </div>
   </div>
-</div>
 
 <!----parts section---->
 <div id="parts" class="parts">
   <div class="cont">
-    <h1>Parts</h1>
+    <h1>Motorcycle Parts</h1>
     <?php           
-       $list = "SELECT * FROM puploads WHERE sid =?";
+       $list = "SELECT * FROM puploads WHERE by_id =? AND user_type =?";
        //create prepares statement
        $stmt = mysqli_stmt_init($conn);
        //prepare stmt
@@ -339,13 +351,13 @@ echo '<img src="data:image;base64,'.base64_encode( $img3 ).'" height="240px" wid
           echo "SQL STATEMENT FAILED";
        } else {
            //bind parameters to placeholder
-           mysqli_stmt_bind_param($stmt, "i", $sid);
+           mysqli_stmt_bind_param($stmt, "is", $sid, $usertype);
            //run parameters inside database
            mysqli_stmt_execute($stmt);
            $result = mysqli_stmt_get_result($stmt);
            if (mysqli_num_rows($result)>0){
             while($row = mysqli_fetch_assoc($result)) {
-$sid = $row['sid'];
+$sid = $row['by_id'];
 $make = $row['make'];
 $model = $row['model'];
 $type = $row['type'];
@@ -359,9 +371,9 @@ $img4 = $row["frontim"];
    ?>
   
 <div class="listings">  
-<div class="img">
+<div class="img" id="top">
 <?php
-echo '<img src="data:image;base64,'.base64_encode( $row['frontim'] ).'" height="240px" width="440px">';
+echo '<img src="data:image;base64,'.base64_encode( $img4 ).'">';
 ?>
 </div>
 
@@ -372,6 +384,7 @@ echo '<img src="data:image;base64,'.base64_encode( $row['frontim'] ).'" height="
  <p><?php echo "Part Name:\t" .$pname; ?></p><br>
  <p><?php echo "Price:\tKes" .$price; ?></p><br>
  <p><?php echo "Contact Me:\t" .$contact; ?></p><br>
+
 <?php
 /* encrypt url */
 $data = $row["pid"];
@@ -380,10 +393,10 @@ $encode = "vpart?v=" .urlencode(base64_encode($encrypt));
 ?>
 
 <a href="<?=$encode;?>" id="ref" name = "ref">View Listing</a>
-</div>
+</div><br>
 <div class="img" id="bottom">
 <?php
-echo '<img src="data:image;base64,'.base64_encode( $img3 ).'" height="240px" width="440px">';
+echo '<img src="data:image;base64,'.base64_encode( $img3 ).'">';
 ?>
 </div>
 </div>
@@ -393,24 +406,27 @@ echo '<img src="data:image;base64,'.base64_encode( $img3 ).'" height="240px" wid
 }else{ ?>
         
      <div class='noad'>
-         <p>You Currently Have No Parts Listings!!!!</p><br><br>
-         <a href="partsad" id="ref" name="ref">SellParts</a>
-     </div>   
+      <?php if (!isset($_GET['v'])) { ?>
+         <p>You Currently Have No Parts on Sale!!!!</p><br><br>
+         <a href="partad" id="ref" name="ref">SellPart</a>
+      <?php } else { ?>
+         <p>They Currently Have No Parts on Sale!!!!</p><br><br>
+      <?php } ?>
+     </div>    
 
 <?php 
 }
-}
+} 
 ?>
 </div>
-  </div>  
-</div>
+  </div>
 
 <!----events section---->
 <div class="events" id="events">
-   <div class="cont">
+       <div class="cont">
     <h1>Coming Soon</h1>
     <?php           
-       $list = "SELECT * FROM events WHERE by_id =?";
+       $list = "SELECT * FROM events WHERE by_id =? AND user_type =?";
        //create prepares statement
        $stmt = mysqli_stmt_init($conn);
        //prepare stmt
@@ -418,7 +434,7 @@ echo '<img src="data:image;base64,'.base64_encode( $img3 ).'" height="240px" wid
           echo "SQL STATEMENT FAILED";
        } else {
            //bind parameters to placeholder
-           mysqli_stmt_bind_param($stmt, "i", $sid);
+           mysqli_stmt_bind_param($stmt, "is", $sid, $usertype);
            //run parameters inside database
            mysqli_stmt_execute($stmt);
            $result = mysqli_stmt_get_result($stmt);
@@ -437,9 +453,9 @@ $poster2 = $row["poster2"];
    ?>
   
 <div class="listings">  
-<div class="img">
+<div class="img" id="top">
 <?php
-echo '<img src="data:image;base64,'.base64_encode( $row['poster1'] ).'" height="240px" width="440px">';
+echo '<img src="data:image;base64,'.base64_encode( $poster1 ).'">';
 ?>
 </div>
 
@@ -448,8 +464,8 @@ echo '<img src="data:image;base64,'.base64_encode( $row['poster1'] ).'" height="
  <p><?php echo "Held By:\t" .$held_by; ?></p><br>
  <p><?php echo "Date:\t" .$date; ?></p><br>
  <p><?php echo "Location:\t" .$location; ?></p><br>
- <p><?php echo "Contact Number:\t" .$contact; ?></p><br>
- <p><?php echo "Description:\t" .$description; ?></p><br>
+ <p><?php echo "Contact Us:\t" .$contact; ?></p><br><br>
+ 
 <?php
 /* encrypt url */
 $data = $row["evid"];
@@ -458,10 +474,10 @@ $encode = "viewevent?v=" .urlencode(base64_encode($encrypt));
 ?>
 
 <a href="<?=$encode;?>" id="ref" name = "ref">View Event</a>
-</div>
+</div><br>
 <div class="img" id="bottom">
 <?php
-echo '<img src="data:image;base64,'.base64_encode( $row['poster2'] ).'" height="240px" width="440px">';
+echo '<img src="data:image;base64,'.base64_encode( $poster2 ).'">';
 ?>
 </div>
 </div>
@@ -471,23 +487,27 @@ echo '<img src="data:image;base64,'.base64_encode( $row['poster2'] ).'" height="
 }else{ ?>
         
      <div class='noad'>
-         <p>You Currently Have No Events Posted!!!!</p><br><br>
+      <?php if (!isset($_GET['v'])) { ?>
+         <p>You Currently Have No Upcoming Events!!!!</p><br><br>
          <a href="postevent" id="ref" name="ref">Post Event</a>
+      <?php } else { ?>
+         <p>They Currently Have No Upcoming Events!!!!</p><br><br>
+      <?php } ?>
      </div>   
 
-<?php
-} 
+<?php 
 }
+} 
 ?>
 </div>
-    </div>
+  </div>
 
 <!----rentals section---->
 <div class="rentals">
   <div class="cont">
     <h1>Rent a Bike</h1>
     <?php           
-      $list = "SELECT * FROM rentals WHERE sid =?";
+       $list = "SELECT * FROM rentals WHERE by_id =? AND user_type =?";
        //create prepares statement
        $stmt = mysqli_stmt_init($conn);
        //prepare stmt
@@ -495,14 +515,14 @@ echo '<img src="data:image;base64,'.base64_encode( $row['poster2'] ).'" height="
           echo "SQL STATEMENT FAILED";
        } else {
            //bind parameters to placeholder
-           mysqli_stmt_bind_param($stmt, "i", $sid);
+           mysqli_stmt_bind_param($stmt, "is", $sid, $usertype);
            //run parameters inside database
            mysqli_stmt_execute($stmt);
            $result = mysqli_stmt_get_result($stmt);
            if (mysqli_num_rows($result)>0){
             while($row = mysqli_fetch_assoc($result)) {
 $rid = $row["rid"];
-$sid = $row["sid"];
+$sid = $row["by_id"];
 $make = $row["make"];
 $model =$row["model"];
 $year = $row["year"];
@@ -516,9 +536,9 @@ $img4 = $row["frontim"];
    ?>
   
 <div class="listings">  
-<div class="img">
+<div class="img" id="top">
 <?php
-echo '<img src="data:image;base64,'.base64_encode( $row['frontim'] ).'" height="240px" width="440px">';
+echo '<img src="data:image;base64,'.base64_encode( $img4 ).'">';
 ?>
 </div>
 
@@ -528,7 +548,8 @@ echo '<img src="data:image;base64,'.base64_encode( $row['frontim'] ).'" height="
  <p><?php echo "Year:\t" .$year; ?></p><br>
   <p><?php echo "Engine size:\t" .$eng_size. "cc" ;?></p><br>
  <p><?php echo "Price/hour:\t" .$price. "/="; ?></p><br>
- <p><?php echo "Contact Me:\t" .$contact; ?></p><br>
+ <p><?php echo "Contact Me:\t" .$contact; ?></p><br><br>
+
 <?php
 /* encrypt url */
 $data = $row["rid"];
@@ -537,10 +558,10 @@ $encode = "viewrental?v=" .urlencode(base64_encode($encrypt));
 ?>
 
 <a href="<?=$encode;?>" id="ref" name = "ref">View Listing</a>
-</div>
+</div><br>
 <div class="img" id="bottom">
 <?php
-echo '<img src="data:image;base64,'.base64_encode( $row['backim'] ).'" height="240px" width="440px">';
+echo '<img src="data:image;base64,'.base64_encode( $img3 ).'">';
 ?>
 </div>
 </div>
@@ -550,29 +571,33 @@ echo '<img src="data:image;base64,'.base64_encode( $row['backim'] ).'" height="2
 }else{ ?>
         
      <div class='noad'>
-         <p>You Currently Have No Motorcycles up for Rent!!!!</p><br><br>
+      <?php if (!isset($_GET['v'])) { ?>
+         <p>You Currently Have No Motorcycles for rent!!!!</p><br><br>
          <a href="rentad" id="ref" name="ref">RentYourBike</a>
-     </div>   
+      <?php } else { ?>
+         <p>They Currently Have No Motorcycles for rent!!!!</p><br><br>
+      <?php } ?>
+     </div>    
 
 <?php 
 }
 } 
 ?>
 </div>
-    </div>
-</div>
+  </div>
 </header>
 
  <!-- Contact Section -->
 <?php
-    $list = "SELECT * FROM dealers WHERE did = '$did'";
+    $list = "SELECT * FROM users WHERE sid = '$sid'";
     $result = mysqli_query($conn,$list);
     if (mysqli_num_rows($result)>0){
             while($row = mysqli_fetch_assoc($result)) {
-                 $did = $row['did'];
-                 $dname = $row['dname'];
+                 $sid = $row['sid'];
+                 $fname = $row['fname'];
+                 $sname = $row['sname'];
                  $email = $row['email'];
-                 $contact = $row['pnumber'];
+                 $contact = $row['contact'];
             } 
               }
 
@@ -587,7 +612,7 @@ echo '<img src="data:image;base64,'.base64_encode( $row['backim'] ).'" height="2
     <div class="close" id="close">+</div>
     <div>
       <h1>CONTACT</h1>
-      <p><?php echo $dname; ?></p>
+      <p><?php echo $fname. " " .$sname; ?></p>
       <p><?php echo $contact; ?></p>
       <p><?php echo $email; ?></p>
     </div>

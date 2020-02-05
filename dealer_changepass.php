@@ -2,12 +2,13 @@
 require 'inc/conn.php';
 $error = null;
 if(isset($_POST['reset'])){
+
   $user = mysqli_real_escape_string($conn,  $_POST['uname']);
   $prevpass = mysqli_real_escape_string($conn,  md5($_POST['prevpass']));
   $pass = mysqli_real_escape_string($conn,  md5($_POST['pass']));
   $repass = mysqli_real_escape_string($conn,  md5($_POST['repass']));
 
-   $select="SELECT * FROM `users` WHERE uname=? ";
+   $select="SELECT * FROM `dealers` WHERE dname =? ";
    $stmt = mysqli_stmt_init($conn);
        //prepare stmt
        if (!mysqli_stmt_prepare($stmt, $select)) {
@@ -21,13 +22,14 @@ if(isset($_POST['reset'])){
             if(mysqli_num_rows($result)>0){
       while($row = mysqli_fetch_assoc($result)) {
            $password = $row['pass'];
+
          }
      }
          } 
      
     if($prevpass == $password){
       if ($pass == $repass) {
-          $edit ="UPDATE `users` SET pass='$pass', repass='$repass' WHERE uname ='$user'";
+          $edit ="UPDATE `dealers` SET pass='$pass', repass='$repass' WHERE dname ='$user'";
              $stmt = mysqli_stmt_init($conn);
        //prepare stmt
        if (!mysqli_stmt_prepare($stmt, $edit)) {
@@ -38,7 +40,7 @@ if(isset($_POST['reset'])){
            //run parameters inside database
            mysqli_stmt_execute($stmt);   
 
-           header("location:login"); 
+           header("location:dealer_login"); 
           }
       }else{
           $error = "Your New Passwords are not the same";
@@ -65,9 +67,9 @@ if(isset($_POST['reset'])){
     <?php require_once 'inc/nav.php'; ?>
     <div class="form">
       <h1>Change Password</h1>
-      <form action="changepass.php" method="post">
+      <form action="dealer_changepass.php" method="post">
         <font size="5" color="#fff"><?php echo $error; ?></font><br>
-        <input type="text" name="uname" placeholder="Username" required><br>
+        <input type="text" name="uname" placeholder="Dealer name" required><br>
         <input type="password" name="prevpass" placeholder="Previous Password" required><br>
         <input type="password" name="pass" placeholder="New Password" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"><br>
         <input type="password" name="repass" placeholder="Confirm password" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"><br>

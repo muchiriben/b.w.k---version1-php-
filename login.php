@@ -121,10 +121,9 @@ $error = null;
 		<?php require 'inc/nav.php'; ?>
     <div class="cat">
     <select class="category">
-      <option class="option" value="user">Login As</option>
-      <option class="option" value="user">Individual User</option>
+      <option class="option" value="user">Login As:</option>
+      <option class="option" value="user">User</option>
       <option class="option" value="dealer">Dealership</option>
-      <option class="option" value="garage">Garage</option>
     </select>
   </div>
 		<div class="form">
@@ -135,7 +134,7 @@ $error = null;
 				<input type="password" name="pass" placeholder="password" required><br>
 				<input type="submit" name="login" value="LOGIN">
 			</form>
-			<font color="#fff" size="4px">Don't have an account? <a href="signup"> Sign Up</a></font><br><br>
+			<font color="#fff" size="4px">Don't have an account? <a href="signup"> Sign Up</a></font><br>
 			<font color="#fff" size="4px"><a href="getpassword">Forgot your password?</a></font>
 		</div>
 	</header>

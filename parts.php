@@ -63,7 +63,7 @@ $(document).ready(function(){
            $result = mysqli_stmt_get_result($stmt);
            
             while($row = mysqli_fetch_assoc($result)) {
-$sid = $row['sid'];
+$sid = $row['by_id'];
 $make = $row['make'];
 $model = $row['model'];
 $type = $row['type'];
@@ -111,8 +111,7 @@ echo '<img src="data:image;base64,'.base64_encode( $img3 ).'">';
 }
 }
 ?>
-</div>
-	</div>	
+</div>	
 </header>
 <?php require_once 'inc/cpt.php'; ?>
 </body>

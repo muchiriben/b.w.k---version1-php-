@@ -7,6 +7,7 @@ if (($_SESSION['login_user']) == null) {
 
 require_once "inc/conn.php";
 $myusername = $_SESSION['login_user'];
+$usertype = $_SESSION['user_type'];
 $pmenu = $cmenu = null;
 if (isset($_GET["cate"]) && is_numeric($_GET["cate"])) {
     $pmenu = $_GET["cate"];
@@ -54,7 +55,8 @@ if ($ext["extension"] == "jpg" || $ext["extension"] == "jpeg" || $ext["extension
       exit();
 }
 
- $sidq = "SELECT sid FROM users WHERE uname =? ";
+ if($usertype == 'user') {
+    $sidq = "SELECT sid FROM users WHERE uname =? ";
   //create prepares statement
        $stmt = mysqli_stmt_init($conn);
        //prepare stmt
@@ -67,9 +69,27 @@ if ($ext["extension"] == "jpg" || $ext["extension"] == "jpeg" || $ext["extension
            mysqli_stmt_execute($stmt);
            $result = mysqli_stmt_get_result($stmt);
             while($row = mysqli_fetch_assoc($result)) {
-               $sid = $row["sid"];
+               $by_id = $row["sid"];
             }
          } 
+} elseif ($usertype == 'dealer') {
+     $sidq = "SELECT did FROM dealers WHERE dname =? ";
+  //create prepares statement
+       $stmt = mysqli_stmt_init($conn);
+       //prepare stmt
+       if (!mysqli_stmt_prepare($stmt, $sidq)) {
+          echo "SQL STATEMENT FAILED";
+       } else {
+           //bind parameters to placeholder
+           mysqli_stmt_bind_param($stmt, "s", $myusername);
+           //run parameters inside database
+           mysqli_stmt_execute($stmt);
+           $result = mysqli_stmt_get_result($stmt);
+            while($row = mysqli_fetch_assoc($result)) {
+               $by_id = $row["did"];
+            }
+         } 
+}
 
 $sq = "SELECT cname FROM gcategories WHERE cid =? ";
  //create prepares statement
@@ -89,19 +109,19 @@ $sq = "SELECT cname FROM gcategories WHERE cid =? ";
          } 
 
 
- $sellgear="INSERT INTO `guploads`(`sid`, `cate`, `type`, `brand`, `gname`, `price`, `contact`,`frontim`, `leftim`, `rightim` ,`backim`) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+ $sellgear="INSERT INTO `guploads`(`by_id`,`user_type`, `cate`, `type`, `brand`, `gname`, `price`, `contact`,`frontim`, `leftim`, `rightim` ,`backim`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
 
 $null = NULL; 
 $stmt = mysqli_stmt_init($conn);
 if (!mysqli_stmt_prepare($stmt, $sellgear)) {
   echo "SQL error";
 } else {
-  mysqli_stmt_bind_param($stmt, "issssisbbbb", $sid, $cname, $type , $brand ,$gname, $price, $contact,$null,$null,$null,$null);
+  mysqli_stmt_bind_param($stmt, "isssssisbbbb", $by_id, $usertype, $cname, $type , $brand ,$gname, $price, $contact,$null,$null,$null,$null);
 
-$stmt->send_long_data(7, $imagetmp1);
-$stmt->send_long_data(8, $imagetmp2);
-$stmt->send_long_data(9, $imagetmp3);
-$stmt->send_long_data(10, $imagetmp4);
+$stmt->send_long_data(8, $imagetmp1);
+$stmt->send_long_data(9, $imagetmp2);
+$stmt->send_long_data(10, $imagetmp3);
+$stmt->send_long_data(11, $imagetmp4);
 
 mysqli_stmt_execute($stmt);
 

@@ -2,11 +2,16 @@
 session_start();
 require_once 'inc/conn.php';
 $_SESSION['from'] = "editprofile";
+
 if (($_SESSION['login_user']) == null) {
   header("Location:login");
 }
 
+$usertype = $_SESSION['user_type'];
 $user = $_SESSION['login_user'];
+
+if ($usertype == 'user') {
+  
 $list = "SELECT * FROM profiles WHERE uname =? ";
 $stmt = mysqli_stmt_init($conn);
        //prepare stmt
@@ -29,13 +34,13 @@ $stmt = mysqli_stmt_init($conn);
           }
 
 if(isset($_POST['save'])){
-	$uname = mysqli_real_escape_string($conn, $_POST['name']);
-	$bio = mysqli_real_escape_string($conn, $_POST['bio']);
-    $picname = $_FILES['profilepic']['name']; 
+  $uname = mysqli_real_escape_string($conn, $_POST['name']);
+  $bio = mysqli_real_escape_string($conn, $_POST['bio']);
+  $picname = $_FILES['profilepic']['name']; 
 
 if ($picname == null) {
-	$edit ="UPDATE `profiles` SET uname=? , bio =?  WHERE uname =? ";
-	$stmt = mysqli_stmt_init($conn);
+  $edit ="UPDATE `profiles` SET uname=? , bio =?  WHERE uname =? ";
+  $stmt = mysqli_stmt_init($conn);
        //prepare stmt
        if (!mysqli_stmt_prepare($stmt, $edit)) {
           echo "SQL STATEMENT FAILED";
@@ -50,15 +55,15 @@ if ($picname == null) {
 $ext = pathinfo($picname);
 if ($ext["extension"] == "jpg" || $ext["extension"] == "jpeg" || $ext["extension"] == "png" || $ext["extension"] == "gif") {
 
-	$pic = $_FILES['profilepic']['tmp_name'];
-	$profilepic = file_get_contents($pic);
+  $pic = $_FILES['profilepic']['tmp_name'];
+  $profilepic = file_get_contents($pic);
 
 } else {
       $error = "File is not an Image.";
       exit();
 }
 
-	$edit ="UPDATE `profiles` SET uname=? , bio =? , profilepic =? WHERE uname =? ";
+  $edit ="UPDATE `profiles` SET uname=? , bio =? , profilepic =? WHERE uname =? ";
     
 $null = NULL;
 $stmt = mysqli_stmt_init($conn);
@@ -89,9 +94,99 @@ $stmt = mysqli_stmt_init($conn);
           }
 
 $_SESSION['login_user'] = $uname;
-header("Location:myprofile.php");
-            
+header("Location:myprofile.php");            
 }
+
+} else if($usertype == 'dealer'){
+     
+$list = "SELECT * FROM dprofile WHERE dname =? ";
+$stmt = mysqli_stmt_init($conn);
+       //prepare stmt
+       if (!mysqli_stmt_prepare($stmt, $list)) {
+          echo "SQL STATEMENT FAILED";
+       } else {
+           //bind parameters to placeholder
+           mysqli_stmt_bind_param($stmt, "s", $user);
+           //run parameters inside database
+           mysqli_stmt_execute($stmt);
+           $result = mysqli_stmt_get_result($stmt);
+    if (mysqli_num_rows($result)>0){
+            while($row = mysqli_fetch_assoc($result)) {
+                 $sid = $row['did'];
+                 $uname = $row['dname'];
+                 $bio = $row['bio'];
+                 $profilepic = $row['profilepic'];
+            } 
+              } 
+          }
+
+if(isset($_POST['save'])){
+  $uname = mysqli_real_escape_string($conn, $_POST['name']);
+  $bio = mysqli_real_escape_string($conn, $_POST['bio']);
+    $picname = $_FILES['profilepic']['name']; 
+
+if ($picname == null) {
+  $edit ="UPDATE `dprofile` SET dname=? , bio =?  WHERE dname =? ";
+  $stmt = mysqli_stmt_init($conn);
+       //prepare stmt
+       if (!mysqli_stmt_prepare($stmt, $edit)) {
+          echo "SQL STATEMENT FAILED";
+       } else {
+           //bind parameters to placeholder
+           mysqli_stmt_bind_param($stmt, "sss", $uname, $bio, $user);
+           //run parameters inside database
+           mysqli_stmt_execute($stmt);    
+          }
+}else{
+
+$ext = pathinfo($picname);
+if ($ext["extension"] == "jpg" || $ext["extension"] == "jpeg" || $ext["extension"] == "png" || $ext["extension"] == "gif") {
+
+  $pic = $_FILES['profilepic']['tmp_name'];
+  $profilepic = file_get_contents($pic);
+
+} else {
+      $error = "File is not an Image.";
+      exit();
+}
+
+  $edit ="UPDATE `dprofile` SET dname=? , bio =? , profilepic =? WHERE dname =? ";
+    
+$null = NULL;
+$stmt = mysqli_stmt_init($conn);
+if (!mysqli_stmt_prepare($stmt, $edit)) {
+  echo "SQL error";
+  exit();
+} else {
+
+  mysqli_stmt_bind_param($stmt, "ssbs", $uname,$bio,$null,$user);
+
+$stmt->send_long_data(2, $profilepic);
+  
+mysqli_stmt_execute($stmt);
+}
+}
+
+//update dealers table
+$edit ="UPDATE `dealers` SET dname =? , slogan =? , logo =? WHERE dname =? ";
+$stmt = mysqli_stmt_init($conn);
+       //prepare stmt
+       if (!mysqli_stmt_prepare($stmt, $edit)) {
+          echo "SQL STATEMENT FAILED";
+       } else {
+           //bind parameters to placeholder
+           $null = NULL;
+           mysqli_stmt_bind_param($stmt, "ssbs", $uname,$bio,$null,$user);
+           //run parameters inside database
+           $stmt->send_long_data(2, $profilepic);
+           mysqli_stmt_execute($stmt);    
+          }
+
+$_SESSION['login_user'] = $uname;
+header("Location:dealer_profile.php");            
+}
+}
+
 
 ?>
 

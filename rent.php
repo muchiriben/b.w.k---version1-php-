@@ -1,7 +1,7 @@
 <?php 
 session_start();
 $_SESSION['from'] = "rentals";
-require_once "inc/conn.php";
+require "inc/conn.php";
 ?>
 <!DOCTYPE html>
 <html>
@@ -38,7 +38,7 @@ require_once "inc/conn.php";
            $result = mysqli_stmt_get_result($stmt);
             while($row = mysqli_fetch_assoc($result)) {
 $rid = $row["rid"];
-$sid = $row["sid"];
+$sid = $row["by_id"];
 $make = $row["make"];
 $model =$row["model"];
 $year = $row["year"];
@@ -87,7 +87,6 @@ echo '<img src="data:image;base64,'.base64_encode( $img3 ).'">';
 }
 ?>
 </div>
-    </div>
 </header>
 <?php require_once 'inc/cpt.php'; ?>
 </body>

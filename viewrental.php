@@ -13,7 +13,8 @@ $list = "SELECT * FROM rentals WHERE rid = '$r_id'";
  $result = mysqli_query($conn,$list);
     if (mysqli_num_rows($result)>0){
             while($row = mysqli_fetch_assoc($result)) {
-$sid = $row["sid"];
+$by_id = $row["by_id"];
+$usertype = $row["user_type"];
 $make = $row["make"];
 $model =$row["model"];
 $year = $row["year"];
@@ -26,13 +27,42 @@ $img3 = $row["backim"];
 $img4 = $row["frontim"];
 }
  }
-$user = "SELECT * FROM users WHERE sid = '$sid'";
- $result = mysqli_query($conn,$user);
-    if (mysqli_num_rows($result)>0){
+
+if($usertype == 'user') {
+    $sidq = "SELECT uname FROM users WHERE sid =? ";
+  //create prepares statement
+       $stmt = mysqli_stmt_init($conn);
+       //prepare stmt
+       if (!mysqli_stmt_prepare($stmt, $sidq)) {
+          echo "SQL STATEMENT FAILED";
+       } else {
+           //bind parameters to placeholder
+           mysqli_stmt_bind_param($stmt, "i", $by_id);
+           //run parameters inside database
+           mysqli_stmt_execute($stmt);
+           $result = mysqli_stmt_get_result($stmt);
             while($row = mysqli_fetch_assoc($result)) {
-                    $name = $row['uname'];
+               $name = $row["uname"];
             }
-          }
+         } 
+} elseif ($usertype == 'dealer') {
+    $sidq = "SELECT dname FROM dealers WHERE did =? ";
+  //create prepares statement
+       $stmt = mysqli_stmt_init($conn);
+       //prepare stmt
+       if (!mysqli_stmt_prepare($stmt, $sidq)) {
+          echo "SQL STATEMENT FAILED";
+       } else {
+           //bind parameters to placeholder
+           mysqli_stmt_bind_param($stmt, "i", $by_id);
+           //run parameters inside database
+           mysqli_stmt_execute($stmt);
+           $result = mysqli_stmt_get_result($stmt);
+            while($row = mysqli_fetch_assoc($result)) {
+               $name = $row["dname"];
+            }
+         } 
+}
 
  ?>
 
@@ -104,9 +134,13 @@ echo '<div class="img">
       <th>
         <td><?php
 /* encrypt url */
-$data = $sid;
+$data = $by_id;
 $encrypt = $data*201820192020007;
-$encode = "myprofile?v=" .urlencode(base64_encode($encrypt));
+if($usertype == 'user') { 
+   $encode = "myprofile?v=" .urlencode(base64_encode($encrypt));
+} elseif ($usertype == 'dealer') { 
+   $encode = "dealer_profile?v=" .urlencode(base64_encode($encrypt)); 
+}
 ?>
 
 <a href="<?=$encode;?>" id="ref" name = "ref">View Profile</a></td>
