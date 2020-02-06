@@ -72,7 +72,7 @@ if ($slogan != null) {
 
  <?php
    if ($web != null) {
-     echo "<a target='_blank' href='" .$web. "'>Website</a>";
+     echo "<a target='_blank' href='" .$web. "' id='web'>Website</a>";
    }
  ?>
 

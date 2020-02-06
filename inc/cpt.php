@@ -10,19 +10,19 @@
     	<div class="copyall">
     	     <div class="media">
 	        	<h2>JOIN US ON</h2>
-	           	    <a class="btn" href="#">
+	           	    <a class="btn" target="_blank" href="https://instagram.com/bikerworldkenya">
 	                   <i class="fab fa-instagram"></i>
 	           	    </a>
-	           	    <a class="btn" href="#">
+	           	    <a class="btn" target="_blank" href="https://facebook.com/bikerworldkenya">
 	                   <i class="fab fa-facebook"></i>
 	           	    </a>
-	           	    <a class="btn" href="#">
+	           	    <a class="btn" target="_blank" href="https://twitter.com/bikerworldkenya">
 	                   <i class="fab fa-twitter"></i>
 	           	    </a>
-	           	    <a class="btn" href="#">
+	           	    <a class="btn" target="_blank" href="https://youtube.com/bikerworldkenya">
 	                  <i class="fab fa-youtube"></i>
 	           	    </a>
-	           	    <a class="btn" href="bikerworldkenya.co.ke">
+	           	    <a class="btn" target="_blank" href="https://bikerworldkenya.co.ke">
 	                   <i class="fab fa-google"></i>
 	           	    </a>
 	           	 

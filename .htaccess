@@ -1,3 +1,7 @@
+#page 404 handling
+
+ErrorDocument 404 /bikerworld/error404.php
+
 #mod_rewrite starts here
 
 RewriteEngine on

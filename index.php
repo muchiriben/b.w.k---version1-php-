@@ -46,7 +46,7 @@ if(!mysqli_stmt_prepare($stmt, $mes)){
         <input type="radio" name="r" id="r5">
 
         <div class="slide s1">
-          <h1>BikerWorldKenya</h1><br>
+          <h1>B.W.K - We are Family</h1><br>
           <h2>Join the Family</h2><br>
           <a href="signup">Braap!!!</a>
         </div>
