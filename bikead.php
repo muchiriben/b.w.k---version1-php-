@@ -35,6 +35,7 @@ $trans =mysqli_real_escape_string($conn, $_POST['trans']);
 $condition =mysqli_real_escape_string($conn, $_POST['condition']);
 $size =mysqli_real_escape_string($conn, $_POST['size']);
 $color =mysqli_real_escape_string($conn, $_POST['color']);
+$description =mysqli_real_escape_string($conn, $_POST['description']);
 
 $ext = pathinfo($_FILES['frontim']['name']);
 $ext = pathinfo($_FILES['leftim']['name']);
@@ -118,7 +119,7 @@ $sq = "SELECT name FROM maketable WHERE mid =? ";
 
 /* insert into databse */
 
- $sell="INSERT INTO `uploads`(`by_id`,`user_type`, `make`, `model`, `year`, `price`, `contact`, `body_type`, `mileage`, `trans_type`, `bike_condition`, `engine_size`, `color`,`frontim`, `leftim`, `rightim` ,`backim`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+ $sell="INSERT INTO `uploads`(`by_id`,`user_type`, `make`, `model`, `year`, `price`, `contact`, `body_type`, `mileage`, `trans_type`, `bike_condition`, `engine_size`, `color`, `description`,`frontim`, `leftim`, `rightim` ,`backim`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
  
 $null = NULL;        
 $stmt = mysqli_stmt_init($conn);
@@ -126,12 +127,12 @@ if (!mysqli_stmt_prepare($stmt, $sell)) {
   echo "SQL error";
   exit();
 } else {
-  mysqli_stmt_bind_param($stmt, "isssiississssbbbb", $by_id,$usertype,$makename,$model,$year,$price,$contact,$body,$mileage,$trans,$condition,$size,$color,$null,$null,$null,$null);
+  mysqli_stmt_bind_param($stmt, "isssiississsssbbbb", $by_id,$usertype,$makename,$model,$year,$price,$contact,$body,$mileage,$trans,$condition,$size,$color,$description,$null,$null,$null,$null);
 
-$stmt->send_long_data(13, $imagetmp1);
-$stmt->send_long_data(14, $imagetmp2);
-$stmt->send_long_data(15, $imagetmp3);
-$stmt->send_long_data(16, $imagetmp4);
+$stmt->send_long_data(14, $imagetmp1);
+$stmt->send_long_data(15, $imagetmp2);
+$stmt->send_long_data(16, $imagetmp3);
+$stmt->send_long_data(17, $imagetmp4);
 
 mysqli_stmt_execute($stmt);
 
@@ -172,7 +173,7 @@ header('location:shop');
   <div class="details">
     <h1>Motorcycle Details</h1><br>
                    <select id="make" name="make" onchange="autoSubmit();" required>
-                        <option value="">Make</option>
+                        <option value="">Motorcycle Make</option>
                         <?php
                        
                         $sql = "SELECT mid,name from maketable";
@@ -184,7 +185,7 @@ header('location:shop');
                         ?>
                     </select>
                <select id="model" name="model" required>
-                <option value="">Model</option>
+                <option value="">Motorcycle Model</option>
                 <?php
                 if ($pmenu != '' && is_numeric($pmenu)) {
                   
@@ -217,8 +218,8 @@ header('location:shop');
   <?php }?>
 </select>
     
-<input type="number" placeholder="Price:e.g 200000" name="price" id="price" required><br>
-<input type="text" placeholder="Contact" name="contact" id="contact" required><br>
+<input type="number" placeholder="Price(Ksh): e.g. 200000" name="price" id="price" required><br>
+<input type="text" placeholder="Contact: e.g. 07123445678" name="contact" id="contact" required><br>
     
     
   <h1>Add Features</h1><br> 
@@ -237,7 +238,7 @@ header('location:shop');
       <option value="Custom">Custom</option>
       <option value="Other">Other</option>
     </select>
- <input type="number" placeholder="Mileage(Kilometers)" name="mileage" id="mileage" required><br>
+ <input type="number" placeholder="Mileage(Kilometers) e.g 10000" name="mileage" id="mileage" required><br>
     
   <select  name="trans" id="trans" required>
       <option value="">Transmission Type</option>
@@ -254,8 +255,9 @@ header('location:shop');
       <option value="Localally Used">Locally Used</option>
     </select><br>
  
-<input type="number" placeholder="Engine size(cc)" name="size" id="size" required>    
-<input type="text" name="color" id="color" placeholder="Color" required><br>
+<input type="number" placeholder="Engine size(cc) e.g 600" name="size" id="size" required>    
+<input type="text" name="color" id="color" placeholder="Color e.g green and black" required><br>
+<textarea name="description" id="description" placeholder="Description" required></textarea><br>
 <a href="#" id="button">Next</a>
 </div>
 

@@ -28,6 +28,7 @@ $trans = $row["trans_type"];
 $condition = $row["bike_condition"];
 $size =$row["engine_size"];
 $color = $row["color"];
+$description = $row["description"];
 $img1 = $row["leftim"]; 
 $img2 = $row["rightim"]; 
 $img3 = $row["backim"]; 
@@ -158,11 +159,9 @@ echo '<img src="data:image;base64,'.base64_encode( $img1 ).'">';
     <tr>
     <th scope="row">CONTACT</th>
     <td><?php echo $contact;?></td>
-    </tr>   
-  </tbody>
-  <tfoot>
+    </tr>
     <tr>
-      <th>
+      <th></th>
         <td>
 <?php
 /* encrypt url */
@@ -176,7 +175,14 @@ if($usertype == 'user') {
 ?>
 
 <a href="<?=$encode;?>" id="ref" name = "ref">View Profile</a></td>
-      </th>
+    </tr>   
+  </tbody>
+  <tfoot>
+    <tr>
+    <th scope="col" colspan="2">DESCRIPTION</th>
+    </tr>
+    <tr>
+      <td colspan="2"><?php echo $description;?></td>
     </tr>
   </tfoot>
 </table>

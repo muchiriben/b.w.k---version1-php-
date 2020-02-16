@@ -13,6 +13,7 @@ $evname = mysqli_real_escape_string($conn, $_POST["evname"]);
 $held_by = mysqli_real_escape_string($conn, $_POST["held_by"]);
 $date = mysqli_real_escape_string($conn, $_POST["date"]);
 $location = mysqli_real_escape_string($conn, $_POST["location"]);
+$price = mysqli_real_escape_string($conn, $_POST['price']);
 $description = mysqli_real_escape_string($conn, $_POST["description"]); 
 $contact = mysqli_real_escape_string($conn, $_POST["contact"]);
 
@@ -68,17 +69,17 @@ if($usertype == 'user') {
 }
 
 
-$sell="INSERT INTO `events`(`by_id`,`user_type`,`evname`, `held_by`, `date`,`location`,`description`,`contact`,`poster1`, `poster2`) VALUES (?,?,?,?,?,?,?,?,?,?)";
+$sell="INSERT INTO `events`(`by_id`,`user_type`,`evname`, `held_by`, `date`,`location`,`price`,`description`,`contact`,`poster1`, `poster2`) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
 
 $null = NULL;
 $stmt = mysqli_stmt_init($conn);
 if (!mysqli_stmt_prepare($stmt, $sell)) {
   echo "SQL error";
 } else {
-  mysqli_stmt_bind_param($stmt, "isssssssbb",$by_id,$usertype,$evname,$held_by,$date,$location,$description,$contact,$null,$null);
+  mysqli_stmt_bind_param($stmt, "issssssssbb",$by_id,$usertype,$evname,$held_by,$date,$location,$price,$description,$contact,$null,$null);
 
-$stmt->send_long_data(8, $imagetmp1);
-$stmt->send_long_data(9, $imagetmp2);
+$stmt->send_long_data(9, $imagetmp1);
+$stmt->send_long_data(10, $imagetmp2);
 
 mysqli_stmt_execute($stmt);
 
@@ -107,9 +108,10 @@ header('location:events');
 <input type="text" placeholder="Event Name" name="evname" id="evname" required>
 <input type="text" placeholder="Held By" name="held_by" id="held_by" required><br>
 <input type="date" placeholder="Date" name="date" id="date" min="<?php echo date('Y-m-d'); ?>" required>
-<input type="text" placeholder="Location" name="location" id="location" required><br>
-<input type="text" placeholder="Description" name="description" id="description" maxlength="20" required>
-<input type="text" placeholder="Contact number" name="contact" id="contact" required><br>
+<input type="text" placeholder="Location: e.g. Nairobi, South c" name="location" id="location" required><br>
+<input type="text" placeholder="Price/per: e.g 2500" name="price" id="price" required>
+<input type="text" placeholder="Contact: e.g. 0712345678" name="contact" id="contact" required><br>
+<textarea name="description" id="description" placeholder="Description" required></textarea><br>
 <a href="#" id="button">Next</a>
 </div>
 

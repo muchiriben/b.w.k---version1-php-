@@ -29,6 +29,7 @@ $year = mysqli_real_escape_string($conn, $_POST['year']);
 $eng_size = mysqli_real_escape_string($conn, $_POST['eng_size']);
 $price = mysqli_real_escape_string($conn, $_POST['price']);
 $contact = mysqli_real_escape_string($conn, $_POST['contact']);
+$description =mysqli_real_escape_string($conn, $_POST['description']);
 
 $ext = pathinfo($_FILES['frontim']['name']);
 $ext = pathinfo($_FILES['leftim']['name']);
@@ -109,19 +110,19 @@ $sq = "SELECT name FROM maketable WHERE mid =? ";
          } 
 
 
- $sell="INSERT INTO `rentals`(`by_id`,`user_type`, `make`, `model`, `year`,`eng_size`,`price`, `contact`,`frontim`, `leftim`, `rightim` ,`backim`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+ $sell="INSERT INTO `rentals`(`by_id`,`user_type`, `make`, `model`, `year`,`eng_size`,`price`, `contact`,`description`,`frontim`, `leftim`, `rightim` ,`backim`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
  $null = NULL;
  $stmt = mysqli_stmt_init($conn);
 if (!mysqli_stmt_prepare($stmt, $sell)) {
   echo "SQL error";
 } else {
-  mysqli_stmt_bind_param($stmt, "isssiiisbbbb", $by_id,$usertype,$makename,$model,$year,$eng_size,$price,$contact,$null,$null,$null,$null);
+  mysqli_stmt_bind_param($stmt, "isssiiissbbbb", $by_id,$usertype,$makename,$model,$year,$eng_size,$price,$contact,$description,$null,$null,$null,$null);
 
-$stmt->send_long_data(8, $imagetmp1);
-$stmt->send_long_data(9, $imagetmp2);
-$stmt->send_long_data(10, $imagetmp3);
-$stmt->send_long_data(11, $imagetmp4);
+$stmt->send_long_data(9, $imagetmp1);
+$stmt->send_long_data(10, $imagetmp2);
+$stmt->send_long_data(11, $imagetmp3);
+$stmt->send_long_data(12, $imagetmp4);
 
   mysqli_stmt_execute($stmt);
 
@@ -160,7 +161,7 @@ $stmt->send_long_data(11, $imagetmp4);
   <div class="details">
   <h1>Motorcycle Details</h1><br>
                    <select id="make" name="make" onchange="autoSubmit();" required>
-                        <option value="">Make</option>
+                        <option value="">Motorcycle Make</option>
                         <?php
                        
                         $sql = "SELECT mid,name from maketable";
@@ -172,7 +173,7 @@ $stmt->send_long_data(11, $imagetmp4);
                         ?>
                     </select>
                <select id="model" name="model" required>
-                <option value="">Model</option>
+                <option value="">Motorcycle Model</option>
                 <?php
                 if ($pmenu != '' && is_numeric($pmenu)) {
                   
@@ -203,9 +204,10 @@ $stmt->send_long_data(11, $imagetmp4);
     <option value="<?php echo $y;?>"><?php echo $y;?></option>
     <?php }?>
 </select>
-<input type="text" name="eng_size" id="eng_size" placeholder="Engine size(cc)" required><br>       
-<input type="text" placeholder="Price/hour:e.g 200000" name="price" id="price" required>
-<input type="text" placeholder="Contact" name="contact" id="contact" required><br>
+<input type="text" name="eng_size" id="eng_size" placeholder="Engine size(cc): e.g. 600" required><br>       
+<input type="text" placeholder="Price/hour: e.g. 200000" name="price" id="price" required>
+<input type="text" placeholder="Contact: e.g. 0712345678" name="contact" id="contact" required><br>
+<textarea name="description" id="description" placeholder="Description" required></textarea><br>
 <a href="#" id="button">Next</a>
 </div>
 

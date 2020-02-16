@@ -88,7 +88,7 @@ echo '<img src="data:image;base64,'.base64_encode( $img4 ).'">';
  <p><?php echo "Model:\t" .$model; ?></p><br>
  <p><?php echo "Type:\t" .$type; ?></p><br>
  <p><?php echo "Part Name:\t" .$pname; ?></p><br>
- <p><?php echo "Price:\tKes" .$price; ?></p><br>
+ <p><?php echo "Price:\t" .$price."/="; ?></p><br>
  <p><?php echo "Contact Me:\t" .$contact; ?></p><br>
 
 <?php
@@ -98,7 +98,7 @@ $encrypt = $data*201820192020007;
 $encode = "vpart?v=" .urlencode(base64_encode($encrypt));
 ?>
 
-<a href="<?=$encode;?>" id="ref" name = "ref">View Listing</a>
+<a href="<?=$encode;?>" id="ref" name = "ref">View Part</a>
 </div><br>
 <div class="img" id="bottom">
 <?php

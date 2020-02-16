@@ -34,8 +34,8 @@
 	        </div> 
 	        <div class="download">
 	        	<h2>DOWNLOAD OUR APPs(Comming Soon)</h2>
-	        	<a href=""><i class="fab fa-google-play"></i>  Google Play</a>
-	        	<a href=""><i class="fab fa-apple"></i>  App Store</a>
+	        	<a href="https://play.google.com/store/apps" target="_blank"><i class="fab fa-google-play"></i>  Google Play</a>
+	        	<a href="https://www.apple.com/ios/app-store/" target="_blank"><i class="fab fa-apple"></i>  App Store</a>
 	        </div>   	    
 	</div>	
 	<div class="terms">

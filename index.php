@@ -10,7 +10,7 @@ if(isset($_POST['send'])){
 	$email = mysqli_real_escape_string($conn, $_POST['mail']);
 	$phone = mysqli_real_escape_string($conn, $_POST['phone']);
 	$message = mysqli_real_escape_string($conn, $_POST['message']);
-$mes="INSERT INTO `messages`(`fname`,`sname`,`email`, `phone`,`message`) VALUES (?,?,?,?,?)";
+$mes = "INSERT INTO `messages`(`fname`,`sname`,`email`, `phone`,`message`) VALUES (?,?,?,?,?)";
 $stmt = mysqli_stmt_init($conn);
 if(!mysqli_stmt_prepare($stmt, $mes)){
 	echo "error";
@@ -48,7 +48,7 @@ if(!mysqli_stmt_prepare($stmt, $mes)){
         <div class="slide s1">
           <h1>B.W.K - We are Family</h1><br>
           <h2>Join the Family</h2><br>
-          <a href="signup">Braap!!!</a>
+          <a href="signup">Braaap!!!</a>
         </div>
         <div class="slide">
           <h1>SHOP BikerWorldKenya</h1><br>
@@ -64,6 +64,7 @@ if(!mysqli_stmt_prepare($stmt, $mes)){
           <h1>What you looking for?</h1><br>
           <h2>Dealerships, riding schools and garages</h2><br>
           <a href="schools">LearnToRide</a>
+          <a href="dealer">Dealerships</a>
         </div>
         <div class="slide">
           <h1>View upcoming events</h1><br>

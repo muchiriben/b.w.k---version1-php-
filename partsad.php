@@ -8,7 +8,7 @@ if (($_SESSION['login_user']) == null) {
 require "inc/conn.php";
 $myusername = $_SESSION['login_user'];
 $usertype = $_SESSION['user_type'];
-$pmenu = $cmenu = null;
+$pmenu = $cmenu = $error = null;
 if (isset($_GET["make"]) && is_numeric($_GET["make"])) {
     $pmenu = $_GET["make"];
 }
@@ -22,7 +22,7 @@ if (isset($_POST['submit'])) {
 }
 
 if(isset($_POST['save'])){
-
+$error = "Please fill in the all inputs";
 $make = mysqli_real_escape_string($conn, $_POST['make']);
 $model = mysqli_real_escape_string($conn, $_POST['model']);
 $type = mysqli_real_escape_string($conn, $_POST['type']);
@@ -30,6 +30,7 @@ $pname = mysqli_real_escape_string($conn, $_POST['pname']);
 $year = mysqli_real_escape_string($conn, $_POST['year']);
 $price = mysqli_real_escape_string($conn, $_POST['price']);
 $contact = mysqli_real_escape_string($conn, $_POST['contact']);
+$description = mysqli_real_escape_string($conn, $_POST['description']);
 
 $ext = pathinfo($_FILES['frontim']['name']);
 $ext = pathinfo($_FILES['leftim']['name']);
@@ -111,22 +112,21 @@ $sq = "SELECT name FROM maketable WHERE mid =? ";
          } 
 
 
- $sellpart="INSERT INTO `puploads`(`by_id`,`user_type`, `make`, `model`,`year`,`type`,`pname`,`price`, `contact`,`frontim`, `leftim`, `rightim` ,`backim`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
+ $sellpart = "INSERT INTO `puploads` (`by_id`,`user_type`, `make`, `model`,`year`,`type`,`pname`,`price`, `contact`, `description`,`frontim`, `leftim`, `rightim` ,`backim`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
 $null = NULL;
 $stmt = mysqli_stmt_init($conn);
 if (!mysqli_stmt_prepare($stmt, $sellpart)) {
   echo "SQL error";
 } else {
-mysqli_stmt_bind_param($stmt, "isssissisbbbb", $by_id,$usertype,$makename,$model,$price,$type,$pname,$price,$contact,$null,$null,$null,$null);
+mysqli_stmt_bind_param($stmt, "isssississbbbb", $by_id,$usertype,$makename,$model,$price,$type,$pname,$price,$contact,$description,$null,$null,$null,$null);
 
-$stmt->send_long_data(9, $imagetmp1);
-$stmt->send_long_data(10, $imagetmp2);
-$stmt->send_long_data(11, $imagetmp3);
-$stmt->send_long_data(12, $imagetmp4);
+$stmt->send_long_data(10, $imagetmp1);
+$stmt->send_long_data(11, $imagetmp2);
+$stmt->send_long_data(12, $imagetmp3);
+$stmt->send_long_data(13, $imagetmp4);
 
-mysqli_stmt_execute($stmt); 
-  
+mysqli_stmt_execute($stmt);   
 header('location:parts');
 }
             
@@ -163,7 +163,7 @@ header('location:parts');
   <div class="details">
   <h1>Parts Details</h1><br>
                    <select id="make" name="make" onchange="autoSubmit();" required>
-                        <option value="">Make</option>
+                        <option value="">Motorcycle Make</option>
                         <?php
                        
                         $sql = "SELECT mid,name from maketable";
@@ -175,7 +175,7 @@ header('location:parts');
                         ?>
                     </select>
                <select id="model" name="model" required>
-                <option value="">Model</option>
+                <option value="">Motorcycle Model</option>
                 <option value="Universal">Universal</option>
                 <?php
                 if ($pmenu != '' && is_numeric($pmenu)) {
@@ -210,12 +210,14 @@ header('location:parts');
 </select>
 
 <select id="type" name="type" required>
+  <option id="type" value="">Choose category:</option>
   <option id="type" value="Aftermaket Part">Aftermaket Part</option>
-  <option id="type" value="OEM Part(0riginal)">OEM Part(Original Equipment Manufacturer)</option>
+  <option id="type" value="OEM Part(Original Equipment Manufacturer)">OEM Part(Original Equipment Manufacturer)</option>
 </select><br> 
-<input type="text" name="pname" id="pname" placeholder="Part Name" required>
-<input type="text" placeholder="Price:e.g 200000" name="price" id="price" required><br>
-<input type="text" placeholder="Contact" name="contact" id="contact" required><br>
+<input type="text" name="pname" id="pname" placeholder="Part Name e.g. Air filter" required>
+<input type="text" placeholder="Price(Ksh):e.g 2500" name="price" id="price" required><br>
+<input type="text" placeholder="Contact: e.g. 0712345678" name="contact" id="contactp" required><br>
+<textarea name="description" id="description" placeholder="Description" required></textarea><br>
 <a href="#" id="button">Next</a>
 </div>
 
@@ -233,6 +235,7 @@ header('location:parts');
      <input type="file" name="rightim" id="rightim"><br>
      <input type="file" name="backim" id="backim"><br>
      <input type="submit" name="save" value="Finish">
+     <?php echo $error; ?>
 </div>
 </form> 
 </div>

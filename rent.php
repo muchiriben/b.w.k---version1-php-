@@ -62,7 +62,6 @@ echo '<img src="data:image;base64,'.base64_encode( $img4 ).'">';
  <p><?php echo "Make:\t" .$make; ?></p><br>
  <p><?php echo "Model:\t" .$model; ?></p><br>
  <p><?php echo "Year:\t" .$year; ?></p><br>
-  <p><?php echo "Engine size:\t" .$eng_size. "cc" ;?></p><br>
  <p><?php echo "Price/hour:\t" .$price. "/="; ?></p><br>
  <p><?php echo "Contact Me:\t" .$contact; ?></p><br><br>
 
@@ -73,7 +72,7 @@ $encrypt = $data*201820192020007;
 $encode = "viewrental?v=" .urlencode(base64_encode($encrypt));
 ?>
 
-<a href="<?=$encode;?>" id="ref" name = "ref">View Listing</a>
+<a href="<?=$encode;?>" id="ref" name = "ref">View Motorcycle</a>
 </div><br>
 <div class="img" id="bottom">
 <?php

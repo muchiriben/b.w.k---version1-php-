@@ -21,6 +21,7 @@ $type = $row['type'];
 $pname = $row['pname'];
 $price = $row['price'];
 $contact = $row['contact'];
+$description = $row["description"];
 $img1 = $row["leftim"]; 
 $img2 = $row["rightim"]; 
 $img3 = $row["backim"]; 
@@ -114,7 +115,7 @@ echo '<div class="img">
     <td><?php echo $model; ?></td>
   </tr>
   <tr>
-    <th scope="row">Type</th>
+    <th scope="row">Category</th>
     <td><?php echo $type; ?></td>
     </tr> 
   <tr>
@@ -125,13 +126,12 @@ echo '<div class="img">
     <th scope="row">Price</th>
     <td><?php echo "Ksh." .$price. "/="; ?></td>
     </tr> 
+    <tr>
     <th scope="row">CONTACT</th>
     <td><?php echo $contact;?></td>
-    </tr>   
-  </tbody>
-  <tfoot>
+    </tr>
     <tr>
-      <th>
+      <th></th>
         <td><?php
 /* encrypt url */
 $data = $by_id;
@@ -145,7 +145,15 @@ if($usertype == 'user') {
 ?>
 
 <a href="<?=$encode;?>" id="ref" name = "ref">View Profile</a></td>
-      </th>
+      
+    </tr>   
+  </tbody>
+  <tfoot>
+    <tr>
+    <th scope="col" colspan="2">DESCRIPTION</th>
+    </tr>
+    <tr>
+      <td colspan="2"><?php echo $description;?></td>
     </tr>
   </tfoot>
 </table>

@@ -29,6 +29,7 @@ $brand = mysqli_real_escape_string($conn, $_POST['brand']);
 $gname = mysqli_real_escape_string($conn, $_POST['name']);
 $price = mysqli_real_escape_string($conn, $_POST['price']);
 $contact = mysqli_real_escape_string($conn, $_POST['contact']);
+$description =mysqli_real_escape_string($conn, $_POST['description']);
 
 $ext = pathinfo($_FILES['frontim']['name']);
 $ext = pathinfo($_FILES['leftim']['name']);
@@ -109,19 +110,19 @@ $sq = "SELECT cname FROM gcategories WHERE cid =? ";
          } 
 
 
- $sellgear="INSERT INTO `guploads`(`by_id`,`user_type`, `cate`, `type`, `brand`, `gname`, `price`, `contact`,`frontim`, `leftim`, `rightim` ,`backim`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+ $sellgear="INSERT INTO `guploads`(`by_id`,`user_type`, `cate`, `type`, `brand`, `gname`, `price`, `contact`,`description`,`frontim`, `leftim`, `rightim` ,`backim`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
 $null = NULL; 
 $stmt = mysqli_stmt_init($conn);
 if (!mysqli_stmt_prepare($stmt, $sellgear)) {
   echo "SQL error";
 } else {
-  mysqli_stmt_bind_param($stmt, "isssssisbbbb", $by_id, $usertype, $cname, $type , $brand ,$gname, $price, $contact,$null,$null,$null,$null);
+  mysqli_stmt_bind_param($stmt, "isssssissbbbb", $by_id, $usertype, $cname, $type , $brand ,$gname, $price, $contact,$description,$null,$null,$null,$null);
 
-$stmt->send_long_data(8, $imagetmp1);
-$stmt->send_long_data(9, $imagetmp2);
-$stmt->send_long_data(10, $imagetmp3);
-$stmt->send_long_data(11, $imagetmp4);
+$stmt->send_long_data(9, $imagetmp1);
+$stmt->send_long_data(10, $imagetmp2);
+$stmt->send_long_data(11, $imagetmp3);
+$stmt->send_long_data(12, $imagetmp4);
 
 mysqli_stmt_execute($stmt);
 
@@ -160,7 +161,7 @@ header('location:gears');
   <div class="details">
     <h1>Gear Details</h1><br>
                    <select id="cate" name="cate" onchange="autoSubmit();" required>
-                        <option value="">Category</option>
+                        <option value="">Gear Category</option>
                         <?php
                        
                         $sql = "SELECT cid,cname from gcategories";
@@ -172,7 +173,7 @@ header('location:gears');
                         ?>
                     </select>
                <select id="type" name="type" required>
-                <option value="">Type</option>
+                <option value="">Gear Type</option>
                 <?php
                 if ($pmenu != '' && is_numeric($pmenu)) {
                   
@@ -190,10 +191,11 @@ header('location:gears');
                  </select>
 		<br>
 
-<input type="text" placeholder="Brand:e.g alpinestars" name="brand" id="brand" required>
-<input type="text" placeholder="Name" name="name" id="name" required><br>		
-<input type="text" placeholder="Price:e.g 200000" name="price" id="price" required>
-<input type="text" placeholder="Contact" name="contact" id="contact" required><br>		
+<input type="text" placeholder="Brand Name: e.g. LS2" name="brand" id="brand" required>
+<input type="text" placeholder="Gear Name: e.g. LS2 Challenger GT" name="name" id="name" required><br>		
+<input type="text" placeholder="Price(Ksh): e.g. 2500" name="price" id="price" required>
+<input type="text" placeholder="Contact e.g. 0712345678" name="contact" id="contact" required><br>
+<textarea name="description" id="description" placeholder="Description" required></textarea><br>
 <a href="#" id="button">Next</a>
 </div>
 

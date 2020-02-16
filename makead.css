@@ -180,6 +180,9 @@ padding:20px;
 	cursor: pointer;
 	outline: none;
 }
+#contactp {
+	width: 650px;
+}
 .form textarea:hover{
 	border-color: #3498db;
 }

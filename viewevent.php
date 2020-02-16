@@ -20,6 +20,7 @@ $evname = $row["evname"];
 $held_by = $row["held_by"];
 $date = $row["date"];
 $location =$row["location"];
+$price = $row["price"];
 $description = $row["description"]; 
 $contact = $row["contact"];
 $poster1 = $row["poster1"];
@@ -118,17 +119,20 @@ echo '<div class="img">
     <td><?php echo $location ;?></td>
     </tr> 
   <tr>
-    <th scope="row">Description</th>
-    <td><?php echo $description; ?></td>
+    <th scope="row">Ticket Price</th>
+    <td><?php 
+    if ($price == 0) {
+       $price = 'No charges';
+       echo $price;
+    } else { echo $price;  } ?>
+    </td>
     </tr> 
     <tr>
     <th scope="row">CONTACT</th>
     <td><?php echo $contact;?></td>
-    </tr>   
-  </tbody>
-  <tfoot>
+    </tr>
     <tr>
-      <th>
+      <th></th>
         <td><?php
 /* encrypt url */
 $data = $by_id;
@@ -140,8 +144,15 @@ if($usertype == 'user') {
 }
 ?>
 
-<a href="<?=$encode;?>" id="ref" name = "ref">View Profile</a></td>
-      </th>
+<a href="<?=$encode;?>" id="ref" name = "ref">View Profile</a></td>     
+    </tr>   
+  </tbody>
+  <tfoot>
+    <tr>
+    <th scope="col" colspan="2">DESCRIPTION</th>
+    </tr>
+    <tr>
+      <td colspan="2"><?php echo $description;?></td>
     </tr>
   </tfoot>
 </table>
