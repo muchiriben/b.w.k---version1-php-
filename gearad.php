@@ -8,7 +8,7 @@ if (($_SESSION['login_user']) == null) {
 require_once "inc/conn.php";
 $myusername = $_SESSION['login_user'];
 $usertype = $_SESSION['user_type'];
-$pmenu = $cmenu = null;
+$pmenu = $cmenu = $error = null;
 if (isset($_GET["cate"]) && is_numeric($_GET["cate"])) {
     $pmenu = $_GET["cate"];
 }
@@ -22,7 +22,7 @@ if (isset($_POST['submit'])) {
 }
 
 if(isset($_POST['save'])){
-	
+  
 $cate = mysqli_real_escape_string($conn, $_POST['cate']);
 $type = mysqli_real_escape_string($conn, $_POST['type']);
 $brand = mysqli_real_escape_string($conn, $_POST['brand']);
@@ -32,29 +32,43 @@ $contact = mysqli_real_escape_string($conn, $_POST['contact']);
 $description =mysqli_real_escape_string($conn, $_POST['description']);
 
 $ext = pathinfo($_FILES['frontim']['name']);
-$ext = pathinfo($_FILES['leftim']['name']);
-$ext = pathinfo($_FILES['rightim']['name']);
-$ext = pathinfo($_FILES['backim']['name']);
+$ext1 = pathinfo($_FILES['leftim']['name']);
+$ext2 = pathinfo($_FILES['rightim']['name']);
+$ext3 = pathinfo($_FILES['backim']['name']);
+
 if ($ext["extension"] == "jpg" || $ext["extension"] == "jpeg" || $ext["extension"] == "png" || $ext["extension"] == "gif") {
        $frontim = $_FILES['frontim']['name']; 
        $first =  $_FILES['frontim']['tmp_name'];
-       $imagetmp1= file_get_contents($first); 
+       $imagetmp1= file_get_contents($first);
+} else {
+      $error = "One of the files uploaded is not an Image";
+}
 
+if ($ext1["extension"] == "jpg" || $ext1["extension"] == "jpeg" || $ext1["extension"] == "png" || $ext1["extension"] == "gif") {
        $leftim = $_FILES['leftim']['name']; 
        $sec =  $_FILES['leftim']['tmp_name'];
-       $imagetmp2= file_get_contents($sec); 
+       $imagetmp2= file_get_contents($sec);
+} else {
+      $error = "One of the files uploaded is not an Image";
+}
 
+if ($ext2["extension"] == "jpg" || $ext2["extension"] == "jpeg" || $ext2["extension"] == "png" || $ext2["extension"] == "gif") {
        $rightim = $_FILES['rightim']['name']; 
        $thrd =  $_FILES['rightim']['tmp_name'];
-       $imagetmp3= file_get_contents($thrd); 
+       $imagetmp3= file_get_contents($thrd);
+} else {
+      $error = "One of the files uploaded is not an Image";
+}
 
+if ($ext3["extension"] == "jpg" || $ext3["extension"] == "jpeg" || $ext3["extension"] == "png" || $ext3["extension"] == "gif") {
        $backim = $_FILES['backim']['name']; 
        $frth =  $_FILES['backim']['tmp_name'];
-       $imagetmp4= file_get_contents($frth); 
+       $imagetmp4= file_get_contents($frth);
 } else {
-      $error = "File is not an Image.";
-      exit();
+      $error = "One of the files uploaded is not an Image";
 }
+
+
 
  if($usertype == 'user') {
     $sidq = "SELECT sid FROM users WHERE uname =? ";
@@ -109,8 +123,9 @@ $sq = "SELECT cname FROM gcategories WHERE cid =? ";
             }
          } 
 
+if ($error == null) {
 
- $sellgear="INSERT INTO `guploads`(`by_id`,`user_type`, `cate`, `type`, `brand`, `gname`, `price`, `contact`,`description`,`frontim`, `leftim`, `rightim` ,`backim`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
+  $sellgear="INSERT INTO `guploads`(`by_id`,`user_type`, `cate`, `type`, `brand`, `gname`, `price`, `contact`,`description`,`frontim`, `leftim`, `rightim` ,`backim`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
 $null = NULL; 
 $stmt = mysqli_stmt_init($conn);
@@ -129,15 +144,19 @@ mysqli_stmt_execute($stmt);
 header('location:gears');
 }
 
+} 
+
+ 
+
 }
 
 ?>
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Shop</title>
-	<script type="text/javascript">
-	 function autoSubmit()
+  <title>Shop</title>
+  <script type="text/javascript">
+   function autoSubmit()
             {
                 with (window.document.form) {
                       if (cate.selectedIndex === 0) {
@@ -155,11 +174,12 @@ header('location:gears');
 </head>
 <body>
 <header class="header">
-	<?php require_once "inc/nav.php"; ?>
+  <?php require_once "inc/nav.php"; ?>
 <div class="form">
 <form action="gearad.php" method="post" name= "form" id="form" enctype="multipart/form-data">
   <div class="details">
     <h1>Gear Details</h1><br>
+    <font size="5" color="#fff"><?php echo $error; ?></font><br>
                    <select id="cate" name="cate" onchange="autoSubmit();" required>
                         <option value="">Gear Category</option>
                         <?php
@@ -189,10 +209,10 @@ header('location:gears');
                 }
                 ?>
                  </select>
-		<br>
+    <br>
 
 <input type="text" placeholder="Brand Name: e.g. LS2" name="brand" id="brand" required>
-<input type="text" placeholder="Gear Name: e.g. LS2 Challenger GT" name="name" id="name" required><br>		
+<input type="text" placeholder="Gear Name: e.g. LS2 Challenger GT" name="name" id="name" required><br>    
 <input type="text" placeholder="Price(Ksh): e.g. 2500" name="price" id="price" required>
 <input type="text" placeholder="Contact e.g. 0712345678" name="contact" id="contact" required><br>
 <textarea name="description" id="description" placeholder="Description" required></textarea><br>
@@ -201,18 +221,76 @@ header('location:gears');
 
 <script type="text/javascript">
   document.getElementById('button').addEventListener("click", function() {
-  document.querySelector('.imgupload').style.display = "inline-block";
+
+   var errormessage = "";
+   if(document.getElementById('cate').value == "") {
+     errormessage += "Enter Gear Category \n";
+     document.getElementById('cate').style.border = "2px solid #B40431";
+   } else {
+      document.getElementById('cate').style.border = "2px solid #fff";
+   }
+
+   if(document.getElementById('type').value == "") {
+     errormessage += "Enter Gear Type \n";
+     document.getElementById('type').style.border = "2px solid #B40431";
+   } else {
+      document.getElementById('type').style.border = "2px solid #fff";
+   }
+
+   if (document.getElementById('brand').value == ""){
+     errormessage += "Enter Brand Name \n";
+     document.getElementById('brand').style.border = "2px solid #B40431";
+   } else{
+     document.getElementById('brand').style.border = "2px solid #fff";
+   }
+
+   if(document.getElementById('name').value == "") {
+     errormessage += "Enter Gear Name \n";
+     document.getElementById('name').style.border = "2px solid #B40431";
+   } else {
+      document.getElementById('name').style.border = "2px solid #fff";
+   }
+
+   if(document.getElementById('price').value == "") {
+     errormessage += "Enter Price \n";
+     document.getElementById('price').style.border = "2px solid #B40431";
+   } else {
+      document.getElementById('price').style.border = "2px solid #fff";
+   }
+
+   if(document.getElementById('contact').value == "") {
+     errormessage += "Enter Contact \n";
+     document.getElementById('contact').style.border = "2px solid #B40431";
+   } else {
+      document.getElementById('contact').style.border = "2px solid #fff";
+   }
+
+   if(document.getElementById('description').value == "") {
+     errormessage += "Enter Description \n";
+     document.getElementById('description').style.border = "2px solid #B40431";
+   } else {
+      document.getElementById('description').style.border = "2px solid #fff";
+   }
+
+   if (errormessage != "") {
+     alert(errormessage);
+     return false;
+   } else {
+     document.querySelector('.imgupload').style.display = "inline-block";
   document.querySelector('.details').style.display = "none";
+   }
+  
 });
 </script>
 
 <div class="imgupload">
   <h1>UPLOAD IMAGES</h1><br>
-     <input type="file" name="frontim" id="frontim"><br>
-     <input type="file" name="leftim" id="leftim"><br>
-     <input type="file" name="rightim" id="rightim"><br>
-     <input type="file" name="backim" id="backim"><br>
+     <input type="file" name="frontim" id="frontim" required><br>
+     <input type="file" name="leftim" id="leftim" required><br>
+     <input type="file" name="rightim" id="rightim" required><br>
+     <input type="file" name="backim" id="backim" required><br>
      <input type="submit" name="save" value="Finish">
+     
 </div>
 </form> 
 </div>

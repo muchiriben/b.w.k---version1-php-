@@ -42,8 +42,9 @@ $slogan = mysqli_real_escape_string($conn, $_POST['slogan']);
 $pass = mysqli_real_escape_string($conn, md5($_POST['pass']));
 $repass = mysqli_real_escape_string($conn, md5($_POST['repass']));   
 
-$ext = pathinfo($_FILES['logo']['name']);
-if ($ext["extension"] == "jpg" || $ext["extension"] == "jpeg" || $ext["extension"] == "png" || $ext["extension"] == "gif") {
+if ($_FILES['logo']['name'] != null) {
+   $ext = pathinfo($_FILES['logo']['name']);
+   if ($ext["extension"] == "jpg" || $ext["extension"] == "jpeg" || $ext["extension"] == "png" || $ext["extension"] == "gif") {
 
        $poster1 = $_FILES['logo']['name'];
        $first =  $_FILES['logo']['tmp_name'];
@@ -51,8 +52,11 @@ if ($ext["extension"] == "jpg" || $ext["extension"] == "jpeg" || $ext["extension
 $imagetmp1= file_get_contents($first); 
 
 } else {
-      $error = "File is not an Image.";
-      exit();
+      $error = "Logo uploaded is not an Image.";
+}
+
+} else {
+     $imagetmp1 = null;
 }
 
 //check for similar records
@@ -66,8 +70,9 @@ if (!mysqli_stmt_prepare($stmt, $select)) {
   $result = mysqli_stmt_get_result($stmt);
   $num=mysqli_num_rows($result);
 
-    //if record exists
-    if ($num == 0){
+if($error == null){
+
+    if ($num == 0){  //if record exists
 
         //check passwords are similar
         if($pass == $repass){ 
@@ -99,6 +104,7 @@ if (!mysqli_stmt_prepare($stmt, $addg)) {
   }  else{
            $error = "Garage name has already been taken!!!"; 
         }
+}
 
 }
 

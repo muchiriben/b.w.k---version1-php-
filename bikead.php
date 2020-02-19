@@ -8,7 +8,7 @@ if (($_SESSION['login_user']) == null) {
 require "inc/conn.php";
 $myusername = $_SESSION['login_user'];
 $usertype = $_SESSION['user_type'];
-$pmenu = $cmenu = null;
+$pmenu = $cmenu = $error = null;
 if (isset($_GET["make"]) && is_numeric($_GET["make"])) {
     $pmenu = $_GET["make"];
 }
@@ -38,29 +38,42 @@ $color =mysqli_real_escape_string($conn, $_POST['color']);
 $description =mysqli_real_escape_string($conn, $_POST['description']);
 
 $ext = pathinfo($_FILES['frontim']['name']);
-$ext = pathinfo($_FILES['leftim']['name']);
-$ext = pathinfo($_FILES['rightim']['name']);
-$ext = pathinfo($_FILES['backim']['name']);
+$ext1 = pathinfo($_FILES['leftim']['name']);
+$ext2 = pathinfo($_FILES['rightim']['name']);
+$ext3 = pathinfo($_FILES['backim']['name']);
+
 if ($ext["extension"] == "jpg" || $ext["extension"] == "jpeg" || $ext["extension"] == "png" || $ext["extension"] == "gif") {
        $frontim = $_FILES['frontim']['name']; 
        $first =  $_FILES['frontim']['tmp_name'];
-       $imagetmp1= file_get_contents($first); 
+       $imagetmp1= file_get_contents($first);
+} else {
+      $error = "One of the files uploaded is not an Image";
+}
 
+if ($ext1["extension"] == "jpg" || $ext1["extension"] == "jpeg" || $ext1["extension"] == "png" || $ext1["extension"] == "gif") {
        $leftim = $_FILES['leftim']['name']; 
        $sec =  $_FILES['leftim']['tmp_name'];
-       $imagetmp2= file_get_contents($sec); 
+       $imagetmp2= file_get_contents($sec);
+} else {
+      $error = "One of the files uploaded is not an Image";
+}
 
+if ($ext2["extension"] == "jpg" || $ext2["extension"] == "jpeg" || $ext2["extension"] == "png" || $ext2["extension"] == "gif") {
        $rightim = $_FILES['rightim']['name']; 
        $thrd =  $_FILES['rightim']['tmp_name'];
-       $imagetmp3= file_get_contents($thrd); 
+       $imagetmp3= file_get_contents($thrd);
+} else {
+      $error = "One of the files uploaded is not an Image";
+}
 
+if ($ext3["extension"] == "jpg" || $ext3["extension"] == "jpeg" || $ext3["extension"] == "png" || $ext3["extension"] == "gif") {
        $backim = $_FILES['backim']['name']; 
        $frth =  $_FILES['backim']['tmp_name'];
-       $imagetmp4= file_get_contents($frth); 
+       $imagetmp4= file_get_contents($frth);
 } else {
-      $error = "File is not an Image.";
-      exit();
+      $error = "One of the files uploaded is not an Image";
 }
+
 
 if($usertype == 'user') {
     $sidq = "SELECT sid FROM users WHERE uname =? ";
@@ -116,7 +129,7 @@ $sq = "SELECT name FROM maketable WHERE mid =? ";
             }
          } 
 
-
+if ($error == null) {
 /* insert into databse */
 
  $sell="INSERT INTO `uploads`(`by_id`,`user_type`, `make`, `model`, `year`, `price`, `contact`, `body_type`, `mileage`, `trans_type`, `bike_condition`, `engine_size`, `color`, `description`,`frontim`, `leftim`, `rightim` ,`backim`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
@@ -138,7 +151,8 @@ mysqli_stmt_execute($stmt);
 
 header('location:shop');
 }
- 
+
+} 
         
 
 }
@@ -172,6 +186,7 @@ header('location:shop');
 <form action="bikead.php" method="post" name= "form" id="form" enctype="multipart/form-data">
   <div class="details">
     <h1>Motorcycle Details</h1><br>
+    <font size="5" color="#fff"><?php echo $error; ?></font><br>
                    <select id="make" name="make" onchange="autoSubmit();" required>
                         <option value="">Motorcycle Make</option>
                         <?php
@@ -263,17 +278,109 @@ header('location:shop');
 
 <script type="text/javascript">
   document.getElementById('button').addEventListener("click", function() {
-  document.querySelector('.imgupload').style.display = "inline-block";
+
+   var errormessage = "";
+   if(document.getElementById('make').value == "") {
+     errormessage += "Enter Motorcycle make \n";
+     document.getElementById('make').style.border = "2px solid #B40431";
+   } else {
+      document.getElementById('make').style.border = "2px solid #fff";
+   }
+
+   if(document.getElementById('model').value == "") {
+     errormessage += "Enter motorcycle model \n";
+     document.getElementById('model').style.border = "2px solid #B40431";
+   } else {
+      document.getElementById('model').style.border = "2px solid #fff";
+   }
+
+   if (document.getElementById('year').value == ""){
+     errormessage += "Enter year \n";
+     document.getElementById('year').style.border = "2px solid #B40431";
+   } else{
+     document.getElementById('year').style.border = "2px solid #fff";
+   }
+
+   if(document.getElementById('price').value == "") {
+     errormessage += "Enter Price \n";
+     document.getElementById('price').style.border = "2px solid #B40431";
+   } else {
+      document.getElementById('price').style.border = "2px solid #fff";
+   }
+
+   if(document.getElementById('contact').value == "") {
+     errormessage += "Enter Contact \n";
+     document.getElementById('contact').style.border = "2px solid #B40431";
+   } else {
+      document.getElementById('contact').style.border = "2px solid #fff";
+   }
+
+   if(document.getElementById('bodytype').value == "") {
+     errormessage += "Enter Body Type \n";
+     document.getElementById('bodytype').style.border = "2px solid #B40431";
+   } else {
+      document.getElementById('bodytype').style.border = "2px solid #fff";
+   }
+
+   if(document.getElementById('mileage').value == "") {
+     errormessage += "Enter mileage \n";
+     document.getElementById('mileage').style.border = "2px solid #B40431";
+   } else {
+      document.getElementById('mileage').style.border = "2px solid #fff";
+   }
+
+   if(document.getElementById('trans').value == "") {
+     errormessage += "Enter transmission type \n";
+     document.getElementById('trans').style.border = "2px solid #B40431";
+   } else {
+      document.getElementById('trans').style.border = "2px solid #fff";
+   }
+
+   if(document.getElementById('condition').value == "") {
+     errormessage += "Enter motorcycle condition \n";
+     document.getElementById('condition').style.border = "2px solid #B40431";
+   } else {
+      document.getElementById('condition').style.border = "2px solid #fff";
+   }
+
+   if(document.getElementById('size').value == "") {
+     errormessage += "Enter Engine size \n";
+     document.getElementById('size').style.border = "2px solid #B40431";
+   } else {
+      document.getElementById('size').style.border = "2px solid #fff";
+   }
+
+   if(document.getElementById('color').value == "") {
+     errormessage += "Enter motorcycle color \n";
+     document.getElementById('color').style.border = "2px solid #B40431";
+   } else {
+      document.getElementById('color').style.border = "2px solid #fff";
+   }
+
+   if(document.getElementById('description').value == "") {
+     errormessage += "Enter Description \n";
+     document.getElementById('description').style.border = "2px solid #B40431";
+   } else {
+      document.getElementById('description').style.border = "2px solid #fff";
+   }
+
+   if (errormessage != "") {
+     alert(errormessage);
+     return false;
+   } else {
+     document.querySelector('.imgupload').style.display = "inline-block";
   document.querySelector('.details').style.display = "none";
+   }
+  
 });
 </script>
 
 <div class="imgupload">
   <h1>UPLOAD IMAGES</h1><br>
-     <input type="file" name="frontim" id="frontim"><br>
-     <input type="file" name="leftim" id="leftim"><br>
-     <input type="file" name="rightim" id="rightim"><br>
-     <input type="file" name="backim" id="backim"><br>
+     <input type="file" name="frontim" id="frontim" required><br>
+     <input type="file" name="leftim" id="leftim" required><br>
+     <input type="file" name="rightim" id="rightim" required><br>
+     <input type="file" name="backim" id="backim" required><br>
      <input type="submit" name="save" value="Finish">
 </div>
 </form> 

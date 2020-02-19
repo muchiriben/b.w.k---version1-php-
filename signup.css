@@ -201,6 +201,9 @@ padding:20px;
 .form input[name = 'uname']{
     width: 640px;
 }
+.form a{
+	color: #3498db;
+}
 .form h1{
 	display: inline-block;
 	text-transform: uppercase;

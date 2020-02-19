@@ -87,6 +87,7 @@ header('Location:login');
 				<input type="password" name="repass" placeholder="Re-password" required pattern="(?=.*[0-9])(?=.*[A-Z]).{8,}"><br>
 				<font size="4" color="#fff">Password must be 8 characters including atleast 1 uppercase letter, 1 lowercase letter and a number</font><br>
 				<input type="submit" name="signup" value="Sign Up">
+        <font color="#fff" size="4px">Already have an account? <a href="login"> Login</a></font><br>
 			</form>
 		</div>
 	</header>

@@ -79,7 +79,7 @@ if($usertype == 'user') {
   <header class="header">
       <?php require_once 'inc/nav.php'; ?>
       <div class="name">
-         <h1><?php echo "Post by: " .$name; ?></h1>
+         <h1><?php echo "Event Posted by: " .$name; ?></h1>
       </div>   
 <div class="image">
 <?php
@@ -92,7 +92,7 @@ echo '<div class="img">
 ?>
 <div class="ticket">
   <a href="tickets.php">Get Tickets</a>
-  <a href="pin.php">Pin Location</a>
+  <a href="https://www.google.com/maps/" target="_blank">Find Location</a>
 </div>
 </div>
 <table>
