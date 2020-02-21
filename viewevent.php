@@ -9,9 +9,15 @@ $data = $_GET['v'];
   $decrypt = $data2/201820192020007;
   $ev_id = $decrypt;
 
-$list = "SELECT * FROM events WHERE evid = '$ev_id'";
- $result = mysqli_query($conn,$list);
-    if (mysqli_num_rows($result)>0){
+$list = "SELECT * FROM events WHERE evid =? ";
+$stmt = mysqli_stmt_init($conn);
+if(!mysqli_stmt_prepare($stmt, $list)){
+  echo 'errrror';
+} else {
+  mysqli_stmt_bind_param($stmt, "i" , $ev_id);
+  mysqli_stmt_execute($stmt);
+  $result = mysqli_stmt_get_result($stmt);
+  if (mysqli_num_rows($result)>0){
             while($row = mysqli_fetch_assoc($result)) {
 $evid = $row["evid"];
 $by_id = $row["by_id"];
@@ -26,8 +32,9 @@ $contact = $row["contact"];
 $poster1 = $row["poster1"];
 $poster2 = $row["poster2"];   
 }
- }
- 
+ }          
+}
+        
 if($usertype == 'user') {
     $sidq = "SELECT uname FROM users WHERE sid =? ";
   //create prepares statement
@@ -88,10 +95,10 @@ echo '<div class="img">
   </div>';
 echo '<div class="img">
     <img src="data:image;base64,'.base64_encode( $poster1 ).'" height="280px" width="380px">
-  </div><br>';
+  </div>';
 ?>
 <div class="ticket">
-  <a href="tickets.php">Get Tickets</a>
+  <a href="#" id="getickets" name="getickets">Get Tickets</a>
   <a href="https://www.google.com/maps/" target="_blank">Find Location</a>
 </div>
 </div>
@@ -157,6 +164,34 @@ if($usertype == 'user') {
   </tfoot>
 </table>
 </header>
+
+<!---modal section of tickets ---->
+<script type="text/javascript">
+  document.getElementById('getickets').addEventListener("click", function() {
+  document.querySelector('.bg-modal').style.display = "flex";
+});
+</script>
+<div class="bg-modal">
+  <div class="modal-contents">
+    <div class="close" id="close">+</div>
+    <div>
+      <h1>Get Tickets</h1>
+      <a href="https://www.mtickets.com/" target="_blank">mtickets.com</a>
+      <a href="">ticketsasa.com</a>
+      <a href="">ticketkenya.com</a>
+      <a href="">254tickets.com</a>
+      <a href="">supertickets.com</a><br>
+      <font size="4" color="#3498db">(Check the posters to find more information on how to access the tickets if they are not available in the above websites.)</font><br>
+    </div>
+  </div>
+  <script type="text/javascript">
+    document.getElementById('close').addEventListener("click", function() {
+  document.querySelector('.bg-modal').style.display = "none";
+});
+  </script>
+</div>
+
+
 <?php require_once 'inc/cpt.php'; ?>
 </body>
 </html>

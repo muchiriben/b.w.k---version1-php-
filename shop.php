@@ -44,7 +44,7 @@ $(document).ready(function(){
     <a href="makead.php">SellYourBike</a>
   </div>
     
-    <div class="cont">
+    <div class="cont" id="contshop">
     <h1>Motorcycle Listings</h1>
     <?php
        //create sql template           

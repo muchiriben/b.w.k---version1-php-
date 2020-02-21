@@ -19,7 +19,7 @@ require "inc/conn.php";
 		<a href="rentad">RentYourBike</a>
 	</div>
     
-    <div class="cont">
+    <div class="cont" id="contrent">
     <h1>Rent a Bike</h1>
     <?php           
        $list = "SELECT * FROM rentals ORDER BY rand()";

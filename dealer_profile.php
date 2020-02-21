@@ -212,7 +212,7 @@ echo '<img src="data:image;base64,'.base64_encode( $img4 ).'" >';
  <p><?php echo "Make:\t" .$make; ?></p><br>
  <p><?php echo "Model:\t" .$model; ?></p><br>
  <p><?php echo "Year:\t" .$year; ?></p><br>
- <p><?php echo "Price:\t" .$price; ?></p><br>
+ <p><?php echo "Price:\t" .$price. "/=" ?></p><br>
  <p><?php echo "Contact Me:\t" .$contact; ?></p><br><br>
 
 <?php
@@ -223,6 +223,19 @@ $encode = "viewad?v=" .urlencode(base64_encode($encrypt));
 ?>
 
 <a href="<?=$encode;?>" id="ref" name = "ref">View Listing</a>
+
+<!---delete listing---->
+<?php
+/* encrypt url */
+$data1 = $row["adid"];
+$encrypt1 = $data1*201820192020007;
+$encode1 = "profiled.php?a=" .urlencode(base64_encode($encrypt));
+
+if (!isset($_GET['v'])) { ?>
+  <a href="<?=$encode1;?>" id="ref" name = "ref">Delete Listing</a>
+<?php } ?>
+<!---delete listing end--->
+
 </div><br>
    <div class="img" id="bottom">
 <?php
@@ -298,7 +311,7 @@ echo '<img src="data:image;base64,'.base64_encode( $img4 ).'">';
  <p><?php echo "Type:\t" .$type; ?></p><br>
  <p><?php echo "Brand:\t" .$brand; ?></p><br>
  <p><?php echo "Name:\t" .$gname; ?></p><br>
- <p><?php echo "Price:\t" .$price; ?></p><br>
+ <p><?php echo "Price:\t" .$price. "/=" ?></p><br>
  <p><?php echo "Contact Me:\t" .$contact; ?></p><br>
 
 
@@ -310,6 +323,19 @@ $encode = "vgear?v=" .urlencode(base64_encode($encrypt));
 ?>
 
 <a href="<?=$encode;?>" id="ref" name = "ref">View Listing</a>
+
+<!---delete listing---->
+<?php
+/* encrypt url */
+$data1 = $row["gid"];
+$encrypt1 = $data1*201820192020007;
+$encode1 = "profiled.php?g=" .urlencode(base64_encode($encrypt));
+
+if (!isset($_GET['v'])) { ?>
+  <a href="<?=$encode1;?>" id="ref" name = "ref">Delete Listing</a>
+<?php } ?>
+<!---delete listing end--->
+
 </div><br>
 <div class="img" id="bottom">
 <?php
@@ -382,7 +408,7 @@ echo '<img src="data:image;base64,'.base64_encode( $img4 ).'">';
  <p><?php echo "Model:\t" .$model; ?></p><br>
  <p><?php echo "Type:\t" .$type; ?></p><br>
  <p><?php echo "Part Name:\t" .$pname; ?></p><br>
- <p><?php echo "Price:\tKes" .$price; ?></p><br>
+ <p><?php echo "Price:\t" .$price. "/="  ?></p><br>
  <p><?php echo "Contact Me:\t" .$contact; ?></p><br>
 
 <?php
@@ -393,6 +419,19 @@ $encode = "vpart?v=" .urlencode(base64_encode($encrypt));
 ?>
 
 <a href="<?=$encode;?>" id="ref" name = "ref">View Listing</a>
+
+<!---delete listing---->
+<?php
+/* encrypt url */
+$data1 = $row["pid"];
+$encrypt1 = $data1*201820192020007;
+$encode1 = "profiled.php?p=" .urlencode(base64_encode($encrypt));
+
+if (!isset($_GET['v'])) { ?>
+  <a href="<?=$encode1;?>" id="ref" name = "ref">Delete Listing</a>
+<?php } ?>
+<!---delete listing end--->
+
 </div><br>
 <div class="img" id="bottom">
 <?php
@@ -463,7 +502,7 @@ echo '<img src="data:image;base64,'.base64_encode( $poster1 ).'">';
  <p><?php echo "Event Name:\t" .$evname; ?></p><br>
  <p><?php echo "Held By:\t" .$held_by; ?></p><br>
  <p><?php echo "Date:\t" .$date; ?></p><br>
- <p><?php echo "Location:\t" .$location; ?></p><br>
+ <p><?php echo "At:\t" .$location; ?></p><br>
  <p><?php echo "Contact Us:\t" .$contact; ?></p><br><br>
  
 <?php
@@ -474,6 +513,19 @@ $encode = "viewevent?v=" .urlencode(base64_encode($encrypt));
 ?>
 
 <a href="<?=$encode;?>" id="ref" name = "ref">View Event</a>
+
+<!---delete listing---->
+<?php
+/* encrypt url */
+$data1 = $row["evid"];
+$encrypt1 = $data1*201820192020007;
+$encode1 = "profiled.php?e=" .urlencode(base64_encode($encrypt));
+
+if (!isset($_GET['v'])) { ?>
+  <a href="<?=$encode1;?>" id="ref" name = "ref">Delete Listing</a>
+<?php } ?>
+<!---delete listing end--->
+
 </div><br>
 <div class="img" id="bottom">
 <?php
@@ -546,7 +598,6 @@ echo '<img src="data:image;base64,'.base64_encode( $img4 ).'">';
  <p><?php echo "Make:\t" .$make; ?></p><br>
  <p><?php echo "Model:\t" .$model; ?></p><br>
  <p><?php echo "Year:\t" .$year; ?></p><br>
-  <p><?php echo "Engine size:\t" .$eng_size. "cc" ;?></p><br>
  <p><?php echo "Price/hour:\t" .$price. "/="; ?></p><br>
  <p><?php echo "Contact Me:\t" .$contact; ?></p><br><br>
 
@@ -558,6 +609,19 @@ $encode = "viewrental?v=" .urlencode(base64_encode($encrypt));
 ?>
 
 <a href="<?=$encode;?>" id="ref" name = "ref">View Listing</a>
+
+<!---delete listing---->
+<?php
+/* encrypt url */
+$data1 = $row["rid"];
+$encrypt1 = $data1*201820192020007;
+$encode1 = "profiled.php?r=" .urlencode(base64_encode($encrypt));
+
+if (!isset($_GET['v'])) { ?>
+  <a href="<?=$encode1;?>" id="ref" name = "ref">Delete Listing</a>
+<?php } ?>
+<!---delete listing end--->
+
 </div><br>
 <div class="img" id="bottom">
 <?php
@@ -603,7 +667,7 @@ echo '<img src="data:image;base64,'.base64_encode( $img3 ).'">';
 
 ?>
 <script type="text/javascript">
-  document.getElementById('button').addEventListener("click", function() {
+  document.getElementById('contactbtn').addEventListener("click", function() {
   document.querySelector('.bg-modal').style.display = "flex";
 });
 </script>
@@ -624,6 +688,19 @@ echo '<img src="data:image;base64,'.base64_encode( $img3 ).'">';
   </script>
 </div>
 <!--- end of modal section --->
+
+
+<!---delete listing--->
+<script type="text/javascript">
+      var result = '<?php echo $res ?>';
+      if (result == 1) {
+        alert("Listing deleted succefully!!");
+      } else if (result == 0) {
+        alert("Failed to delete listing");
+      }
+    </script>
+<!---delete listing--->
+
 <?php require_once 'inc/cpt.php'; ?>
 </body>
 </html>

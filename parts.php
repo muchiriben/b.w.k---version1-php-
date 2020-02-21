@@ -34,7 +34,7 @@ $(document).ready(function(){
 <body>
 <header class="header">
 	<?php require_once "inc/nav.php"; ?>
-	<div class="cat">
+	<div class="cat" id="catparts">
 		<select class="category">
 			<option class="option" value="" selected="">Category</option>
 			<option class="option" value="bikes">Bikes</option>
@@ -44,7 +44,7 @@ $(document).ready(function(){
 		<a href="makead.php">SellParts</a>
 	</div>
 
-<div class="cont">
+<div class="cont" id="contparts">
     <h1>Motorcycle Parts</h1>
     <?php           
        $list = "SELECT * FROM puploads ORDER BY rand()";

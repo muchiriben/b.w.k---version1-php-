@@ -19,7 +19,7 @@ require "inc/conn.php";
 		<a href="postevent">Post Event</a>
 	</div>
     
-    <div class="cont">
+    <div class="cont" id="contev">
     <h1>Coming Soon</h1>
     <?php           
        $list = "SELECT * FROM events ORDER BY rand()";
@@ -60,7 +60,7 @@ echo '<img src="data:image;base64,'.base64_encode( $poster1 ).'">';
  <p><?php echo "Event Name:\t" .$evname; ?></p><br>
  <p><?php echo "Held By:\t" .$held_by; ?></p><br>
  <p><?php echo "Date:\t" .$date; ?></p><br>
- <p><?php echo "Location:\t" .$location; ?></p><br>
+ <p><?php echo "At:\t" .$location; ?></p><br>
  <p><?php echo "Contact Us:\t" .$contact; ?></p><br><br>
  
 <?php
@@ -88,3 +88,6 @@ echo '<img src="data:image;base64,'.base64_encode( $poster2 ).'">';
 <?php require_once 'inc/cpt.php';?>
 </body>
 </html>
+
+
+

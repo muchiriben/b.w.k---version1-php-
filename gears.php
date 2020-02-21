@@ -44,7 +44,7 @@ $(document).ready(function(){
 		<a href="makead.php">SellGear</a>
 	</div>
 
-	<div class="cont">
+	<div class="cont" id="contgears">
     <h1>Motorcycle Gear</h1>
     <?php           
        $list = "SELECT * FROM guploads ORDER BY rand()";

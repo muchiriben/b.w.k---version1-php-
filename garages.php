@@ -84,7 +84,6 @@ if ($slogan != null) {
 }
 ?>
 </div>
-    </div>
 </header>
 <?php require_once 'inc/cpt.php'; ?>
 </body>
