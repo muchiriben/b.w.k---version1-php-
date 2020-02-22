@@ -163,11 +163,19 @@ padding:20px;
 	font-size: 14px;
 	color: #fff; 
 	padding: 5px 20px;
-	margin-top: 30px;
-	margin-right: 20px;
+	margin-top: 10px;
 	display: inline-block;  
 	width: 150px; 
 
+}
+.editcont a[name = 'editbtn']{
+	margin-right: 10px;
+}
+.editcont a[name = 'contactbtn1']{
+	margin-left: 10px;
+}
+.editcont a[name = 'contactbtn2']{
+	width: 250px;
 }
 
 /* MODAL STARTS HERE */

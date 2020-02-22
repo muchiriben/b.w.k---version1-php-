@@ -144,11 +144,12 @@ $(document).ready(function(){
     <div class="href">
       <?php
          if (!isset($_GET['v'])) { ?>
-            <a href="editprofile" name="ref">Edit Profile</a>
-      <?php } ?>
+            <a href="editprofile" name="editbtn">Edit Profile</a>
+            <a href="#" id="contactbtn" name="contactbtn1">Contact</a>
+      <?php } else { ?>
+            <a href="#" id="contactbtn" name="contactbtn2">Contact</a>
+      <?php } ?> 
       
-      <a href="#" name="ref">Message</a>
-      <a href="#" id="button" class="button">Contact</a>
     </div> 
   </div>
 

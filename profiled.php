@@ -89,6 +89,8 @@ if (isset($_GET['a'])) {
 		header("location:myprofile?res=1");
 	}
 
+} else {
+	header("Location:eror404");
 }
 
 
