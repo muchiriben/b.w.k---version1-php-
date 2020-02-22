@@ -1,8 +1,9 @@
 <?php 
 session_start();
 $_SESSION['from'] = "garage";
-require_once "inc/conn.php";
+require "inc/conn.php";
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>

@@ -1,13 +1,18 @@
 <?php 
 session_start();
-$_SESSION['from'] = "rentad";
+require "inc/conn.php";
+
 if (($_SESSION['login_user']) == null) {
   header("Location:login.php");
+  exit();
 }
 
-require_once "inc/conn.php";
+
+$_SESSION['from'] = "rentad";
+
 $myusername = $_SESSION['login_user'];
 $usertype = $_SESSION['user_type'];
+
 $pmenu = $cmenu = $error = null;
 if (isset($_GET["make"]) && is_numeric($_GET["make"])) {
     $pmenu = $_GET["make"];

@@ -5,6 +5,7 @@ require "inc/conn.php";
 //check user has logged in
 if (($_SESSION['login_user']) == null) {
   header("Location:login");
+  exit();
 }
 
 //initialization of important elements

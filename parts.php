@@ -1,7 +1,7 @@
 <?php 
 session_start();
 $_SESSION['from'] = "parts";
-require_once "inc/conn.php";
+require "inc/conn.php";
 
 ?>
 <!DOCTYPE html>

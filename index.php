@@ -1,7 +1,7 @@
 <?php
 session_start();
 $_SESSION['from'] = "index";
-require_once 'inc/conn.php';
+require 'inc/conn.php';
 
 //message admin
 if(isset($_POST['send'])){
@@ -13,9 +13,8 @@ if(isset($_POST['send'])){
 $mes = "INSERT INTO `messages`(`fname`,`sname`,`email`, `phone`,`message`) VALUES (?,?,?,?,?)";
 $stmt = mysqli_stmt_init($conn);
 if(!mysqli_stmt_prepare($stmt, $mes)){
-	echo "error";
+	header('location:index');
 } else {
-
 	mysqli_stmt_bind_param($stmt, "sssss" , $fname,$sname,$email,$phone,$message);
     mysqli_stmt_execute($stmt);
     header('location:index');

@@ -5,11 +5,12 @@ require "inc/conn.php";
 //check user has logged in
 if (($_SESSION['login_user']) == null) {
   header("Location:login");
+  exit();
 }
 
 //initialization of important elements
-$myusername = $_SESSION['login_user'];
 $_SESSION['from'] = "addshule";
+$myusername = $_SESSION['login_user'];
 $error = null;
 
 //get the sid of user

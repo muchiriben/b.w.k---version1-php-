@@ -1,10 +1,14 @@
 <?php 
 session_start();
+require "inc/conn.php";
+
 if (($_SESSION['login_user']) == null) {
   header("Location:login");
+  exit();
 }
+
 $_SESSION['from'] = "postev";
-require_once "inc/conn.php";
+
 $myusername = $_SESSION['login_user'];
 $usertype = $_SESSION['user_type'];
 $error = null; 

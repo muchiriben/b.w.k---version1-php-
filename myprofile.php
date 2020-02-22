@@ -1,10 +1,11 @@
 <?php
 session_start();
-require_once 'inc/conn.php';
+require 'inc/conn.php';
 if (($_SESSION['login_user']) == null) {
 	header("Location:login");
   exit();
 }
+
 $usertype = 'user';
 $_SESSION['from'] = 'profile';
 /* view profile */

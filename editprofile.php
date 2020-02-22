@@ -1,12 +1,13 @@
 <?php
 session_start();
-require_once 'inc/conn.php';
-$_SESSION['from'] = "editprofile";
+require 'inc/conn.php';
 
 if (($_SESSION['login_user']) == null) {
   header("Location:login");
+  exit();
 }
 
+$_SESSION['from'] = "editprofile";
 $usertype = $_SESSION['user_type'];
 $user = $_SESSION['login_user'];
 

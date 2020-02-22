@@ -1,7 +1,9 @@
 <?php
 require 'inc/conn.php';
+
 $error = null;
 $password = null;
+
 if(isset($_POST['reset'])){
 	$user = mysqli_real_escape_string($conn, $_POST['uname']);
     $provpass = mysqli_real_escape_string($conn, $_POST['provpass']);

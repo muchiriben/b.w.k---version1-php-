@@ -1,6 +1,10 @@
  <?php
+session_start();
 require 'inc/conn.php';
+
+$_SESSION['from'] = 'changepass';
 $error = null;
+
 if(isset($_POST['reset'])){
   $user = mysqli_real_escape_string($conn,  $_POST['uname']);
   $prevpass = mysqli_real_escape_string($conn,  md5($_POST['prevpass']));

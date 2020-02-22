@@ -1,6 +1,9 @@
  <?php
+session_start();
 require 'inc/conn.php';
+
 $error = null;
+
 if(isset($_POST['reset'])){
 
   $user = mysqli_real_escape_string($conn,  $_POST['uname']);

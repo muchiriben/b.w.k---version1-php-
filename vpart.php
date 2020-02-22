@@ -1,9 +1,9 @@
 <?php
 session_start();
-require_once 'inc/conn.php';
+require 'inc/conn.php';
 $_SESSION['from'] = "vpart";
-$data = $_GET['v'];
 
+$data = $_GET['v'];
 /*decrypt url*/
   $data2 = base64_decode(urldecode($data));
   $decrypt = $data2/201820192020007;

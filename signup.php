@@ -2,6 +2,7 @@
 session_start();
 require 'inc/conn.php';
 $_SESSION['from'] = "signup";
+
 $error = null;
 
 if(isset($_POST['signup'])){

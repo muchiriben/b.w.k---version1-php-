@@ -1,15 +1,19 @@
 <?php
 session_start();
 require_once 'inc/conn.php';
+
 if (($_SESSION['login_user']) == null) {
   header("Location:dealer_login");
+  exit();
 }
+
 $usertype = 'dealer';
 
 /* view profile */
 if (!isset($_GET['v'])) {
 if (($_SESSION['user_type']) != 'dealer') {
   header("Location:dealer_login");
+  exit();
 }
  
 $user = $_SESSION['login_user'];

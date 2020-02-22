@@ -1,7 +1,9 @@
 <?php
 session_start();
 require 'inc/conn.php';
+
 $error = null;
+
 if (isset($_POST['get'])) {
   $user = mysqli_real_escape_string($conn, $_POST['uname']);
   $select="SELECT * FROM `dealers` WHERE dname=? ";
@@ -98,7 +100,7 @@ require 'phpmailer/PHPMailerAutoload.php';
 			<h1>GET NEW PASSWORD</h1><br>
       <h2><?php echo $error ?></h2>
 			<form action="dealer_getpass.php" method="post">
-				<input type="text" name="uname" id="uname" placeholder="Dealer name"><br>
+				<input type="text" name="uname" id="uname" placeholder="Dealer name" required><br>
 				<input type="submit" name="get" id="uname" value="GET">
 			</form>
 			<font color="#fff" size="4px"><a href="dealer_changepass">Change Password</a></font>

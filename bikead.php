@@ -1,13 +1,17 @@
 <?php 
 session_start();
-$_SESSION['from'] = "bikead";
 if (($_SESSION['login_user']) == null) {
   header("Location:login");
+  exit();
 }
 
 require "inc/conn.php";
+$_SESSION['from'] = "bikead";
+
 $myusername = $_SESSION['login_user'];
 $usertype = $_SESSION['user_type'];
+
+//make and model dependent inputs 
 $pmenu = $cmenu = $error = null;
 if (isset($_GET["make"]) && is_numeric($_GET["make"])) {
     $pmenu = $_GET["make"];
@@ -37,11 +41,13 @@ $size =mysqli_real_escape_string($conn, $_POST['size']);
 $color =mysqli_real_escape_string($conn, $_POST['color']);
 $description =mysqli_real_escape_string($conn, $_POST['description']);
 
+//images
 $ext = pathinfo($_FILES['frontim']['name']);
 $ext1 = pathinfo($_FILES['leftim']['name']);
 $ext2 = pathinfo($_FILES['rightim']['name']);
 $ext3 = pathinfo($_FILES['backim']['name']);
 
+//check for extensions
 if ($ext["extension"] == "jpg" || $ext["extension"] == "jpeg" || $ext["extension"] == "png" || $ext["extension"] == "gif") {
        $frontim = $_FILES['frontim']['name']; 
        $first =  $_FILES['frontim']['tmp_name'];
@@ -75,7 +81,7 @@ if ($ext3["extension"] == "jpg" || $ext3["extension"] == "jpeg" || $ext3["extens
 }
 
 
-if($usertype == 'user') {
+if($usertype == 'user') { //for users
     $sidq = "SELECT sid FROM users WHERE uname =? ";
   //create prepares statement
        $stmt = mysqli_stmt_init($conn);
@@ -92,7 +98,7 @@ if($usertype == 'user') {
                $by_id = $row["sid"];
             }
          } 
-} elseif ($usertype == 'dealer') {
+} elseif ($usertype == 'dealer') { //for dealers
      $sidq = "SELECT did FROM dealers WHERE dname =? ";
   //create prepares statement
        $stmt = mysqli_stmt_init($conn);
@@ -111,7 +117,7 @@ if($usertype == 'user') {
          } 
 }
  
-
+//get make name from mid
 $sq = "SELECT name FROM maketable WHERE mid =? ";
  //create prepares statement
        $stmt = mysqli_stmt_init($conn);
@@ -129,9 +135,10 @@ $sq = "SELECT name FROM maketable WHERE mid =? ";
             }
          } 
 
-if ($error == null) {
-/* insert into databse */
 
+if ($error == null) { //if image is valid
+
+/* insert into databse */
  $sell="INSERT INTO `uploads`(`by_id`,`user_type`, `make`, `model`, `year`, `price`, `contact`, `body_type`, `mileage`, `trans_type`, `bike_condition`, `engine_size`, `color`, `description`,`frontim`, `leftim`, `rightim` ,`backim`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
  
 $null = NULL;        

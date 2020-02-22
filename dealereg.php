@@ -4,6 +4,7 @@ require "inc/conn.php";
 
 if (($_SESSION['login_user']) == null) {
   header("Location:login");
+  exit();
 }
 
 $myusername = $_SESSION['login_user'];

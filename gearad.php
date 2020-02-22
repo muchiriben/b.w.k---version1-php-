@@ -1,13 +1,17 @@
 <?php 
 session_start();
-$_SESSION['from'] = "gearad";
 if (($_SESSION['login_user']) == null) {
   header("Location:login");
+  exit();
 }
 
-require_once "inc/conn.php";
+require "inc/conn.php";
+$_SESSION['from'] = "gearad";
+
 $myusername = $_SESSION['login_user'];
 $usertype = $_SESSION['user_type'];
+
+//category and type dependent inputs
 $pmenu = $cmenu = $error = null;
 if (isset($_GET["cate"]) && is_numeric($_GET["cate"])) {
     $pmenu = $_GET["cate"];
@@ -36,6 +40,7 @@ $ext1 = pathinfo($_FILES['leftim']['name']);
 $ext2 = pathinfo($_FILES['rightim']['name']);
 $ext3 = pathinfo($_FILES['backim']['name']);
 
+//validate images
 if ($ext["extension"] == "jpg" || $ext["extension"] == "jpeg" || $ext["extension"] == "png" || $ext["extension"] == "gif") {
        $frontim = $_FILES['frontim']['name']; 
        $first =  $_FILES['frontim']['tmp_name'];
@@ -70,7 +75,7 @@ if ($ext3["extension"] == "jpg" || $ext3["extension"] == "jpeg" || $ext3["extens
 
 
 
- if($usertype == 'user') {
+ if($usertype == 'user') { //usertype user
     $sidq = "SELECT sid FROM users WHERE uname =? ";
   //create prepares statement
        $stmt = mysqli_stmt_init($conn);
@@ -87,7 +92,7 @@ if ($ext3["extension"] == "jpg" || $ext3["extension"] == "jpeg" || $ext3["extens
                $by_id = $row["sid"];
             }
          } 
-} elseif ($usertype == 'dealer') {
+} elseif ($usertype == 'dealer') { //usertype dealer
      $sidq = "SELECT did FROM dealers WHERE dname =? ";
   //create prepares statement
        $stmt = mysqli_stmt_init($conn);
@@ -123,7 +128,7 @@ $sq = "SELECT cname FROM gcategories WHERE cid =? ";
             }
          } 
 
-if ($error == null) {
+if ($error == null) {//images are valid
 
   $sellgear="INSERT INTO `guploads`(`by_id`,`user_type`, `cate`, `type`, `brand`, `gname`, `price`, `contact`,`description`,`frontim`, `leftim`, `rightim` ,`backim`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
 

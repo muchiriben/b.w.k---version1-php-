@@ -1,11 +1,14 @@
 <?php
 session_start();
-require_once 'inc/conn.php';
+require 'inc/conn.php';
+
 if (!isset($_SESSION['from'])) {
 	header("Location:error404");
+	exit();
 } else {
 	if (($_SESSION['from']) != 'profile') {
 	header("Location:error404");
+	exit();
 } else {
 
 

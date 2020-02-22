@@ -3,6 +3,7 @@ session_start();
 $_SESSION['from'] = "rentals";
 require "inc/conn.php";
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>
