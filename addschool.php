@@ -134,7 +134,7 @@ if (!mysqli_stmt_prepare($stmt, $sell)) {
 <input type="text" placeholder="Location e.g Nairobi, South C" name="location" id="location" required><br>
 <input type="text" placeholder="Contact number e.g 0712345678" name="contact" id="contact" required>
 <input type="email" placeholder="Email e.g biker@gmail.com" name="email" id="email" required><br>
-<input type="text" placeholder="Website(optional) e.g https://biker.com" name="web" id="web">
+<input type="text" placeholder="Website(optional) e.g bikerschool.co.ke" name="web" id="web">
 <input type="text" placeholder="Slogan(optional)" name="slogan" id="slogan"><br>
 <input type="password" placeholder="Password" name="pass" id="pass" required pattern="(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}">
 <input type="password" placeholder="Repeat Password" name="repass" id="repass" required pattern="(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}"><br>

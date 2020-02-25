@@ -1,6 +1,12 @@
 <?php
 session_start();
 require 'inc/conn.php';
+
+if ($_SESSION['from'] != 'admin') {
+  header("location:error404");
+  exit();
+}
+
 $_SESSION['from'] = "update";
 $error1 = null;
 $error2= null;

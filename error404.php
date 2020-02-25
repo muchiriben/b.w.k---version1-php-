@@ -1,3 +1,7 @@
+<?php 
+session_start();
+require 'inc/conn.php';
+?>
 <!DOCTYPE html>
 <html>
 <head>

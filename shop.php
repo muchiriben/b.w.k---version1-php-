@@ -7,7 +7,9 @@ require "inc/conn.php";
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Shop</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Buy sell Motorcycles, Motorcycle gear and parts">
+  <title>Shop BikerWorldKenya</title>
   <link rel="stylesheet" type="text/css" href="shop.css">
     <link href="https://fonts.googleapis.com/css?family=Ibarra+Real+Nova&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>

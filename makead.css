@@ -110,7 +110,7 @@ html{
 /*header section*/
 .header{
 border: solid 1px #fff;
-background-image: linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6)), url("img/road.jpeg");
+background-image: linear-gradient(rgba(0,0,0,0.8),rgba(0,0,0,0.8)), url("img/vespa.jpg");
 min-height: 100vh;
 height: auto;
 -webkit-background-size:cover;

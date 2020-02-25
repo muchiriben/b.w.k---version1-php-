@@ -7,7 +7,9 @@ require "inc/conn.php";
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Garages</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Motorcycle Garages in Kenya">
+	<title>Motorcycle Garages in Kenya</title>
 	<link rel="stylesheet" type="text/css" href="deal.css">
     <link href="https://fonts.googleapis.com/css?family=Ibarra+Real+Nova&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
@@ -54,7 +56,7 @@ $logo = $row["logo"];
 <div class="img">
 <?php
 if ($logo == null) {
-  echo '<img src="img/brossi.jpg" height="240px" width="440px">';
+  echo '<img src="img/garage.jpg" height="240px" width="440px">';
 }else{
    echo '<img src="data:image;base64,'.base64_encode( $logo ).'" height="240px" width="440px">';
 }
@@ -73,7 +75,7 @@ if ($slogan != null) {
 
  <?php
    if ($web != null) {
-     echo "<a target='_blank' href='" .$web. "' id='web'>Website</a>";
+     echo "<a target='_blank' href='https://" .$web. "' id='web'>Website</a>";
    }
  ?>
 

@@ -110,7 +110,7 @@ html{
 /*header section*/
 .header{
 border: solid 1px #fff;
-background-image: linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6)), url("img/motome.jpg");
+background-image: linear-gradient(rgba(0,0,0,0.8),rgba(0,0,0,0.8)), url("img/vespa.jpg");
 min-height: 100vh;
 height: auto;
 -webkit-background-size:cover;
@@ -139,15 +139,15 @@ padding:20px;
 	float: right;
 	margin-right: 70px;
     border:none;
-	background: #3498db;
+	background: #fff;
 	display:inline-block;
-	border: 2px solid #fff;
+	border: 2px solid #3498db;
 	padding: 10px 10px;
 	width: 170px;
 	border-radius: 24px;
 	transition: 0.25s;
-	color: #fff;
-    font-size: 14px;
+	color: #3498db;
+    font-size: 15px;
 	outline: none;
 }
 

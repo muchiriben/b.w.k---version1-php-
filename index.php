@@ -17,7 +17,6 @@ if(!mysqli_stmt_prepare($stmt, $mes)){
 } else {
 	mysqli_stmt_bind_param($stmt, "sssss" , $fname,$sname,$email,$phone,$message);
     mysqli_stmt_execute($stmt);
-    header('location:index');
 }
 
 
@@ -27,11 +26,13 @@ if(!mysqli_stmt_prepare($stmt, $mes)){
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Home</title>
+	<meta charset="utf-8">
+	<meta name="description" content="Top website for Kenya motorcycles and bikers needs">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>BikerWorldKenya - We are Family</title>
 	<link rel="stylesheet" type="text/css" href="index.css"> 
 	<link href="https://fonts.googleapis.com/css?family=Ibarra+Real+Nova&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
 	<header class="header">
@@ -135,7 +136,7 @@ if(!mysqli_stmt_prepare($stmt, $mes)){
 				<input type="email" name="mail" placeholder="Your Email" required>
 				<input type="text" name="phone" placeholder="Phone Number: e.g 0712345678" required>
 				<textarea name="message" placeholder="Your Message" required></textarea>
-				<input type="submit" name="send" value="Send">
+				<input type="submit" name="send" id="send" value="Send">
 			</form>
 	    </div> 	         
 </footer>

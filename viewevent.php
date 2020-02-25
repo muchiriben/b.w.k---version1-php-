@@ -177,10 +177,7 @@ if($usertype == 'user') {
     <div>
       <h1>Get Tickets</h1>
       <a href="https://www.mtickets.com/" target="_blank">mtickets.com</a>
-      <a href="">ticketsasa.com</a>
-      <a href="">ticketkenya.com</a>
-      <a href="">254tickets.com</a>
-      <a href="">supertickets.com</a><br>
+      <a href="https://www.ticketsasa.com/" target="_blank">ticketsasa.com</a><br>
       <font size="4" color="#3498db">(Check the posters to find more information on how to access the tickets if they are not available in the above websites.)</font><br>
     </div>
   </div>

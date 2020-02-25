@@ -125,7 +125,7 @@ header('location:events');
 <input type="text" placeholder="Held By" name="held_by" id="held_by" required><br>
 <input type="date" placeholder="Date" name="date" id="date" min="<?php echo date('Y-m-d'); ?>" required>
 <input type="text" placeholder="Location: e.g. Nairobi, South c" name="location" id="location" required><br>
-<input type="text" placeholder="Price/per: e.g 2500" name="price" id="price" required>
+<input type="text" placeholder="Price/per:e.g 500 Enter: 0(zero) for no charges" name="price" id="price" required>
 <input type="text" placeholder="Contact: e.g. 0712345678" name="contact" id="contact" required><br>
 <textarea name="description" id="description" placeholder="Description" required></textarea><br>
 <a href="#" id="button">Next</a>

@@ -7,7 +7,9 @@ require "inc/conn.php";
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Dealerships</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Motorcycle Dealerships in Kenya">
+	<title>Motorcycle Dealerships in Kenya</title>
 	<link rel="stylesheet" type="text/css" href="deal.css">
     <link href="https://fonts.googleapis.com/css?family=Ibarra+Real+Nova&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
@@ -54,7 +56,7 @@ $logo = $row["logo"];
 if ($logo != null) {
   echo '<img src="data:image;base64,'.base64_encode( $logo ).'" height="240px" width="440px">';
 }else{
-  echo '<img src="img/logo_transparent.png" height="240px" width="440px">';
+  echo '<img src="img/logo.png" height="240px" width="440px">';
 }
 if ($slogan != null) {
   echo "<div class='slogan'><p>"  .$slogan. "</p></div>";
@@ -69,7 +71,7 @@ if ($slogan != null) {
  <p><?php echo "Email:\t" .$email; ?></p><br><br>
  <?php
    if ($web != null) {
-     echo "<a target='_blank' href='" .$web. "'>Website</a>";
+     echo "<a target='_blank' href='https://" .$web. "'>Website</a>";
    }
 
 /* encrypt url */

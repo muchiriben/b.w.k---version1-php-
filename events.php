@@ -7,7 +7,9 @@ require "inc/conn.php";
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Events</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Motorcycle events and racing in kenya">
+	<title>Motorcycle Events</title>
 	<link rel="stylesheet" type="text/css" href="shop.css">
     <link href="https://fonts.googleapis.com/css?family=Ibarra+Real+Nova&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
