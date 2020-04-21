@@ -32,11 +32,11 @@ $error = null;
       if($count == 1) {
          $_SESSION['login_user'] = $myusername;
          $_SESSION['user_type'] = 'user';
-         //redirect to admin page if login is by admin
-         if ($_SESSION['login_user'] == "AdMiN") {
-           header("location:admin");
+         
+         if ($_SESSION['login_user'] == "*******") {
+           header("location:*****");
          }
-         //for normal users
+         
          else{
 
 
